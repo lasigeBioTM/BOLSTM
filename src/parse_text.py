@@ -2,6 +2,7 @@ from itertools import combinations
 import spacy
 from spacy.tokenizer import Tokenizer
 import re
+import logging
 import networkx as nx
 
 
@@ -67,12 +68,12 @@ def get_head_tokens(entities, sentence):
             entity_tokens = sentence.char_span(offset[0], offset[1] + 1)
 
         if not entity_tokens:
-            print("no tokens found:", entities[eid], sentence.text, '|'.join([t.text for t in sentence]))
+            logging.error(("no tokens found:", entities[eid], sentence.text, '|'.join([t.text for t in sentence])))
         else:
             head_token = '{0}-{1}'.format(entity_tokens.root.lower_,
                                           entity_tokens.root.i)
             if head_token in sentence_head_tokens:
-                print("head token conflict:", sentence_head_tokens[head_token], entities[eid])
+                logging.error(("head token conflict:", sentence_head_tokens[head_token], entities[eid]))
             sentence_head_tokens[head_token] = eid
     return sentence_head_tokens
 
@@ -128,7 +129,7 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             # print("no path:", e1_text, e2_text, sentence_text, parsed.print_tree(light=True))
             # sys.exit()
         except nx.NodeNotFound:
-            print("node not found:", e1_text, e2_text, e1, e2, list(parsed), graph.nodes())
+            logging.error(("node not found:", e1_text, e2_text, e1, e2, list(parsed), graph.nodes()))
             instances.append([])
     return labels, instances, classes
 

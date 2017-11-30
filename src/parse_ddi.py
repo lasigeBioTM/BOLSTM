@@ -1,8 +1,9 @@
 import xml.etree.ElementTree as ET
 import sys
 import os
+import logging
 
-from src.parse_text import process_sentence
+from parse_text import process_sentence
 
 def get_ddi_sdp_instances(base_dir):
     """
@@ -15,7 +16,7 @@ def get_ddi_sdp_instances(base_dir):
     labels = []
 
     for f in os.listdir(base_dir):
-        print(f)
+        logging.info(f)
         #if f != "L-Glutamine_ddi.xml":
         #    continue
         tree = ET.parse(base_dir + f)
@@ -23,7 +24,7 @@ def get_ddi_sdp_instances(base_dir):
         for sentence in root:
             sentence_entities = {e.get("id"): (e.get("charOffset"), e.get("text")) for e in sentence.findall('entity')}
             sentence_pairs = [(p.get("e1"), p.get("e2")) for p in sentence.findall('pair') if p.get("ddi") == "true"]
-            sentence_labels, sentence_instances,sentence_classes = parse_sentence(sentence,
+            sentence_labels, sentence_instances,sentence_classes = process_sentence(sentence.get("text"),
                                                                                   sentence_entities,
                                                                                   sentence_pairs)
             labels += sentence_labels
