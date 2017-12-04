@@ -15,6 +15,11 @@ from sklearn.metrics import f1_score
 
 from parse_ddi import get_ddi_sdp_instances
 
+embbed_size = 300
+LSTM_units = 300
+sigmoid_units = 100
+n_classes = 2
+max_sentence_length = 10
 
 #https://github.com/fchollet/keras/issues/5400
 def precision(y_true, y_pred):
@@ -76,7 +81,7 @@ def f1(y_true, y_pred):
     recall_v = recall(y_true, y_pred)
     if precision_v + recall_v == 0:
         return 0
-    return (2.0*precision(y_true, y_pred)*recall(y_true, y_pred))/(precision(y_true, y_pred)+recall(y_true, y_pred))
+    return (2.0*precision_v*recall_v)/(precision_v+recall_v)
 
 
 #model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=[X_test,y_test],
@@ -99,10 +104,11 @@ def f1(y_true, y_pred):
 
 
 def get_model():
+
     model = Sequential()
     # model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length))
-    model.add(LSTM(200, input_shape=(10, 300)))
-    model.add(Dense(100, activation='sigmoid'))
+    model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
+    model.add(Dense(sigmoid_units, activation='sigmoid'))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
     print(model.summary())
@@ -112,13 +118,13 @@ def get_model():
 def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine/"]):
     dirs = ["data/DDICorpus/Test/DDIExtraction/DrugBank/", "data/DDICorpus/Test/DDIExtraction/MedLine/"]
     labels = []
-    instances = np.empty((0, 10, 300))
+    instances = np.empty((0, max_sentence_length, embbed_size))
     classes = np.empty((0,))
 
     for dir in dirs:
         dir_labels, dir_instances, dir_classes = get_ddi_sdp_instances(dir)
         dir_instances = np.array(dir_instances)
-        dir_instances = sequence.pad_sequences(dir_instances, maxlen=10)
+        dir_instances = sequence.pad_sequences(dir_instances, maxlen=max_sentence_length)
         dir_classes = np.array(dir_classes)
 
         labels += dir_labels
@@ -132,6 +138,11 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
 
 
 def main():
+    n_epochs = 20
+    batch_size = 100
+    validation_split = 0.1
+
+
     if sys.argv[1] == "preprocessing":
         labels, X_train, classes = get_ddi_data()
         np.save(sys.argv[2] + "_labels.npy", labels)
@@ -148,9 +159,9 @@ def main():
             Y_test = np.load(sys.argv[3] + "_y.npy")
             # Y_train = to_categorical(Y_train, num_classes=None)
 
-            model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=50, batch_size=64)
+            model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs, batch_size=batch_size)
         else:
-            model.fit(X_train, Y_train, validation_split=0.1, epochs=20, batch_size=64)
+            model.fit(X_train, Y_train, validation_split=validation_split, epochs=n_epochs, batch_size=batch_size)
 
 if __name__ == "__main__":
     main()
