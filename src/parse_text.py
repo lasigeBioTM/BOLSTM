@@ -1,4 +1,5 @@
 from itertools import combinations
+import numpy as np
 import spacy
 from spacy.tokenizer import Tokenizer
 import re
@@ -68,12 +69,12 @@ def get_head_tokens(entities, sentence):
             entity_tokens = sentence.char_span(offset[0], offset[1] + 1)
 
         if not entity_tokens:
-            logging.error(("no tokens found:", entities[eid], sentence.text, '|'.join([t.text for t in sentence])))
+            logging.warning(("no tokens found:", entities[eid], sentence.text, '|'.join([t.text for t in sentence])))
         else:
             head_token = '{0}-{1}'.format(entity_tokens.root.lower_,
                                           entity_tokens.root.i)
             if head_token in sentence_head_tokens:
-                logging.error(("head token conflict:", sentence_head_tokens[head_token], entities[eid]))
+                logging.warning(("head token conflict:", sentence_head_tokens[head_token], entities[eid]))
             sentence_head_tokens[head_token] = eid
     return sentence_head_tokens
 
@@ -83,7 +84,7 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     Process sentence to obtain labels, instances and classes for a ML classifier
     :param sentence_text: sentence text string
     :param sentence_entities: dictionary mapping entity ID to (offset, text)
-    :param sentence_pairs: pairs of known entities in this sentence
+    :param sentence_pairs: dictionary mapping pairs of known entities in this sentence to pair types
     :return:
     """
     instances = []
@@ -104,7 +105,7 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     for (e1, e2) in combinations(sentence_head_tokens, 2):
         labels.append((sentence_head_tokens[e1], sentence_head_tokens[e2]))
         if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
-            classes.append(1)
+            classes.append(sentence_pairs[(sentence_head_tokens[e1], sentence_head_tokens[e2])])
         else:
             classes.append(0)
         e1_text = sentence_entities[sentence_head_tokens[e1]]
@@ -124,12 +125,12 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             # instances.append(sdp)
         except nx.exception.NetworkXNoPath:
             # pass
-            print("no path:", e1_text, e2_text, graph.nodes())
+            logging.warning("no path:", e1_text, e2_text, graph.nodes())
             instances.append([])
             # print("no path:", e1_text, e2_text, sentence_text, parsed.print_tree(light=True))
             # sys.exit()
         except nx.NodeNotFound:
-            logging.error(("node not found:", e1_text, e2_text, e1, e2, list(parsed), graph.nodes()))
+            logging.warning(("node not found:", e1_text, e2_text, e1, e2, list(parsed), graph.nodes()))
             instances.append([])
     return labels, instances, classes
 

@@ -109,8 +109,8 @@ def get_model():
     # model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length))
     model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
     model.add(Dense(sigmoid_units, activation='sigmoid'))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
+    model.add(Dense(5, activation='sigmoid'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
     print(model.summary())
     return model
 
@@ -153,11 +153,13 @@ def main():
         model = get_model()
         X_train = np.load(sys.argv[2] + "_x.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
-
+        Y_train = to_categorical(Y_train, num_classes=None)
+        # print(Y_train)
         if len(sys.argv) > 3:
             X_test = np.load(sys.argv[3] + "_x.npy")
             Y_test = np.load(sys.argv[3] + "_y.npy")
-            # Y_train = to_categorical(Y_train, num_classes=None)
+            Y_test = to_categorical(Y_test, num_classes=None)
+            test_labels = np.load(sys.argv[3] + "_labels.npy")
 
             model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs, batch_size=batch_size)
         else:
