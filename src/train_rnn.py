@@ -11,6 +11,9 @@ from keras.layers import LSTM
 from keras.preprocessing import sequence
 from keras import backend as K
 from keras.utils.np_utils import to_categorical
+from keras.models import model_from_json
+from keras.callbacks import Callback
+from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.metrics import f1_score
 
 from parse_ddi import get_ddi_sdp_instances
@@ -18,8 +21,12 @@ from parse_ddi import get_ddi_sdp_instances
 embbed_size = 300
 LSTM_units = 300
 sigmoid_units = 100
-n_classes = 2
+n_classes = 5
 max_sentence_length = 10
+
+n_epochs = 20
+batch_size = 10
+validation_split = 0.1
 
 #https://github.com/fchollet/keras/issues/5400
 def precision(y_true, y_pred):
@@ -30,9 +37,9 @@ def precision(y_true, y_pred):
     Computes the precision, a metric for multi-label classification of
     how many selected items are relevant.
     """
-    print(y_true, y_pred)
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    # print(y_true, y_pred)
+    true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred[...,1:], 0, 1)))
     precision = true_positives / (predicted_positives + K.epsilon())
     return precision
 
@@ -45,8 +52,8 @@ def recall(y_true, y_pred):
     Computes the recall, a metric for multi-label classification of
     how many relevant items are selected.
     """
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+    true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
+    possible_positives = K.sum(K.round(K.clip(y_true[...,1:], 0, 1)))
     recall = true_positives / (possible_positives + K.epsilon())
     return recall
 
@@ -60,8 +67,8 @@ def f1(y_true, y_pred):
         Computes the precision, a metric for multi-label classification of
         how many selected items are relevant.
         """
-        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-        predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+        true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
+        predicted_positives = K.sum(K.round(K.clip(y_pred[...,1:], 0, 1)))
         precision = true_positives / (predicted_positives + K.epsilon())
         return precision
 
@@ -73,17 +80,41 @@ def f1(y_true, y_pred):
         Computes the recall, a metric for multi-label classification of
         how many relevant items are selected.
         """
-        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-        possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+        true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
+        possible_positives = K.sum(K.round(K.clip(y_true[...,1:], 0, 1)))
         recall = true_positives / (possible_positives + K.epsilon())
         return recall
     precision_v = precision(y_true, y_pred)
     recall_v = recall(y_true, y_pred)
-    if precision_v + recall_v == 0:
-        return 0
     return (2.0*precision_v*recall_v)/(precision_v+recall_v)
 
 
+class Metrics(Callback):
+    def on_train_begin(self, logs={}):
+        self.val_f1s = []
+        self.val_recalls = []
+        self.val_precisions = []
+
+
+    def on_epoch_end(self, epoch, logs={}):
+        #print(dir(self.model))
+        val_predict = (np.asarray(self.model.predict(self.validation_data[0]))).round()
+        val_targ = self.validation_data[1]
+        _val_f1 = f1_score(val_targ, val_predict, average='micro', labels=[1,2,3,4])
+        _val_recall = recall_score(val_targ, val_predict, average='micro', labels=[1,2,3,4])
+        _val_precision = precision_score(val_targ, val_predict, average='micro', labels=[1,2,3,4])
+        self.val_f1s.append(_val_f1)
+        self.val_recalls.append(_val_recall)
+        self.val_precisions.append(_val_precision)
+        s = "predicted not false: {}/{}".format(len([x for x in val_predict if x[0] < 0.5]),
+                                                len([x for x in val_targ if x[0] < 0.5]))
+        print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f} f".format(s, _val_f1, _val_precision, _val_recall),)
+        #print(val_predict, val_targ)
+        # print("true not false: {}".format()
+        return
+
+
+metrics = Metrics()
 #model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=[X_test,y_test],
 #       verbose=1, callbacks=[metrics])
 
@@ -109,7 +140,7 @@ def get_model():
     # model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length))
     model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
     model.add(Dense(sigmoid_units, activation='sigmoid'))
-    model.add(Dense(5, activation='sigmoid'))
+    model.add(Dense(n_classes, activation='sigmoid'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
     print(model.summary())
     return model
@@ -138,10 +169,6 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
 
 
 def main():
-    n_epochs = 20
-    batch_size = 100
-    validation_split = 0.1
-
 
     if sys.argv[1] == "preprocessing":
         labels, X_train, classes = get_ddi_data()
@@ -153,17 +180,47 @@ def main():
         model = get_model()
         X_train = np.load(sys.argv[2] + "_x.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
-        Y_train = to_categorical(Y_train, num_classes=None)
+        Y_train = to_categorical(Y_train, num_classes=n_classes)
+        #Y_train = Y_train[...,1:]
         # print(Y_train)
         if len(sys.argv) > 3:
             X_test = np.load(sys.argv[3] + "_x.npy")
             Y_test = np.load(sys.argv[3] + "_y.npy")
-            Y_test = to_categorical(Y_test, num_classes=None)
+            Y_test = to_categorical(Y_test, num_classes=n_classes)
+            #Y_test = Y_test[...,1:]
             test_labels = np.load(sys.argv[3] + "_labels.npy")
 
-            model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs, batch_size=batch_size)
+            model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
+                      batch_size=batch_size) #, callbacks=[metrics])
+
+            # serialize model to JSON
+            model_json = model.to_json()
+            with open("model.json", "w") as json_file:
+                json_file.write(model_json)
+            # serialize weights to HDF5
+            model.save_weights("model.h5")
+            print("Saved model to disk")
+
         else:
             model.fit(X_train, Y_train, validation_split=validation_split, epochs=n_epochs, batch_size=batch_size)
+
+    elif sys.argv[1] == "predict":
+
+        # load json and create model
+        json_file = open('model.json', 'r')
+        loaded_model_json = json_file.read()
+        json_file.close()
+        loaded_model = model_from_json(loaded_model_json)
+        # load weights into new model
+        loaded_model.load_weights("model.h5")
+        print("Loaded model from disk")
+
+        X_test = np.load(sys.argv[2] + "_x.npy")
+        test_labels = np.load(sys.argv[2] + "_labels.npy")
+
+        scores = loaded_model.predict_classes(X_test)
+        for i, pair in enumerate(test_labels):
+            print(pair, scores[i])
 
 if __name__ == "__main__":
     main()
