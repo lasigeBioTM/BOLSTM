@@ -1,6 +1,6 @@
 import sys
 import logging
-logging.basicConfig(level=30)
+logging.basicConfig(level=10)
 
 import numpy as np
 np.random.seed(1)
@@ -25,7 +25,7 @@ n_classes = 5
 max_sentence_length = 10
 
 n_epochs = 20
-batch_size = 10
+batch_size = 100
 validation_split = 0.1
 
 #https://github.com/fchollet/keras/issues/5400
@@ -100,15 +100,15 @@ class Metrics(Callback):
         #print(dir(self.model))
         val_predict = (np.asarray(self.model.predict(self.validation_data[0]))).round()
         val_targ = self.validation_data[1]
-        _val_f1 = f1_score(val_targ, val_predict, average='micro', labels=[1,2,3,4])
-        _val_recall = recall_score(val_targ, val_predict, average='micro', labels=[1,2,3,4])
-        _val_precision = precision_score(val_targ, val_predict, average='micro', labels=[1,2,3,4])
+        _val_f1 = f1_score(val_targ[...,1:], val_predict[...,1:], average='micro')
+        _val_recall = recall_score(val_targ[...,1:], val_predict[...,1:], average='micro')
+        _val_precision = precision_score(val_targ[...,1:], val_predict[...,1:], average='micro')
         self.val_f1s.append(_val_f1)
         self.val_recalls.append(_val_recall)
         self.val_precisions.append(_val_precision)
         s = "predicted not false: {}/{}".format(len([x for x in val_predict if x[0] < 0.5]),
                                                 len([x for x in val_targ if x[0] < 0.5]))
-        print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f} f".format(s, _val_f1, _val_precision, _val_recall),)
+        print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f} \n".format(s, _val_f1, _val_precision, _val_recall),)
         #print(val_predict, val_targ)
         # print("true not false: {}".format()
         return
@@ -140,14 +140,14 @@ def get_model():
     # model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length))
     model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
     model.add(Dense(sigmoid_units, activation='sigmoid'))
-    model.add(Dense(n_classes, activation='sigmoid'))
+    model.add(Dense(n_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
     print(model.summary())
     return model
 
 
 def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine/"]):
-    dirs = ["data/DDICorpus/Test/DDIExtraction/DrugBank/", "data/DDICorpus/Test/DDIExtraction/MedLine/"]
+    #dirs = ["data/DDICorpus/Test/DDIExtraction/DrugBank/", "data/DDICorpus/Test/DDIExtraction/MedLine/"]
     labels = []
     instances = np.empty((0, max_sentence_length, embbed_size))
     classes = np.empty((0,))
@@ -171,7 +171,7 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
 def main():
 
     if sys.argv[1] == "preprocessing":
-        labels, X_train, classes = get_ddi_data()
+        labels, X_train, classes = get_ddi_data(sys.argv[3:])
         np.save(sys.argv[2] + "_labels.npy", labels)
         np.save(sys.argv[2] + "_x.npy", X_train)
         np.save(sys.argv[2] + "_y.npy", classes)
@@ -191,18 +191,19 @@ def main():
             test_labels = np.load(sys.argv[3] + "_labels.npy")
 
             model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
-                      batch_size=batch_size) #, callbacks=[metrics])
-
-            # serialize model to JSON
-            model_json = model.to_json()
-            with open("model.json", "w") as json_file:
-                json_file.write(model_json)
-            # serialize weights to HDF5
-            model.save_weights("model.h5")
-            print("Saved model to disk")
+                      batch_size=batch_size, callbacks=[metrics])
 
         else:
-            model.fit(X_train, Y_train, validation_split=validation_split, epochs=n_epochs, batch_size=batch_size)
+            model.fit(X_train, Y_train, validation_split=validation_split, epochs=n_epochs,
+                      batch_size=batch_size, callbacks=[metrics])
+
+        # serialize model to JSON
+        model_json = model.to_json()
+        with open("model.json", "w") as json_file:
+            json_file.write(model_json)
+            # serialize weights to HDF5
+        model.save_weights("model.h5")
+        print("Saved model to disk")
 
     elif sys.argv[1] == "predict":
 
@@ -219,8 +220,9 @@ def main():
         test_labels = np.load(sys.argv[2] + "_labels.npy")
 
         scores = loaded_model.predict_classes(X_test)
-        for i, pair in enumerate(test_labels):
-            print(pair, scores[i])
+        with open("{}_results.txt".format(sys.argv[2].split("/")[-1]), 'w') as f:
+            for i, pair in enumerate(test_labels):
+                f.write(" ".join((pair[0], pair[1], str(scores[i]))) + "\n")
 
 if __name__ == "__main__":
     main()
