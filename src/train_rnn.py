@@ -8,24 +8,30 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+from keras.layers import Embedding
+from keras.layers import Flatten
 from keras.preprocessing import sequence
 from keras import backend as K
 from keras.utils.np_utils import to_categorical
 from keras.models import model_from_json
 from keras.callbacks import Callback
+from keras.preprocessing.text import one_hot
+from keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.metrics import f1_score
 
+
 from parse_ddi import get_ddi_sdp_instances
 
+vocab_size = 10000
 embbed_size = 300
 LSTM_units = 300
-sigmoid_units = 100
+sigmoid_units = 200
 n_classes = 5
 max_sentence_length = 10
 
-n_epochs = 20
-batch_size = 100
+n_epochs = 30
+batch_size = 200
 validation_split = 0.1
 
 #https://github.com/fchollet/keras/issues/5400
@@ -137,9 +143,10 @@ metrics = Metrics()
 def get_model():
 
     model = Sequential()
-    # model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length))
+    model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
+    #model.add(Flatten())
     model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
-    model.add(Dense(sigmoid_units, activation='sigmoid'))
+    #model.add(Dense(sigmoid_units, activation='sigmoid'))
     model.add(Dense(n_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
     print(model.summary())
@@ -149,18 +156,22 @@ def get_model():
 def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine/"]):
     #dirs = ["data/DDICorpus/Test/DDIExtraction/DrugBank/", "data/DDICorpus/Test/DDIExtraction/MedLine/"]
     labels = []
-    instances = np.empty((0, max_sentence_length, embbed_size))
+    #instances = np.empty((0, max_sentence_length, embbed_size))
+    #instances = np.empty((0, max_sentence_length))
+    instances = []
     classes = np.empty((0,))
 
     for dir in dirs:
         dir_labels, dir_instances, dir_classes = get_ddi_sdp_instances(dir)
-        dir_instances = np.array(dir_instances)
-        dir_instances = sequence.pad_sequences(dir_instances, maxlen=max_sentence_length)
+        #dir_instances = np.array(dir_instances)
+        #print(dir_instances)
+        #dir_instances = sequence.pad_sequences(dir_instances, maxlen=max_sentence_length)
         dir_classes = np.array(dir_classes)
 
         labels += dir_labels
-        print(instances.shape, dir_instances.shape)
-        instances = np.concatenate((instances, dir_instances), axis=0)
+        #print(instances.shape, dir_instances.shape)
+        #instances = np.concatenate((instances, dir_instances), axis=0)
+        instances += dir_instances
         classes = np.concatenate((classes, dir_classes), axis=0)
     return labels, instances, classes
 
@@ -173,28 +184,34 @@ def main():
     if sys.argv[1] == "preprocessing":
         labels, X_train, classes = get_ddi_data(sys.argv[3:])
         np.save(sys.argv[2] + "_labels.npy", labels)
-        np.save(sys.argv[2] + "_x.npy", X_train)
+        np.save(sys.argv[2] + "_x_words.npy", X_train)
         np.save(sys.argv[2] + "_y.npy", classes)
 
     elif sys.argv[1] == "train":
         model = get_model()
-        X_train = np.load(sys.argv[2] + "_x.npy")
+
+        X_words_train = np.load(sys.argv[2] + "_x_words.npy")
+        print(X_words_train)
+        X_words_train = [one_hot(" ".join(d), vocab_size) for d in X_words_train]
+        X_words_train = pad_sequences(X_words_train, maxlen=max_sentence_length, padding='post')
+        #print(X_words_train)
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
+
         #Y_train = Y_train[...,1:]
         # print(Y_train)
         if len(sys.argv) > 3:
-            X_test = np.load(sys.argv[3] + "_x.npy")
+            X_test = np.load(sys.argv[3] + "_x_words.npy")
             Y_test = np.load(sys.argv[3] + "_y.npy")
             Y_test = to_categorical(Y_test, num_classes=n_classes)
             #Y_test = Y_test[...,1:]
             test_labels = np.load(sys.argv[3] + "_labels.npy")
 
-            model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
+            model.fit(X_words_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
                       batch_size=batch_size, callbacks=[metrics])
 
         else:
-            model.fit(X_train, Y_train, validation_split=validation_split, epochs=n_epochs,
+            model.fit(X_words_train, Y_train, validation_split=validation_split, epochs=n_epochs,
                       batch_size=batch_size, callbacks=[metrics])
 
         # serialize model to JSON

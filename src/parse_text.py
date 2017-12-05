@@ -85,9 +85,10 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     :param sentence_text: sentence text string
     :param sentence_entities: dictionary mapping entity ID to (offset, text)
     :param sentence_pairs: dictionary mapping pairs of known entities in this sentence to pair types
-    :return:
+    :return: labels of each pair (according to sentence_entities,
+            word vectors and classes (pair types according to sentence_pairs)
     """
-    instances = []
+    word_vectors = []
     classes = []
     labels = []
 
@@ -116,9 +117,10 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             for element in sdp:
                 if element != "ROOT":
                     token_idx = int(element.split("-")[-1])
-                    vector.append(parsed[token_idx].vector)
+                    #vector.append(parsed[token_idx].vector)
+                    vector.append(parsed[token_idx].text)
             # print(vector)
-            instances.append(vector)
+            word_vectors.append(vector)
             # if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             #    print(sdp, e1, e2, sentence_text)
             # print(e1_text, e2_text, sdp, sentence_text)
@@ -126,13 +128,13 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
         except nx.exception.NetworkXNoPath:
             # pass
             logging.warning("no path:", e1_text, e2_text, graph.nodes())
-            instances.append([])
+            word_vectors.append([])
             # print("no path:", e1_text, e2_text, sentence_text, parsed.print_tree(light=True))
             # sys.exit()
         except nx.NodeNotFound:
             logging.warning(("node not found:", e1_text, e2_text, e1, e2, list(parsed), graph.nodes()))
-            instances.append([])
-    return labels, instances, classes
+            word_vectors.append([])
+    return labels, word_vectors, classes
 
 
 

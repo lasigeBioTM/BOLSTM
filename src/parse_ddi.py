@@ -43,6 +43,8 @@ def get_ddi_sdp_instances(base_dir):
             classes += sentence_classes
     return labels, instances, classes
 
+
+
 # print("Drugbank")
 # labels, instances, classes = get_ddi_sdp_instances("data/ddi2013Train/DrugBank/")
 # print(len(labels), len(instances), len(classes))
