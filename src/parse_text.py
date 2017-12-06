@@ -58,10 +58,7 @@ def get_head_tokens(entities, sentence):
     """
     sentence_head_tokens = {}
     for eid in entities:
-        offsets = entities[eid][0].split(";")
-        # use only first span for now
-        offset = [int(i) for i in offsets[0].split("-")]
-        offset[-1] += 1
+        offset = (entities[eid][0][0], entities[eid][0][-1])
         # starts = {tok.i: tok.idx for tok in doc}
         entity_tokens = sentence.char_span(offset[0], offset[1])
         if not entity_tokens:
@@ -83,7 +80,7 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     """
     Process sentence to obtain labels, instances and classes for a ML classifier
     :param sentence_text: sentence text string
-    :param sentence_entities: dictionary mapping entity ID to (offset, text)
+    :param sentence_entities: dictionary mapping entity ID to ((e_start, e_end), text)
     :param sentence_pairs: dictionary mapping pairs of known entities in this sentence to pair types
     :return: labels of each pair (according to sentence_entities,
             word vectors and classes (pair types according to sentence_pairs)
@@ -117,8 +114,8 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             for element in sdp:
                 if element != "ROOT":
                     token_idx = int(element.split("-")[-1])
-                    #vector.append(parsed[token_idx].vector)
-                    vector.append(parsed[token_idx].text)
+                    vector.append(parsed[token_idx].vector)
+                    #vector.append(parsed[token_idx].text)
             # print(vector)
             word_vectors.append(vector)
             # if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:

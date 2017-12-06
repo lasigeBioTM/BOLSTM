@@ -10,6 +10,7 @@ from keras.layers import Dense
 from keras.layers import LSTM
 from keras.layers import Embedding
 from keras.layers import Flatten
+from keras.layers import Dropout
 from keras.preprocessing import sequence
 from keras import backend as K
 from keras.utils.np_utils import to_categorical
@@ -22,13 +23,14 @@ from sklearn.metrics import f1_score
 
 
 from parse_ddi import get_ddi_sdp_instances
+from parse_semeval8 import get_semeval8_sdp_instances
 
 vocab_size = 10000
 embbed_size = 300
 LSTM_units = 300
 sigmoid_units = 200
-n_classes = 5
-max_sentence_length = 10
+n_classes = 19
+max_sentence_length = 50
 
 n_epochs = 30
 batch_size = 200
@@ -143,10 +145,11 @@ metrics = Metrics()
 def get_model():
 
     model = Sequential()
-    model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
+    #model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
     #model.add(Flatten())
     model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
     #model.add(Dense(sigmoid_units, activation='sigmoid'))
+    model.add(Dropout(0.3))
     model.add(Dense(n_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
     print(model.summary())
@@ -182,17 +185,24 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
 def main():
 
     if sys.argv[1] == "preprocessing":
-        labels, X_train, classes = get_ddi_data(sys.argv[3:])
-        np.save(sys.argv[2] + "_labels.npy", labels)
-        np.save(sys.argv[2] + "_x_words.npy", X_train)
-        np.save(sys.argv[2] + "_y.npy", classes)
+        #labels, X_train, classes = get_ddi_data(sys.argv[3:])
+        train = True
+        if "test" in sys.argv[3].lower():
+            train= False
+        if sys.argv[2] == "semeval8":
+            labels, X_train, classes = get_semeval8_sdp_instances(sys.argv[4:], train=train)
+        elif sys.argv[2] == "ddi":
+            labels, X_train, classes = get_ddi_data(sys.argv[3:])
+        np.save(sys.argv[3] + "_labels.npy", labels)
+        np.save(sys.argv[3] + "_x_words.npy", X_train)
+        np.save(sys.argv[3] + "_y.npy", classes)
 
     elif sys.argv[1] == "train":
         model = get_model()
 
         X_words_train = np.load(sys.argv[2] + "_x_words.npy")
-        print(X_words_train)
-        X_words_train = [one_hot(" ".join(d), vocab_size) for d in X_words_train]
+        #print(X_words_train)
+        #X_words_train = [one_hot(" ".join(d), vocab_size) for d in X_words_train]
         X_words_train = pad_sequences(X_words_train, maxlen=max_sentence_length, padding='post')
         #print(X_words_train)
         Y_train = np.load(sys.argv[2] + "_y.npy")
@@ -234,7 +244,7 @@ def main():
         print("Loaded model from disk")
 
         X_words_test = np.load(sys.argv[2] + "_x_words.npy")
-        X_words_test = [one_hot(" ".join(d), vocab_size) for d in X_words_test]
+        #X_words_test = [one_hot(" ".join(d), vocab_size) for d in X_words_test]
         X_words_test = pad_sequences(X_words_test, maxlen=max_sentence_length, padding='post')
         test_labels = np.load(sys.argv[2] + "_labels.npy")
 

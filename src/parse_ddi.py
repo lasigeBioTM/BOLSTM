@@ -31,7 +31,15 @@ def get_ddi_sdp_instances(base_dir):
         tree = ET.parse(base_dir + f)
         root = tree.getroot()
         for sentence in root:
-            sentence_entities = {e.get("id"): (e.get("charOffset"), e.get("text")) for e in sentence.findall('entity')}
+            sentence_entities = {}
+            for e in sentence.findall('entity'):
+                sep_offsets = e.get("charOffset").split(";")
+                offsets = []
+                for o in sep_offsets:
+                    start, end = o.split("-")
+                    offsets.append(int(start))
+                    offsets.append(int(end)+1)
+                sentence_entities[e.get("id")] = (offsets, e.get("text"))
             sentence_pairs = {(p.get("e1"), p.get("e2")): label_to_pairtype[p.get("type")] for p in sentence.findall('pair') if p.get("ddi") == "true"}
             # sentence_pairs: {(e1id, e2id): pairtype_label}
 
