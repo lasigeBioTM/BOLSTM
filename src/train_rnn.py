@@ -233,10 +233,12 @@ def main():
         loaded_model.load_weights("model.h5")
         print("Loaded model from disk")
 
-        X_test = np.load(sys.argv[2] + "_x.npy")
+        X_words_test = np.load(sys.argv[2] + "_x_words.npy")
+        X_words_test = [one_hot(" ".join(d), vocab_size) for d in X_words_test]
+        X_words_test = pad_sequences(X_words_test, maxlen=max_sentence_length, padding='post')
         test_labels = np.load(sys.argv[2] + "_labels.npy")
 
-        scores = loaded_model.predict_classes(X_test)
+        scores = loaded_model.predict_classes(X_words_test)
         with open("{}_results.txt".format(sys.argv[2].split("/")[-1]), 'w') as f:
             for i, pair in enumerate(test_labels):
                 f.write(" ".join((pair[0], pair[1], str(scores[i]))) + "\n")
