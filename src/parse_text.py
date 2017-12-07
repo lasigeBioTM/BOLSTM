@@ -111,13 +111,29 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
         try:
             sdp = nx.shortest_path(graph, source=e1, target=e2)
             vector = []
-            for element in sdp:
+            left_vector = []
+            right_vector = []
+            head_token_position = None
+            for i, element in enumerate(sdp):
                 if element != "ROOT":
                     token_idx = int(element.split("-")[-1])
-                    vector.append(parsed[token_idx].vector)
+                    sdp_token = parsed[token_idx]
+                    #sdp_children = [t.text for t in sdp_token.children]
+                    head_token = "{}-{}".format(sdp_token.head.lower_, sdp_token.head.i)
+                    vector.append(sdp_token.vector)
+                    print(element, sdp_token.text, head_token, sdp)
+                    if head_token not in sdp or head_token == element:
+                        print("found head token of:", e1_text, e2_text, sdp_token.text, sdp)
+                        head_token_position = i
                     #vector.append(parsed[token_idx].text)
             # print(vector)
+            if head_token_position is None:
+                print("head token not found:", e1_text, e2_text, sdp)
+            else:
+                left_vector = vector[:head_token_position+1]
+                right_vector = vector[head_token_position:]
             word_vectors.append(vector)
+            # word_vectors.append((left_vector, right_vector))
             # if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             #    print(sdp, e1, e2, sentence_text)
             # print(e1_text, e2_text, sdp, sentence_text)
