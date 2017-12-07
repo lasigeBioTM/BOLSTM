@@ -42,7 +42,8 @@ def get_semeval8_sdp_instances(base_dir, train=True):
     :param base_dir: directory containing semeval XML documents and annotations
     :return: instances (vectors), classes (0/1) and labels (eid1, eid2)
     """
-    instances = []
+    left_instances = []
+    right_instances = []
     classes = []
     labels = []
 
@@ -86,13 +87,14 @@ def get_semeval8_sdp_instances(base_dir, train=True):
             #sentence_pairs = {(p.get("e1"), p.get("e2")): label_to_pairtype[p.get("type")] for p in sentence.findall('pair') if p.get("ddi") == "true"}
             # sentence_pairs: {(e1id, e2id): pairtype_label}
 
-            sentence_labels, sentence_instances,sentence_classes = process_sentence(sentence_text,
+            sentence_labels, sentence_instances, sentence_classes = process_sentence(sentence_text,
                                                                                   sentence_entities,
                                                                                   sentence_pairs)
             labels += sentence_labels
-            instances += sentence_instances
+            left_instances += sentence_instances[0]
+            right_instances += sentence_instances[1]
             classes += sentence_classes
-    return labels, instances, classes
+    return labels, (left_instances, right_instances), classes
 
 if __name__ == "__main__":
     get_semeval8_sdp_instances("data/SemEval2010_task8_all_data/SemEval2010_task8_training/TRAIN_FILE.TXT")

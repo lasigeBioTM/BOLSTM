@@ -1,6 +1,7 @@
 from itertools import combinations
 import numpy as np
 import spacy
+import sys
 from spacy.tokenizer import Tokenizer
 import re
 import logging
@@ -85,7 +86,8 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     :return: labels of each pair (according to sentence_entities,
             word vectors and classes (pair types according to sentence_pairs)
     """
-    word_vectors = []
+    left_word_vectors = []
+    right_word_vectors = []
     classes = []
     labels = []
 
@@ -116,24 +118,27 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             head_token_position = None
             for i, element in enumerate(sdp):
                 if element != "ROOT":
-                    token_idx = int(element.split("-")[-1])
-                    sdp_token = parsed[token_idx]
-                    #sdp_children = [t.text for t in sdp_token.children]
-                    head_token = "{}-{}".format(sdp_token.head.lower_, sdp_token.head.i)
+                    token_idx = int(element.split("-")[-1]) # get the index of the token
+                    sdp_token = parsed[token_idx] #get the token obj
+                    head_token = "{}-{}".format(sdp_token.head.lower_, sdp_token.head.i) # get the key of head token
                     vector.append(sdp_token.vector)
-                    print(element, sdp_token.text, head_token, sdp)
+                    #print(element, sdp_token.text, head_token, sdp)
+                    # head token must not have its head in the path, otherwise that would be the head token
+                    # in some cases the token is its own head
                     if head_token not in sdp or head_token == element:
-                        print("found head token of:", e1_text, e2_text, sdp_token.text, sdp)
+                        #print("found head token of:", e1_text, e2_text, sdp_token.text, sdp)
                         head_token_position = i
                     #vector.append(parsed[token_idx].text)
             # print(vector)
             if head_token_position is None:
                 print("head token not found:", e1_text, e2_text, sdp)
+                sys.exit()
             else:
                 left_vector = vector[:head_token_position+1]
                 right_vector = vector[head_token_position:]
-            word_vectors.append(vector)
-            # word_vectors.append((left_vector, right_vector))
+            #word_vectors.append(vector)
+            left_word_vectors.append(left_vector)
+            right_word_vectors.append(right_vector)
             # if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             #    print(sdp, e1, e2, sentence_text)
             # print(e1_text, e2_text, sdp, sentence_text)
@@ -141,13 +146,15 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
         except nx.exception.NetworkXNoPath:
             # pass
             logging.warning("no path:", e1_text, e2_text, graph.nodes())
-            word_vectors.append([])
+            left_word_vectors.append([])
+            right_word_vectors.append([])
             # print("no path:", e1_text, e2_text, sentence_text, parsed.print_tree(light=True))
             # sys.exit()
         except nx.NodeNotFound:
             logging.warning(("node not found:", e1_text, e2_text, e1, e2, list(parsed), graph.nodes()))
-            word_vectors.append([])
-    return labels, word_vectors, classes
+            left_word_vectors.append([])
+            right_word_vectors.append([])
+    return labels, (left_word_vectors, right_word_vectors), classes
 
 
 
