@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -x
+set -e
 #python src/train_rnn.py preprocessing semeval8 temp/semeval8train data/SemEval2010_task8_all_data/SemEval2010_task8_training/TRAIN_FILE.TXT
 #python src/train_rnn.py preprocessing semeval8 temp/semeval8test data/SemEval2010_task8_all_data/SemEval2010_task8_testing/TEST_FILE.txt
 python src/train_rnn.py train temp/semeval8train

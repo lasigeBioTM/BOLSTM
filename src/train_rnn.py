@@ -1,5 +1,6 @@
 import sys
 import logging
+import os
 logging.basicConfig(level=10)
 
 import numpy as np
@@ -12,6 +13,7 @@ from keras.layers import Embedding
 from keras.layers import Flatten
 from keras.layers import Dropout
 from keras.preprocessing import sequence
+from keras import regularizers
 from keras import backend as K
 from keras.utils.np_utils import to_categorical
 from keras.models import model_from_json
@@ -27,14 +29,30 @@ from parse_semeval8 import get_semeval8_sdp_instances
 
 vocab_size = 10000
 embbed_size = 300
-LSTM_units = 300
-sigmoid_units = 200
+LSTM_units = 200
+sigmoid_units = 100
 n_classes = 19
-max_sentence_length = 50
+max_sentence_length = 20
 
 n_epochs = 30
-batch_size = 200
+batch_size = 10
 validation_split = 0.1
+
+
+def get_model():
+
+    model = Sequential()
+    #model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
+    #model.add(Flatten())
+    model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
+    model.add(Dense(sigmoid_units, activation='sigmoid'))
+    model.add(Dropout(0.3))
+    model.add(Dense(n_classes, activation='softmax', kernel_regularizer=regularizers.l2(0.00001)))
+
+    #model.add(Dense(n_classes, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
+    print(model.summary())
+    return model
 
 #https://github.com/fchollet/keras/issues/5400
 def precision(y_true, y_pred):
@@ -142,19 +160,6 @@ metrics = Metrics()
 # model.fit(instances, classes, epochs=5, batch_size=32)
 
 
-def get_model():
-
-    model = Sequential()
-    #model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
-    #model.add(Flatten())
-    model.add(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size)))
-    #model.add(Dense(sigmoid_units, activation='sigmoid'))
-    model.add(Dropout(0.3))
-    model.add(Dense(n_classes, activation='softmax'))
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1])
-    print(model.summary())
-    return model
-
 
 def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine/"]):
     #dirs = ["data/DDICorpus/Test/DDIExtraction/DrugBank/", "data/DDICorpus/Test/DDIExtraction/MedLine/"]
@@ -199,7 +204,10 @@ def main():
 
     elif sys.argv[1] == "train":
         model = get_model()
-
+        if os.path.isfile("model.json"):
+            os.remove("model.json")
+        if os.path.isfile("model.h5"):
+            os.remove("model.h5")
         X_words_train = np.load(sys.argv[2] + "_x_words.npy")
         #print(X_words_train)
         #X_words_train = [one_hot(" ".join(d), vocab_size) for d in X_words_train]
@@ -218,11 +226,11 @@ def main():
             test_labels = np.load(sys.argv[3] + "_labels.npy")
 
             model.fit(X_words_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
-                      batch_size=batch_size, callbacks=[metrics])
+                      batch_size=batch_size, callbacks=[metrics], verbose=2)
 
         else:
             model.fit(X_words_train, Y_train, validation_split=validation_split, epochs=n_epochs,
-                      batch_size=batch_size, callbacks=[metrics])
+                      batch_size=batch_size, callbacks=[metrics], verbose=2)
 
         # serialize model to JSON
         model_json = model.to_json()
