@@ -28,25 +28,47 @@ from keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.metrics import f1_score
 
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 from parse_ddi import get_ddi_sdp_instances
 from parse_semeval8 import get_semeval8_sdp_instances
 GLOVE_DIR = "data/"
 vocab_size = 10000
 embbed_size = 300
-LSTM_units = 200
+LSTM_units = 300
 sigmoid_units = 100
 sigmoid_l2_reg = 0.000001
 dropout1 = 0.5
-n_classes = 19
+#n_classes = 19
+n_classes = 5
 max_sentence_length = 10
 
-n_epochs = 30
-batch_size = 10
+n_epochs = 10
+batch_size = 20
 validation_split = 0.1
 
 # https://github.com/keras-team/keras/issues/853#issuecomment-343981960
 
+def write_plots(history):
+    plt.figure()
+    plt.plot(history.history['f1'])
+    plt.plot(history.history['val_f1'])
+    plt.title('model F1')
+    plt.ylabel('F1')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.savefig("model_f1.png")
+
+    plt.figure()
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.savefig("model_loss.png")
 
 def get_glove_vectors():
     embeddings_vectors = {} # words -> vector
@@ -62,11 +84,6 @@ def get_glove_vectors():
     f.close()
     print('Found %s word vectors.' % len(embeddings_vectors))
 
-    # labels = to_categorical(np.asarray(labels))
-
-    # labels = labels[indices]
-    # nb_validation_samples = int(VALIDATION_SPLIT * data.shape[0])
-
     # assemble the embedding_weights in one numpy array
     n_symbols = len(embedding_indexes) + 1  # adding 1 to account for 0th index (for masking)
     embedding_weights = np.zeros((n_symbols, embbed_size))
@@ -76,36 +93,14 @@ def get_glove_vectors():
     return embedding_indexes, embedding_weights
 
 def preprocess_sequences(x_data, embeddings_index):
-    #tokenizer = Tokenizer(num_words=vocab_size)
-    #tokenizer.fit_on_texts(x_data)
-    #sequences = tokenizer.texts_to_sequences(x_data)
-    #sequences  = x_data
-
-    #word_index = tokenizer.word_index
-    #print('Found %s unique tokens.' % len(word_index))
-    #data = pad_sequences(sequences, maxlen=max_sentence_length)
-
-    #indices = np.arange(data.shape[0])
-    #np.random.shuffle(indices)
-    #data = data[indices]
-    #print('Shape of data tensor:', data.shape)
-    # print('Shape of label tensor:', labels.shape)
     data = []
-    print(len(x_data))
     for i, seq in enumerate(x_data):
         #for w in seq:
             #if w.lower() not in embeddings_index:
             #    print("word not in index: {}".format(w.lower()))
         data.append([embeddings_index.get(w.lower()) for w in seq if w in embeddings_index])
     data = pad_sequences(data, maxlen=max_sentence_length)
-    print(len(data))
     return data
-
-
-#def set_embedding_layer_weights(embedding_layer, pretrained_embeddings):
-#    dense_dim = pretrained_embeddings.shape[1]
-#    weights = np.vstack((np.zeros(dense_dim), pretrained_embeddings))
-#    embedding_layer.set_weights([weights])
 
 
 def get_model(embedding_matrix):
@@ -131,8 +126,10 @@ def get_model(embedding_matrix):
 
     e_right = Dropout(0.5)(e_right)
 
-    lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True)(e_left)
-    lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True)(e_right)
+    lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
+                     kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_left)
+    lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
+                      kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_right)
 
     pool_left = GlobalMaxPooling1D()(lstm_left)
     pool_right = GlobalMaxPooling1D()(lstm_right)
@@ -260,7 +257,8 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
     labels = []
     #instances = np.empty((0, max_sentence_length, embbed_size))
     #instances = np.empty((0, max_sentence_length))
-    instances = []
+    left_instances = []
+    right_instances = []
     classes = np.empty((0,))
 
     for dir in dirs:
@@ -273,9 +271,10 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
         labels += dir_labels
         #print(instances.shape, dir_instances.shape)
         #instances = np.concatenate((instances, dir_instances), axis=0)
-        instances += dir_instances
+        left_instances += dir_instances[0]
+        right_instances += dir_instances[1]
         classes = np.concatenate((classes, dir_classes), axis=0)
-    return labels, instances, classes
+    return labels, (left_instances, right_instances), classes
 
 
 
@@ -293,7 +292,8 @@ def main():
             print(len(X_train))
             print(len(X_train[0]))
         elif sys.argv[2] == "ddi":
-            labels, X_train, classes = get_ddi_data(sys.argv[3:])
+            labels, X_train, classes = get_ddi_data(sys.argv[4:])
+            print(len(X_train))
         np.save(sys.argv[3] + "_labels.npy", labels)
         np.save(sys.argv[3] + "_x_words.npy", X_train)
         np.save(sys.argv[3] + "_y.npy", classes)
@@ -309,7 +309,7 @@ def main():
         Y_train = to_categorical(Y_train, num_classes=n_classes)
 
         print(len(X_words_train))
-        print(X_words_train[0].shape, X_words_train[1].shape, Y_train.shape)
+        #print(X_words_train[0].shape, X_words_train[1].shape, Y_train.shape)
         #X_words_left = [one_hot(" ".join(d), vocab_size) for d in X_words_train[0]]
         #X_words_right = [one_hot(" ".join(d), vocab_size) for d in X_words_train[1]]
         #X_words_train = [pad_sequences(X_words_left, maxlen=max_sentence_length, padding='post'),
@@ -335,10 +335,11 @@ def main():
 
         else:
 
-            model.fit({"left_input":X_words_train[0], "right_input": X_words_train[1]},
+            history = model.fit({"left_input":X_words_train[0], "right_input": X_words_train[1]},
                       {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
                       batch_size=batch_size, verbose=2, callbacks=[metrics])
                                                                    #keras.callbacks.EarlyStopping(patience=3)])
+            write_plots(history)
 
         # serialize model to JSON
         model_json = model.to_json()

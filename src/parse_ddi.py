@@ -20,7 +20,8 @@ def get_ddi_sdp_instances(base_dir):
     :param base_dir: directory containing semeval XML documents and annotations
     :return: instances (vectors), classes (0/1) and labels (eid1, eid2)
     """
-    instances = []
+    left_instances = []
+    right_instances = []
     classes = []
     labels = []
 
@@ -47,9 +48,10 @@ def get_ddi_sdp_instances(base_dir):
                                                                                   sentence_entities,
                                                                                   sentence_pairs)
             labels += sentence_labels
-            instances += sentence_instances
+            left_instances += sentence_instances[0]
+            right_instances += sentence_instances[1]
             classes += sentence_classes
-    return labels, instances, classes
+    return labels, (left_instances, right_instances), classes
 
 
 
