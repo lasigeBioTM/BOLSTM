@@ -16,6 +16,7 @@ from keras.layers import Input
 from keras.layers import GlobalMaxPooling1D
 from keras.layers import Concatenate
 from keras.optimizers import SGD
+from keras.optimizers import Adam
 from keras.preprocessing import sequence
 from keras import regularizers
 from keras import backend as K
@@ -30,11 +31,13 @@ from sklearn.metrics import f1_score
 
 from parse_ddi import get_ddi_sdp_instances
 from parse_semeval8 import get_semeval8_sdp_instances
-
+GLOVE_DIR = "data/"
 vocab_size = 10000
 embbed_size = 300
 LSTM_units = 200
 sigmoid_units = 100
+sigmoid_l2_reg = 0.000001
+dropout1 = 0.5
 n_classes = 19
 max_sentence_length = 10
 
@@ -42,28 +45,115 @@ n_epochs = 30
 batch_size = 10
 validation_split = 0.1
 
+# https://github.com/keras-team/keras/issues/853#issuecomment-343981960
 
-def get_model():
-    input_left = Input(shape=(max_sentence_length, embbed_size),  name='left_input')
-    input_right = Input(shape=(max_sentence_length, embbed_size),  name='right_input')
 
-    lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True)(input_left)
-    lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True)(input_right)
+def get_glove_vectors():
+    embeddings_vectors = {} # words -> vector
+    embedding_indexes = {}
+    # load embeddings indexes: word -> coefs
+    f = open(os.path.join(GLOVE_DIR, 'glove.6B.300d.txt'))
+    for i, line in enumerate(f):
+        values = line.split()
+        word = values[0]
+        coefs = np.asarray(values[1:], dtype='float32')
+        embeddings_vectors[word] = coefs
+        embedding_indexes[word] = i
+    f.close()
+    print('Found %s word vectors.' % len(embeddings_vectors))
+
+    # labels = to_categorical(np.asarray(labels))
+
+    # labels = labels[indices]
+    # nb_validation_samples = int(VALIDATION_SPLIT * data.shape[0])
+
+    # assemble the embedding_weights in one numpy array
+    n_symbols = len(embedding_indexes) + 1  # adding 1 to account for 0th index (for masking)
+    embedding_weights = np.zeros((n_symbols, embbed_size))
+    for word, index in embedding_indexes.items():
+        embedding_weights[index, :] = embeddings_vectors[word]
+
+    return embedding_indexes, embedding_weights
+
+def preprocess_sequences(x_data, embeddings_index):
+    #tokenizer = Tokenizer(num_words=vocab_size)
+    #tokenizer.fit_on_texts(x_data)
+    #sequences = tokenizer.texts_to_sequences(x_data)
+    #sequences  = x_data
+
+    #word_index = tokenizer.word_index
+    #print('Found %s unique tokens.' % len(word_index))
+    #data = pad_sequences(sequences, maxlen=max_sentence_length)
+
+    #indices = np.arange(data.shape[0])
+    #np.random.shuffle(indices)
+    #data = data[indices]
+    #print('Shape of data tensor:', data.shape)
+    # print('Shape of label tensor:', labels.shape)
+    data = []
+    print(len(x_data))
+    for i, seq in enumerate(x_data):
+        #for w in seq:
+            #if w.lower() not in embeddings_index:
+            #    print("word not in index: {}".format(w.lower()))
+        data.append([embeddings_index.get(w.lower()) for w in seq if w in embeddings_index])
+    data = pad_sequences(data, maxlen=max_sentence_length)
+    print(len(data))
+    return data
+
+
+#def set_embedding_layer_weights(embedding_layer, pretrained_embeddings):
+#    dense_dim = pretrained_embeddings.shape[1]
+#    weights = np.vstack((np.zeros(dense_dim), pretrained_embeddings))
+#    embedding_layer.set_weights([weights])
+
+
+def get_model(embedding_matrix):
+    #input_left = Input(shape=(max_sentence_length, embbed_size),  name='left_input')
+    #input_right = Input(shape=(max_sentence_length, embbed_size),  name='right_input')
+
+    input_left = Input(shape=(max_sentence_length,), name='left_input')
+    input_right = Input(shape=(max_sentence_length,), name='right_input')
+
+    e_left = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
+                       trainable=False)
+    e_left.build((None,))
+    e_left.set_weights([embedding_matrix])
+    e_left = e_left(input_left)
+
+    e_left = Dropout(0.5)(e_left)
+
+    e_right = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
+                        trainable=False)
+    e_right.build((None,))
+    e_right.set_weights([embedding_matrix])
+    e_right = e_right(input_right)
+
+    e_right = Dropout(0.5)(e_right)
+
+    lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True)(e_left)
+    lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True)(e_right)
 
     pool_left = GlobalMaxPooling1D()(lstm_left)
     pool_right = GlobalMaxPooling1D()(lstm_right)
 
     concatenate = keras.layers.concatenate([pool_left, pool_right], axis=-1)
-    we_hidden = Dense(sigmoid_units, activation='sigmoid')(concatenate)
-    #we_hidden = Dropout(0.3)(we_hidden)
-    output = Dense(n_classes, activation='softmax', kernel_regularizer=regularizers.l2(0.00001),
-                   name='output')(we_hidden)
+    #we_hidden = Dense(sigmoid_units, activation='sigmoid',
+    #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
+    #we_hidden = Dropout(dropout1)(we_hidden)
+    final_hidden = Dense(sigmoid_units, activation='sigmoid', #, kernel_initializer="random_normal",
+                         kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
+    output = Dense(n_classes, activation='softmax',
+                   name='output')(final_hidden)
     model = Model(inputs=[input_left, input_right], outputs=[output])
     #model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
     #model.add(Flatten())
 
     #model.add(Dense(n_classes, activation='softmax'))
-    model.compile(loss='categorical_crossentropy', optimizer=SGD(1), metrics=['accuracy', precision, recall, f1])
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=SGD(0.1),
+                  #optimizer=Adam(),
+                  metrics=['accuracy', precision, recall, f1])
     print(model.summary())
     return model
 
@@ -141,38 +231,27 @@ class Metrics(Callback):
         val_predict = (np.asarray(self.model.predict([self.validation_data[0], self.validation_data[1]],
                                                       ))).round()
         val_targ = self.validation_data[2]
+        probs = np.asarray(self.model.predict([self.validation_data[0], self.validation_data[1]],
+                                                      ))
         _val_f1 = f1_score(val_targ[...,1:], val_predict[...,1:], average='micro')
         _val_recall = recall_score(val_targ[...,1:], val_predict[...,1:], average='micro')
         _val_precision = precision_score(val_targ[...,1:], val_predict[...,1:], average='micro')
         self.val_f1s.append(_val_f1)
         self.val_recalls.append(_val_recall)
         self.val_precisions.append(_val_precision)
-        s = "predicted not false: {}/{}".format(len([x for x in val_predict if x[0] < 0.5]),
+        s = "predicted not false: {}/{}".format(len([x for x in val_predict if np.argmax(x) != 0]),
                                                 len([x for x in val_targ if x[0] < 0.5]))
-        print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f} \n".format(s, _val_f1, _val_precision, _val_recall),)
+        print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f}\n".format(s, _val_f1, _val_precision, _val_recall),)
+        #for i in range(len(self.validation_data[2])):
+        #    if np.argmax(val_targ[i]) != np.argmax(val_predict[i]):
+        #        print(i, np.argmax(val_targ[i]), np.argmax(val_predict[i]), probs[i])
+        print("\n")
         #print(val_predict, val_targ)
         # print("true not false: {}".format()
         return
 
 
 metrics = Metrics()
-#model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=[X_test,y_test],
-#       verbose=1, callbacks=[metrics])
-
-
-# model = Sequential()
-# model.add(Dense(units=64, activation='relu', input_dim=100))
-# model.add(Dense(units=10, activation='softmax'))
-# model.compile(loss='categorical_crossentropy',
-#               optimizer='sgd',
-#               metrics=['accuracy'])
-#
-# model.compile(loss=keras.losses.categorical_crossentropy,
-#               optimizer=keras.optimizers.SGD(lr=0.01, momentum=0.9, nesterov=True))
-#
-#
-#
-# model.fit(instances, classes, epochs=5, batch_size=32)
 
 
 
@@ -220,7 +299,7 @@ def main():
         np.save(sys.argv[3] + "_y.npy", classes)
 
     elif sys.argv[1] == "train":
-        model = get_model()
+
         if os.path.isfile("model.json"):
             os.remove("model.json")
         if os.path.isfile("model.h5"):
@@ -231,12 +310,17 @@ def main():
 
         print(len(X_words_train))
         print(X_words_train[0].shape, X_words_train[1].shape, Y_train.shape)
-        #X_words_train = [one_hot(" ".join(d), vocab_size) for d in X_words_train]
-        X_words_train = [pad_sequences(X_words_train[0], maxlen=max_sentence_length, padding='post'),
-                         pad_sequences(X_words_train[1], maxlen=max_sentence_length, padding='post')]
-        print(X_words_train[0].shape, X_words_train[1].shape, Y_train.shape)
-
-
+        #X_words_left = [one_hot(" ".join(d), vocab_size) for d in X_words_train[0]]
+        #X_words_right = [one_hot(" ".join(d), vocab_size) for d in X_words_train[1]]
+        #X_words_train = [pad_sequences(X_words_left, maxlen=max_sentence_length, padding='post'),
+        #                 pad_sequences(X_words_right, maxlen=max_sentence_length, padding='post')]
+        #print(X_words_train[0].shape, X_words_train[1].shape, Y_train.shape)
+        emb_index, emb_matrix = get_glove_vectors()
+        # print(emb_index)
+        X_words_left = preprocess_sequences(X_words_train[0], emb_index)
+        X_words_right = preprocess_sequences(X_words_train[1], emb_index)
+        X_words_train = [X_words_left, X_words_right]
+        model = get_model(emb_matrix)
         #Y_train = Y_train[...,1:]
         # print(Y_train)
         if len(sys.argv) > 3:
@@ -253,8 +337,8 @@ def main():
 
             model.fit({"left_input":X_words_train[0], "right_input": X_words_train[1]},
                       {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
-                      batch_size=batch_size, verbose=1, callbacks=[metrics,
-                                                                   keras.callbacks.EarlyStopping(patience=3)])
+                      batch_size=batch_size, verbose=2, callbacks=[metrics])
+                                                                   #keras.callbacks.EarlyStopping(patience=3)])
 
         # serialize model to JSON
         model_json = model.to_json()
@@ -265,6 +349,16 @@ def main():
         print("Saved model to disk")
 
     elif sys.argv[1] == "predict":
+        emb_index, emb_matrix = get_glove_vectors()
+        X_words_test = np.load(sys.argv[2] + "_x_words.npy")
+        #X_words_test_left = [one_hot(" ".join(d), vocab_size) for d in X_words_test[0]]
+        #X_words_test_right = [one_hot(" ".join(d), vocab_size) for d in X_words_test[1]]
+        #X_words_test = [pad_sequences(X_words_test_left, maxlen=max_sentence_length, padding='post'),
+        #                pad_sequences(X_words_test_right, maxlen=max_sentence_length, padding='post')]
+
+        X_words_test_left = preprocess_sequences(X_words_test[0], emb_index)
+        X_words_test_right = preprocess_sequences(X_words_test[1], emb_index)
+        X_words_test = [X_words_test_left, X_words_test_right]
 
         # load json and create model
         json_file = open('model.json', 'r')
@@ -275,10 +369,7 @@ def main():
         loaded_model.load_weights("model.h5")
         print("Loaded model from disk")
 
-        X_words_test = np.load(sys.argv[2] + "_x_words.npy")
-        #X_words_test = [one_hot(" ".join(d), vocab_size) for d in X_words_test]
-        X_words_test = [pad_sequences(X_words_test[0], maxlen=max_sentence_length, padding='post'),
-                        pad_sequences(X_words_test[1], maxlen=max_sentence_length, padding='post')]
+
         test_labels = np.load(sys.argv[2] + "_labels.npy")
 
         scores = loaded_model.predict(X_words_test)

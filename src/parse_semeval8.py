@@ -27,12 +27,24 @@ REL9I = 18
 
 pairtypes = (REL1, REL2, REL3, REL4, REL5, REL6, REL7, REL8, REL9,
              REL1I, REL2I, REL3I, REL4I, REL5I, REL6I, REL7I, REL8I, REL9I)
-label_to_pairtype = {"Cause-Effect(e1,e2)": REL1, "Instrument-Agency(e1,e2)": REL2, "Product-Producer(e1,e2)": REL3,
-                     "Content-Container(e1,e2)": REL4, "Entity-Origin(e1,e2)": REL5, "Entity-Destination(e1,e2)": REL6,
-                     "Component-Whole(e1,e2)": REL7, "Member-Collection(e1,e2)": REL8, "Message-Topic(e1,e2)": REL9,
-                     "Cause-Effect(e2,e1)": REL1I, "Instrument-Agency(e2,e1)": REL2I, "Product-Producer(e2,e1)": REL3I,
-                     "Content-Container(e2,e1)": REL4I, "Entity-Origin(e2,e1)": REL5I, "Entity-Destination(e2,e1)": REL6I,
-                     "Component-Whole(e2,e1)": REL7I, "Member-Collection(e2,e1)": REL8I, "Message-Topic(e2,e1)": REL9I
+label_to_pairtype = {"Cause-Effect(e1,e2)": REL1,
+                     "Instrument-Agency(e1,e2)": REL2,
+                     "Product-Producer(e1,e2)": REL3,
+                     "Content-Container(e1,e2)": REL4,
+                     "Entity-Origin(e1,e2)": REL5,
+                     "Entity-Destination(e1,e2)": REL6,
+                     "Component-Whole(e1,e2)": REL7,
+                     "Member-Collection(e1,e2)": REL8,
+                     "Message-Topic(e1,e2)": REL9,
+                     "Cause-Effect(e2,e1)": REL1I,
+                     "Instrument-Agency(e2,e1)": REL2I,
+                     "Product-Producer(e2,e1)": REL3I,
+                     "Content-Container(e2,e1)": REL4I,
+                     "Entity-Origin(e2,e1)": REL5I,
+                     "Entity-Destination(e2,e1)": REL6I,
+                     "Component-Whole(e2,e1)": REL7I,
+                     "Member-Collection(e2,e1)": REL8I,
+                     "Message-Topic(e2,e1)": REL9I
                      }
 
 
