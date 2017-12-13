@@ -8,7 +8,14 @@ import logging
 import networkx as nx
 
 
+def prevent_sentence_segmentation(doc):
+    for token in doc:
+        # This will entirely disable spaCy's sentence detection
+        token.is_sent_start = False
+    return doc
+
 nlp = spacy.load('en_core_web_lg', disable=['ner'])
+nlp.add_pipe(prevent_sentence_segmentation, name='prevent-sbd', before='parser')
 #nlp = spacy.load('en_core_web_lg', disable=['ner'])
 #tokenizer = Tokenizer(nlp.vocab)
 
@@ -121,7 +128,8 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
                     token_idx = int(element.split("-")[-1]) # get the index of the token
                     sdp_token = parsed[token_idx] #get the token obj
                     head_token = "{}-{}".format(sdp_token.head.lower_, sdp_token.head.i) # get the key of head token
-                    vector.append(sdp_token.vector)
+                    #vector.append(sdp_token.vector)
+                    vector.append(sdp_token.text)
                     #print(element, sdp_token.text, head_token, sdp)
                     # head token must not have its head in the path, otherwise that would be the head token
                     # in some cases the token is its own head
