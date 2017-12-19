@@ -88,7 +88,7 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     """
     Process sentence to obtain labels, instances and classes for a ML classifier
     :param sentence_text: sentence text string
-    :param sentence_entities: dictionary mapping entity ID to ((e_start, e_end), text)
+    :param sentence_entities: dictionary mapping entity ID to ((e_start, e_end), text, paths_to_root)
     :param sentence_pairs: dictionary mapping pairs of known entities in this sentence to pair types
     :return: labels of each pair (according to sentence_entities,
             word vectors and classes (pair types according to sentence_pairs)
