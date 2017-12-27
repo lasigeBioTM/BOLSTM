@@ -1,18 +1,36 @@
+import logging
+from itertools import combinations
+import sys
+
 import obonet
 import networkx
 from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
 
-from itertools import combinations
-import sys
-
 global chebi_cache
+global paths_cache
+global chemical_entity
+global role
+global subatomic_particle
+global application
 chebi_cache = {} # store string-> chebi ID
+paths_cache = {} # store chebi ID->paths
+chemical_entity = "CHEBI:24431"
+role = "CHEBI:50906"
+subatomic_particle = "CHEBI:36342"
+application = "CHEBI:33232"
+root_concept = "CHEBI:00000"
+# TODO: create ROOT concept
 
 def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"):
     print("loading chebi...")
     #graph = obonet.read_obo("data/chebi.obo")
     graph = obonet.read_obo(path)
+    graph.add_node(root_concept, name="ROOT")
+    graph.add_edge(chemical_entity, root_concept, edgetype='is_a')
+    graph.add_edge(role, root_concept, edgetype='is_a')
+    graph.add_edge(subatomic_particle, root_concept, edgetype='is_a')
+    graph.add_edge(application, root_concept, edgetype='is_a')
     #print([dir(d) for u,v,d in graph.edges(data=True)])
     #sys.exit()
     graph = graph.to_directed()
@@ -20,6 +38,7 @@ def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"
     print(networkx.is_directed_acyclic_graph(is_a_graph))
     id_to_name = {id_: data['name'] for id_, data in graph.nodes(data=True)}
     name_to_id = {data['name']: id_ for id_, data in graph.nodes(data=True)}
+    id_to_index = {e: i for i, e in enumerate(graph.nodes())}
     synonym_to_id = {}
     for n in graph.nodes(data=True):
         # print(n[1].get("synonym"))
@@ -29,11 +48,11 @@ def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"
                 syn_name = syn.split('"')[1]
                 synonym_to_id.setdefault(syn_name, []).append(n[0])
             else:
-                print(syn.split('"'))
+                print("not a synonym:", syn.split('"'))
 
     #print(synonym_to_id)
     print("done.")
-    return is_a_graph, name_to_id, synonym_to_id, id_to_name
+    return is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index
 
 
 
@@ -72,29 +91,56 @@ def get_all_shortest_paths_to_root(drugname, is_a_graph, name_to_id, synonym_to_
     #print([id_to_name[x] for x in is_a_graph.successors(source_id)])
     #print("pred")
     #print([id_to_name[x] for x in is_a_graph.predecessors(source_id)])
-    try:
+    if source_id in paths_cache:
+        return paths_cache[source_id]
+    """pred = networkx.predecessor(is_a_graph, source_id)
+    if chemical_entity in pred:
         print("trying chemical entity subontology..", drugname)
         paths = networkx.all_shortest_paths(
             is_a_graph,
             source=source_id,
-            target=name_to_id['chemical entity']
+            target=chemical_entity
         )
-        paths = list(paths)
-    except networkx.exception.NetworkXNoPath:
+        paths = [p for p in paths]
+    elif role in pred:
         print("trying role subontology..", drugname)
         paths = networkx.all_shortest_paths(
             is_a_graph,
             source=source_id,
-            target=name_to_id['role']
+            target=role
         )
-        paths = list(paths)
-
+        paths = [p for p in paths]
+    elif subatomic_particle in pred:
+        print("trying subatomic subontology..", drugname)
+        paths = networkx.all_shortest_paths(
+            is_a_graph,
+            source=source_id,
+            target=subatomic_particle
+        )
+        paths = [p for p in paths]
+    elif application in pred:
+        print("trying application subontology..", drugname)
+        paths = networkx.all_shortest_paths(
+            is_a_graph,
+            source=source_id,
+            target=application
+        )
+        paths = [p for p in paths]
+    else:
+        print("no paths!")"""
+    paths = networkx.all_shortest_paths(
+        is_a_graph,
+        source=source_id,
+        target=root_concept
+    )
+    paths = [p for p in paths]
     # for path in paths:
-    print(drugname)
-    for path in paths:
-        print('•', ' ⟶ '.join(id_to_name[node] for node in path))
-    print()
+    #print(drugname)
+    #for path in paths:
+    #    print('•', ' ⟶ '.join(id_to_name[node] for node in path))
+    #print()
     # print(path)
+    paths_cache[source_id] = paths
     return paths  # can use IDs or names
 
 
@@ -144,11 +190,11 @@ def map_to_chebi(text, name_to_id, synonym_to_id):
     return drug[0]
 
 def main():
-    is_a_graph, name_to_id, synonym_to_id, id_to_name = load_chebi()
+    is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
     choices = name_to_id.keys()
     #drug_names = ["Catecholamine-depleting drugs", "reserpine", "beta-blocking agents"]
     #drug_names = ["Catecholamine-depleting", "reserpine", "beta-blocking", "acebutolol", "catecholamine depletors"]
-    drug_names = ["tertiary alcohol", "citric acid-d4"]
+    drug_names = ["tertiary alcohol", "citric acid-d4", "role"]
     drug_ids = []
     for d in drug_names:
         chebi_name = map_to_chebi(d, name_to_id, synonym_to_id)
