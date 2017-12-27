@@ -41,7 +41,7 @@ def get_ddi_sdp_instances(base_dir):
     :param base_dir: directory containing semeval XML documents and annotations
     :return: instances (vectors), classes (0/1) and labels (eid1, eid2)
     """
-    is_a_graph, name_to_id, synonym_to_id, id_to_name = load_chebi()
+    is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
     left_instances = []
     right_instances = []
     left_ancestors = []
@@ -69,7 +69,9 @@ def get_ddi_sdp_instances(base_dir):
                         offsets.append(int(end)+1)
                     e_text = e.get("text")
                     chebi_name = map_to_chebi(e_text, name_to_id, synonym_to_id)
+                    #chebi_name = ""
                     e_path = get_all_shortest_paths_to_root(chebi_name, is_a_graph, name_to_id, synonym_to_id, id_to_name)
+                    #e_path = []
                     sentence_entities[e.get("id")] = (offsets, e_text, e_path)
 
 
