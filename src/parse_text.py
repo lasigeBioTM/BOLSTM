@@ -14,8 +14,7 @@ def prevent_sentence_segmentation(doc):
         token.is_sent_start = False
     return doc
 
-nlp = spacy.load('en_core_web_lg', disable=['ner'])
-nlp.add_pipe(prevent_sentence_segmentation, name='prevent-sbd', before='parser')
+
 #nlp = spacy.load('en_core_web_lg', disable=['ner'])
 #tokenizer = Tokenizer(nlp.vocab)
 
@@ -93,6 +92,8 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     :return: labels of each pair (according to sentence_entities,
             word vectors and classes (pair types according to sentence_pairs)
     """
+    nlp = spacy.load('en_core_web_lg', disable=['ner'])
+    nlp.add_pipe(prevent_sentence_segmentation, name='prevent-sbd', before='parser')
     left_word_vectors = []
     right_word_vectors = []
     classes = []
