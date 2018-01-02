@@ -86,22 +86,8 @@ def get_head_tokens(entities, sentence):
     return sentence_head_tokens
 
 
-def process_sentence(sentence_text, sentence_entities, sentence_pairs):
-    """
-    Process sentence to obtain labels, instances and classes for a ML classifier
-    :param sentence_text: sentence text string
-    :param sentence_entities: dictionary mapping entity ID to ((e_start, e_end), text, paths_to_root)
-    :param sentence_pairs: dictionary mapping pairs of known entities in this sentence to pair types
-    :return: labels of each pair (according to sentence_entities,
-            word vectors and classes (pair types according to sentence_pairs)
-    """
-
-    left_word_vectors = []
-    right_word_vectors = []
-    classes = []
-    labels = []
-
-    # replace spaces of entits with _ to prevent tokenization
+def parse_sentence(sentence_text, sentence_entities):
+    # use spacy to parse a sentence
     for e in sentence_entities:
         idx = sentence_entities[e][0]
         sentence_text = sentence_text[:idx[0]] + sentence_text[idx[0]:idx[1]].replace(" ", "_") + sentence_text[idx[1]:]
@@ -110,16 +96,33 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     sentence_text = sentence_text.replace(";", ",")
     sentence_text = sentence_text.replace("*", " ")
     sentence_text = sentence_text.replace(":", ",")
-
-
-    #print(sentence_entities)
     parsed = nlp(sentence_text)
-    graph, nodes_list = get_network_graph(parsed)
-    sentence_head_tokens = get_head_tokens(sentence_entities, parsed)
+
+    return parsed
+
+def process_sentence(sentence, sentence_entities, sentence_pairs, wordnet_tags=None):
+    """
+    Process sentence to obtain labels, instances and classes for a ML classifier
+    :param sentence: sentence processed by spacy
+    :param sentence_entities: dictionary mapping entity ID to ((e_start, e_end), text, paths_to_root)
+    :param sentence_pairs: dictionary mapping pairs of known entities in this sentence to pair types
+    :return: labels of each pair (according to sentence_entities,
+            word vectors and classes (pair types according to sentence_pairs)
+    """
+
+    left_word_vectors = []
+    right_word_vectors = []
+    left_wordnets = []
+    right_wordnets = []
+    classes = []
+    labels = []
+
+    graph, nodes_list = get_network_graph(sentence)
+    sentence_head_tokens = get_head_tokens(sentence_entities, sentence)
     #print(sentence_head_tokens)
     for (e1, e2) in combinations(sentence_head_tokens, 2):
-        print()
-        print(e1, e2)
+        #print()
+        #print(e1, e2)
         labels.append((sentence_head_tokens[e1], sentence_head_tokens[e2]))
         if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             classes.append(sentence_pairs[(sentence_head_tokens[e1], sentence_head_tokens[e2])])
@@ -134,21 +137,24 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             if len(sdp) < 3:
                 sdp = nodes_list[head_token1_idx-2:head_token1_idx] + sdp
                 sdp += nodes_list[head_token2_idx+1:head_token2_idx+3]
-            print(e1_text[1:], e2_text[1:], sdp)
+            # print(e1_text[1:], e2_text[1:], sdp)
             #if len(sdp) == 2:
                 # add context words
             vector = []
-            left_vector = []
-            right_vector = []
+            wordnet_vector = []
+
             head_token_position = None
             for i, element in enumerate(sdp):
                 if element != "ROOT":
                     token_idx = int(element.split("-")[-1]) # get the index of the token
-                    sdp_token = parsed[token_idx] #get the token obj
-                    head_token = "{}-{}".format(sdp_token.head.lower_, sdp_token.head.i) # get the key of head token
+                    sdp_token = sentence[token_idx] #get the token obj
+
                     #vector.append(sdp_token.vector)
                     vector.append(sdp_token.text)
+                    if wordnet_tags:
+                        wordnet_vector.append(wordnet_tags[token_idx])
                     #print(element, sdp_token.text, head_token, sdp)
+                    head_token = "{}-{}".format(sdp_token.head.lower_, sdp_token.head.i)  # get the key of head token
                     # head token must not have its head in the path, otherwise that would be the head token
                     # in some cases the token is its own head
                     if head_token not in sdp or head_token == element:
@@ -162,9 +168,13 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             else:
                 left_vector = vector[:head_token_position+1]
                 right_vector = vector[head_token_position:]
+                left_wordnet = wordnet_vector[:head_token_position+1]
+                right_wordnet = wordnet_vector[head_token_position:]
             #word_vectors.append(vector)
             left_word_vectors.append(left_vector)
             right_word_vectors.append(right_vector)
+            left_wordnets.append(left_wordnet)
+            right_wordnets.append(right_wordnet)
             # if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             #    print(sdp, e1, e2, sentence_text)
             # print(e1_text, e2_text, sdp, sentence_text)
@@ -174,13 +184,17 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             logging.warning("no path:", e1_text, e2_text, graph.nodes())
             left_word_vectors.append([])
             right_word_vectors.append([])
+            left_wordnets.append([])
+            right_wordnets.append([])
             # print("no path:", e1_text, e2_text, sentence_text, parsed.print_tree(light=True))
             # sys.exit()
         except nx.NodeNotFound:
-            logging.warning(("node not found:", e1_text, e2_text, e1, e2, list(parsed), graph.nodes()))
+            logging.warning(("node not found:", e1_text, e2_text, e1, e2, list(sentence), graph.nodes()))
             left_word_vectors.append([])
             right_word_vectors.append([])
-    return labels, (left_word_vectors, right_word_vectors), classes
+            left_wordnets.append([])
+            right_wordnets.append([])
+    return labels, (left_word_vectors, right_word_vectors), (left_wordnets, right_wordnets), classes
 
 
 
