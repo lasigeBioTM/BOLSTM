@@ -1,6 +1,9 @@
 import logging
 from itertools import combinations
 import sys
+import os
+import pickle
+import atexit
 
 import obonet
 import networkx
@@ -16,7 +19,27 @@ global chemical_entity
 global role
 global subatomic_particle
 global application
-chebi_cache = {} # store string-> chebi ID
+
+chebi_cache_file = "temp/chebi_cache.pickle"
+
+# store string-> chebi ID
+if os.path.isfile(chebi_cache_file):
+    logging.info("loading chebi...")
+    chebi_cache = pickle.load(open(chebi_cache_file, "rb"))
+    loadedchebi = True
+    logging.info("loaded chebi dictionary with %s entries", str(len(chebi_cache)))
+else:
+    chebi_cache = {}
+    loadedchebi = False
+    logging.info("new chebi dictionary")
+
+
+def exit_handler():
+    print('Saving chebi dictionary...!')
+    pickle.dump(chebi_cache, open(chebi_cache_file, "wb"))
+
+atexit.register(exit_handler)
+
 paths_cache = {} # store chebi ID->paths
 chemical_entity = "CHEBI:24431"
 role = "CHEBI:50906"
