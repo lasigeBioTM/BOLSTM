@@ -4,7 +4,7 @@ import os
 import logging
 
 from parse_text import process_sentence
-from chebi_path import get_lowest_common_ascestor_path, load_chebi, get_all_shortest_paths_to_root, map_to_chebi
+from chebi_path import get_lowest_common_ascestor_path, load_chebi, get_all_shortest_paths_to_root, map_to_chebi, get_common_ancestors
 
 
 
@@ -27,13 +27,18 @@ def get_ancestors(sentence_labels, sentence_entities, name_to_id, synonym_to_id,
     """
     right_paths = []
     left_paths = []
+    common_ancestors = []
     for p in sentence_labels:
-        paths1 = sentence_entities[p[0]][2]
-        paths2 = sentence_entities[p[1]][2]
-        lca, left_path, right_path = get_lowest_common_ascestor_path(paths1, paths2, id_to_name)
-        left_paths.append(left_path + [lca])
-        right_paths.append(right_path + [lca])
-    return (left_paths, right_paths)
+        #paths1 = sentence_entities[p[0]][2]
+        #paths2 = sentence_entities[p[1]][2]
+        #lca, left_path, right_path = get_lowest_common_ascestor_path(paths1, paths2, id_to_name)
+        #left_paths.append(left_path + [lca])
+        #right_paths.append(right_path + [lca])
+        #print(p[0], sentence_entities[p[0]])
+        common_ancestors = get_common_ancestors(sentence_entities[p[0]][2], sentence_entities[p[1]][2])
+        print("common ancestors:", sentence_entities[p[0]][1:], sentence_entities[p[1]][1:], common_ancestors)
+    #return (left_paths, right_paths)
+    return (common_ancestors, common_ancestors)
 
 def get_ddi_sdp_instances(base_dir):
     """
@@ -69,10 +74,15 @@ def get_ddi_sdp_instances(base_dir):
                         offsets.append(int(end)+1)
                     e_text = e.get("text")
                     chebi_name = map_to_chebi(e_text, name_to_id, synonym_to_id)
+                    if chebi_name in name_to_id:
+                        chebi_id = name_to_id[chebi_name]
+                    else:
+                        chebi_id = synonym_to_id[chebi_name][0]
                     #chebi_name = ""
-                    e_path = get_all_shortest_paths_to_root(chebi_name, is_a_graph, name_to_id, synonym_to_id, id_to_name)
+                    #e_path = get_all_shortest_paths_to_root(chebi_name, is_a_graph, name_to_id, synonym_to_id, id_to_name)
                     #e_path = []
-                    sentence_entities[e.get("id")] = (offsets, e_text, e_path)
+                    #sentence_entities[e.get("id")] = (offsets, e_text, e_path)
+                    sentence_entities[e.get("id")] = (offsets, e_text, chebi_id)
 
 
                 # sentence_pairs: {(e1id, e2id): pairtype_label}
@@ -84,6 +94,7 @@ def get_ddi_sdp_instances(base_dir):
 
                 sentence_ancestors = get_ancestors(sentence_labels, sentence_entities,
                                                    name_to_id, synonym_to_id, id_to_name)
+
 
                 labels += sentence_labels
                 left_instances += sentence_instances[0]

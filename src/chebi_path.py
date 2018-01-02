@@ -7,6 +7,9 @@ import networkx
 from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
 
+from DiShIn import ssm
+ssm.semantic_base("src/DiShIn/chebi.db")
+
 global chebi_cache
 global paths_cache
 global chemical_entity
@@ -38,7 +41,8 @@ def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"
     print(networkx.is_directed_acyclic_graph(is_a_graph))
     id_to_name = {id_: data['name'] for id_, data in graph.nodes(data=True)}
     name_to_id = {data['name']: id_ for id_, data in graph.nodes(data=True)}
-    id_to_index = {e: i for i, e in enumerate(graph.nodes())}
+    id_to_index = {e: i+1 for i, e in enumerate(graph.nodes())} # ids should start on 1 and not 0
+    id_to_index[""] = 0
     synonym_to_id = {}
     for n in graph.nodes(data=True):
         # print(n[1].get("synonym"))
@@ -55,7 +59,13 @@ def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"
     return is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index
 
 
-
+def get_common_ancestors(id1, id2):
+    e1 = ssm.get_id(id1.replace(":", "_"))
+    e2 = ssm.get_id(id2.replace(":", "_"))
+    #print(id1, id2, e1, e2)
+    a = ssm.common_ancestors(e1, e2)
+    a = [ssm.get_name(x) for x in a]
+    return a
 
 def get_path_to_root(drugname, is_a_graph, name_to_id, synonym_to_id, id_to_name):
     source_id = name_to_id.get(drugname)
@@ -93,41 +103,7 @@ def get_all_shortest_paths_to_root(drugname, is_a_graph, name_to_id, synonym_to_
     #print([id_to_name[x] for x in is_a_graph.predecessors(source_id)])
     if source_id in paths_cache:
         return paths_cache[source_id]
-    """pred = networkx.predecessor(is_a_graph, source_id)
-    if chemical_entity in pred:
-        print("trying chemical entity subontology..", drugname)
-        paths = networkx.all_shortest_paths(
-            is_a_graph,
-            source=source_id,
-            target=chemical_entity
-        )
-        paths = [p for p in paths]
-    elif role in pred:
-        print("trying role subontology..", drugname)
-        paths = networkx.all_shortest_paths(
-            is_a_graph,
-            source=source_id,
-            target=role
-        )
-        paths = [p for p in paths]
-    elif subatomic_particle in pred:
-        print("trying subatomic subontology..", drugname)
-        paths = networkx.all_shortest_paths(
-            is_a_graph,
-            source=source_id,
-            target=subatomic_particle
-        )
-        paths = [p for p in paths]
-    elif application in pred:
-        print("trying application subontology..", drugname)
-        paths = networkx.all_shortest_paths(
-            is_a_graph,
-            source=source_id,
-            target=application
-        )
-        paths = [p for p in paths]
-    else:
-        print("no paths!")"""
+
     paths = networkx.all_shortest_paths(
         is_a_graph,
         source=source_id,
@@ -157,11 +133,11 @@ def get_lowest_common_ascestor_path(paths1, paths2, id_to_name):
                 if e1 in p2 and p2.index(e1) + i1 < lowest_dist:
                     lowest_dist = p2.index(e1) + i1
                     print("new best dist:", lowest_dist, id_to_name[e1])
-                    lowest = e1
+                    lowest = id_to_name[e1]
                     i_lowest2 = p2[:p2.index(e1)]
                     i_lowest1 = p1[:i1]
-                    print([id_to_name[j] for j in i_lowest1])
-                    print([id_to_name[j] for j in i_lowest2])
+                    i_lowest1 = [id_to_name[j] for j in i_lowest1]
+                    i_lowest2= [id_to_name[j] for j in i_lowest2]
                     print()
     return lowest, i_lowest1, i_lowest2
 
@@ -206,7 +182,7 @@ def main():
     for dpair in combinations(drug_ids, 2):
         paths1 = get_all_shortest_paths_to_root(dpair[0], is_a_graph, name_to_id, synonym_to_id, id_to_name)
         paths2 = get_all_shortest_paths_to_root(dpair[1], is_a_graph, name_to_id, synonym_to_id, id_to_name)
-        print()
+        #print()
         #print(paths1)
         #print(paths2)
         if paths1 and paths2:
