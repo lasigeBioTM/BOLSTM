@@ -6,7 +6,7 @@ from spacy.tokenizer import Tokenizer
 import re
 import logging
 import networkx as nx
-
+import en_core_web_lg
 
 def prevent_sentence_segmentation(doc):
     for token in doc:
@@ -31,22 +31,25 @@ def prevent_sentence_segmentation(doc):
 #            infix_finditer=infix_re.finditer
 #            )
 #nlp = spacy.load('en_core_web_lg', disable=['ner'], create_make_doc=create_tokenizer)
-
+nlp = en_core_web_lg.load(disable=['ner'])
+nlp.add_pipe(prevent_sentence_segmentation, name='prevent-sbd', before='parser')
 
 # https://stackoverflow.com/a/41817795/3605086
 def get_network_graph(document):
     """
     Convert the dependencies of the spacy document object to a networkX graph
     :param document: spacy parsed document object
-    :return: networkX graph object
+    :return: networkX graph object and nodes list
     """
 
     edges = []
+    nodes = []
     # ensure that every token is connected
     #edges.append(("ROOT", '{0}-{1}'.format(list(document)[0].lower_, list(document)[0].i)))
     for s in document.sents:
         edges.append(("ROOT", '{0}-{1}'.format(s.root.lower_, s.root.i)))
     for token in document:
+        nodes.append('{0}-{1}'.format(token.lower_, token.i))
         #edges.append(("ROOT", '{0}-{1}'.format(token.lower_, token.i)))
         # print('{0}-{1}'.format(token.lower_, token.i))
         # FYI https://spacy.io/docs/api/token
@@ -54,7 +57,7 @@ def get_network_graph(document):
             #print("----", '{0}-{1}'.format(child.lower_, child.i))
             edges.append(('{0}-{1}'.format(token.lower_, token.i),
                           '{0}-{1}'.format(child.lower_, child.i)))
-    return nx.Graph(edges)
+    return nx.Graph(edges), nodes
 
 
 def get_head_tokens(entities, sentence):
@@ -92,12 +95,16 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
     :return: labels of each pair (according to sentence_entities,
             word vectors and classes (pair types according to sentence_pairs)
     """
-    nlp = spacy.load('en_core_web_lg', disable=['ner'])
-    nlp.add_pipe(prevent_sentence_segmentation, name='prevent-sbd', before='parser')
+
     left_word_vectors = []
     right_word_vectors = []
     classes = []
     labels = []
+
+    # replace spaces of entits with _ to prevent tokenization
+    for e in sentence_entities:
+        idx = sentence_entities[e][0]
+        sentence_text = sentence_text[:idx[0]] + sentence_text[idx[0]:idx[1]].replace(" ", "_") + sentence_text[idx[1]:]
 
     # clean text to make tokenization easier
     sentence_text = sentence_text.replace(";", ",")
@@ -107,10 +114,12 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
 
     #print(sentence_entities)
     parsed = nlp(sentence_text)
-    graph = get_network_graph(parsed)
+    graph, nodes_list = get_network_graph(parsed)
     sentence_head_tokens = get_head_tokens(sentence_entities, parsed)
-
+    #print(sentence_head_tokens)
     for (e1, e2) in combinations(sentence_head_tokens, 2):
+        print()
+        print(e1, e2)
         labels.append((sentence_head_tokens[e1], sentence_head_tokens[e2]))
         if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             classes.append(sentence_pairs[(sentence_head_tokens[e1], sentence_head_tokens[e2])])
@@ -118,8 +127,16 @@ def process_sentence(sentence_text, sentence_entities, sentence_pairs):
             classes.append(0)
         e1_text = sentence_entities[sentence_head_tokens[e1]]
         e2_text = sentence_entities[sentence_head_tokens[e2]]
+        head_token1_idx = int(e1.split("-")[-1])
+        head_token2_idx = int(e2.split("-")[-1])
         try:
             sdp = nx.shortest_path(graph, source=e1, target=e2)
+            if len(sdp) < 3:
+                sdp = nodes_list[head_token1_idx-2:head_token1_idx] + sdp
+                sdp += nodes_list[head_token2_idx+1:head_token2_idx+3]
+            print(e1_text[1:], e2_text[1:], sdp)
+            #if len(sdp) == 2:
+                # add context words
             vector = []
             left_vector = []
             right_vector = []
