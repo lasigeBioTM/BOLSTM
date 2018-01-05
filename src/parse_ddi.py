@@ -75,9 +75,10 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id):
     return entities
 
 def parse_ddi_sentences(base_dir, entities):
-    sentence_file = open("temp/sentences.txt", 'w')
+
     parsed_sentences = {}
     # first iterate all documents, and preprocess all sentences
+    token_seq = {}
     for f in os.listdir(base_dir):
         logging.info("parsing {}".format(f))
         tree = ET.parse(base_dir + f)
@@ -87,18 +88,34 @@ def parse_ddi_sentences(base_dir, entities):
             if len(sentence.findall('pair')) > 0:  # skip sentences without pairs
                 parsed_sentence = parse_sentence(sentence.get("text"), entities[sentence_id])
                 parsed_sentences[sentence_id] = parsed_sentence
-                sentence_file.write("{}\t{}\n".format(sentence_id, "\t".join([x.text for x in parsed_sentence])))
-    os.chdir("sst-light-0.4/")
-    sst_args = ["./sst", "bitag",
-                "./MODELS/WSJPOSc_base_20", "./DATA/WSJPOSc.TAGSET",
-                "./MODELS/SEM07_base_12", "./DATA/WNSS_07.TAGSET",
-                "../temp/sentences.txt", "0", "0"]
-    p = Popen(sst_args, stdout=PIPE, encoding='utf8')
-    p.communicate()
-    os.chdir("..")
-    with open("temp/sentences.txt.tags") as f:
-        output = f.read()
-    wordnet_tags = parse_sst_results(output)
+                tokens = []
+                for t in parsed_sentence:
+                    tokens.append(t.text.replace(" ", "_").replace('\t', '_').replace('\n', '_'))
+                #sentence_file.write("{}\t{}\t.\n".format(sentence_id, "\t".join(tokens)))
+                token_seq[sentence_id] = tokens
+
+    chunk_size = 500
+    wordnet_tags = {}
+    sent_ids = list(token_seq.keys())
+    chunks = [sent_ids[i:i + chunk_size] for i in range(0, len(sent_ids), chunk_size)]
+    for i, chunk in enumerate(chunks):
+        sentence_file = open("temp/sentences_{}.txt".format(i), 'w')
+        for sent in chunk:
+            sentence_file.write("{}\t{}\t.\n".format(sent, "\t".join(token_seq[sent])))
+        sentence_file.close()
+        os.chdir("sst-light-0.4/")
+        sst_args = ["./sst", "bitag",
+                    "./MODELS/WSJPOSc_base_20", "./DATA/WSJPOSc.TAGSET",
+                    "./MODELS/SEM07_base_12", "./DATA/WNSS_07.TAGSET",
+                    "../temp/sentences_{}.txt".format(i), "0", "0"]
+        p = Popen(sst_args, stdout=PIPE)
+        p.communicate()
+        os.chdir("..")
+        with open("temp/sentences_{}.txt.tags".format(i)) as f:
+            output = f.read()
+        sstoutput = parse_sst_results(output)
+        wordnet_tags.update(sstoutput)
+
     return parsed_sentences, wordnet_tags
 
 def parse_sst_results(results):
@@ -108,7 +125,8 @@ def parse_sst_results(results):
         values = l.split("\t")
         wntags = [x.split(" ")[-1].split("-")[-1] for x in values[1:]]
         sentences[values[0]] = wntags
-        print(values[0], wntags)
+        if values[0].startswith("DDI-MedLine.d185"):
+            print(values[0], wntags)
     return sentences
 
 def get_ddi_sdp_instances(base_dir):
@@ -121,6 +139,7 @@ def get_ddi_sdp_instances(base_dir):
     entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id)
 
     parsed_sentences, wordnet_sentences = parse_ddi_sentences(base_dir, entities)
+    #print(wordnet_sentences.keys())
     # print(sstoutput)
     left_instances = []
     right_instances = []
@@ -143,13 +162,14 @@ def get_ddi_sdp_instances(base_dir):
             if len(sentence.findall('pair')) > 0: # skip sentences without pairs
                 sentence_entities = entities[sentence_id]
                 parsed_sentence = parsed_sentences[sentence_id]
-
+                wordnet_sentence = wordnet_sentences[sentence_id]
                 # sentence_pairs: {(e1id, e2id): pairtype_label}
 
                 sentence_labels, sentence_we_instances,\
                 sentence_wn_instances, sentence_classes = process_sentence(parsed_sentence,
-                                                                                      sentence_entities,
-                                                                                      sentence_pairs)
+                                                                           sentence_entities,
+                                                                           sentence_pairs,
+                                                                           wordnet_sentence)
 
 
                 sentence_ancestors = get_ancestors(sentence_labels, sentence_entities,
