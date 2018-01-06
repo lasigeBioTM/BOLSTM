@@ -26,11 +26,11 @@ sigmoid_l2_reg = 0.00001
 dropout1 = 0.5
 #n_classes = 19
 n_classes = 5
-max_sentence_length = 20
+max_sentence_length = 10
 max_ancestors_length = 10
 
 words_channel = True
-wordnet_channel = False
+wordnet_channel = True
 ancestors_channel = False
 
 

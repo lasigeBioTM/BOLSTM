@@ -8,7 +8,7 @@ set -e
 #python3 src/train_rnn.py preprocessing ddi temp/dditestdrugbank data/DDICorpus/Test/DDIExtraction/DrugBank/
 #python3 src/train_rnn.py preprocessing ddi temp/dditestmedline data/DDICorpus/Test/DDIExtraction/MedLine/
 
-python3 src/train_rnn.py train temp/dditrain
+python3 src/train_rnn.py train temp/dditrain temp/dditest
 #python3 src/train_rnn.py train temp/dditrainmedline
 python3 src/train_rnn.py predict temp/dditest
 python3 src/ddi_evaluation.py dditest_results.txt

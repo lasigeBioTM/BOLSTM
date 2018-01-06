@@ -5,22 +5,7 @@ logging.basicConfig(level=10)
 import collections
 import numpy as np
 np.random.seed(1)
-import keras
-from keras.models import Model
-from keras.layers import Dense
-from keras.layers import LSTM
-from keras.layers import Embedding
-from keras.layers import Flatten
-from keras.layers import Dropout
-from keras.layers import Input
-from keras.layers import GlobalMaxPooling1D
-from keras.layers import Concatenate
-from keras.layers import Bidirectional
-from keras.optimizers import SGD
-from keras.optimizers import Adam
-from keras.preprocessing import sequence
-from keras import regularizers
-from keras import backend as K
+
 from keras.utils.np_utils import to_categorical
 from keras.models import model_from_json
 from keras.callbacks import Callback
@@ -35,20 +20,18 @@ import matplotlib.pyplot as plt
 
 
 from chebi_path import load_chebi
-DATA_DIR = "data/"
-vocab_size = 10000
-embbed_size = 200
-chebi_embbed_size = 100
-wordnet_embbed_size = 47
-LSTM_units = 200
-sigmoid_units = 100
-sigmoid_l2_reg = 0.00001
-dropout1 = 0.5
-#n_classes = 19
-n_classes = 5
-max_sentence_length = 15
-max_ancestors_length = 10
+from models import get_model, embbed_size, max_sentence_length, max_ancestors_length, n_classes,\
+    words_channel, wordnet_channel, ancestors_channel
 
+n_inputs = 0
+if words_channel:
+    n_inputs += 2
+if wordnet_channel:
+    n_inputs += 2
+if ancestors_channel:
+    n_inputs += 2
+
+DATA_DIR = "data/"
 n_epochs = 20
 batch_size = 5
 validation_split = 0.1
@@ -57,13 +40,13 @@ validation_split = 0.1
 
 def write_plots(history):
     plt.figure()
-    plt.plot(history.history['f1'])
-    plt.plot(history.history['val_f1'])
+    plt.plot(history.history['acc'])
+    plt.plot(history.history['val_acc'])
     plt.title('model F1')
     plt.ylabel('F1')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig("model_f1.png")
+    plt.savefig("model_acc.png")
 
     plt.figure()
     plt.plot(history.history['loss'])
@@ -150,277 +133,6 @@ def preprocess_ids(x_data, id_to_index):
     return data
 
 
-def get_model(embedding_matrix, id_to_index, words=True, ancestors=True, wordnet=False):
-    inputs = []
-    pool_layers = []
-    if words:
-        words_input_left = Input(shape=(max_sentence_length,), name='left_words')
-        words_input_right = Input(shape=(max_sentence_length,), name='right_words')
-
-        inputs += [words_input_left, words_input_right]
-
-        e_words_left = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                           trainable=False)
-        e_words_left.build((None,))
-        e_words_left.set_weights([embedding_matrix])
-        e_words_left = e_words_left(words_input_left)
-
-        e_words_left = Dropout(0.5)(e_words_left)
-
-        e_words_right = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                            trainable=False)
-        e_words_right.build((None,))
-        e_words_right.set_weights([embedding_matrix])
-        e_words_right = e_words_right(words_input_right)
-
-        e_words_right = Dropout(0.5)(e_words_right)
-
-        words_lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
-                         kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words_left)
-        words_lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
-                          kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words_right)
-
-        words_pool_left = GlobalMaxPooling1D()(words_lstm_left)
-        words_pool_right = GlobalMaxPooling1D()(words_lstm_right)
-
-        # we_hidden = Dense(sigmoid_units, activation='sigmoid',
-        #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
-        # we_hidden = Dropout(dropout1)(we_hidden)
-        pool_layers += [words_pool_left, words_pool_right]
-
-    if wordnet:
-        wordnet_left = Input(shape=(max_sentence_length,), name='left_wordnet')
-        wordnet_right = Input(shape=(max_sentence_length,), name='right_wordnet')
-
-        inputs += [wordnet_left, wordnet_right]
-
-        e_wn_left = Embedding(len(embedding_matrix), wordnet_embbed_size, input_length=max_sentence_length,
-                                 trainable=True)
-        e_wn_left.build((None,))
-        e_wn_left = e_wn_left(wordnet_left)
-
-        e_wn_left = Dropout(0.5)(e_wn_left)
-
-        e_wn_right = Embedding(len(embedding_matrix), wordnet_embbed_size, input_length=max_sentence_length,
-                                  trainable=True)
-        e_wn_right.build((None,))
-        #e_words_right.set_weights([embedding_matrix])
-        e_wn_right = e_wn_right(wordnet_right)
-
-        e_wn_right = Dropout(0.5)(e_wn_right)
-
-        wn_lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, wordnet_embbed_size), return_sequences=True,
-                               kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_wn_left)
-        wn_lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, wordnet_embbed_size), return_sequences=True,
-                                kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_wn_right)
-
-        wn_pool_left = GlobalMaxPooling1D()(wn_lstm_left)
-        wn_pool_right = GlobalMaxPooling1D()(wn_lstm_right)
-
-        # we_hidden = Dense(sigmoid_units, activation='sigmoid',
-        #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
-        # we_hidden = Dropout(dropout1)(we_hidden)
-        pool_layers += [wn_pool_left, wn_pool_right]
-
-    if ancestors:
-        # use just one chain
-        # do not use LSTM - order is always the same
-        ancestors_input_left = Input(shape=(max_ancestors_length,), name='left_ancestors')
-        ancestors_input_right = Input(shape=(max_ancestors_length,), name='right_ancestors')
-        inputs += [ancestors_input_left, ancestors_input_right]
-
-        e_ancestors_left = Embedding(len(id_to_index), chebi_embbed_size, input_length=max_ancestors_length,
-                                 trainable=True)
-        e_ancestors_left.build((None,))
-        e_ancestors_left = e_ancestors_left(ancestors_input_left)
-
-        e_ancestors_left = Dropout(0.5)(e_ancestors_left)
-
-        e_ancestors_right = Embedding(len(id_to_index), chebi_embbed_size, input_length=max_ancestors_length,
-                                  trainable=True)
-        e_ancestors_right.build((None,))
-        # e_right.set_weights([embedding_matrix])
-        e_ancestors_right = e_ancestors_right(ancestors_input_right)
-
-        e_ancestors_right = Dropout(0.5)(e_ancestors_right)
-
-        ancestors_lstm_left = LSTM(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size), return_sequences=True,
-                               kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_ancestors_left)
-        ancestors_lstm_right = LSTM(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size), return_sequences=True,
-                                kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_ancestors_right)
-
-        ancestors_pool_left = GlobalMaxPooling1D()(ancestors_lstm_left)
-        ancestors_pool_right = GlobalMaxPooling1D()(ancestors_lstm_right)
-
-        # we_hidden = Dense(sigmoid_units, activation='sigmoid',
-        #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
-        # we_hidden = Dropout(dropout1)(we_hidden)
-        pool_layers += [ancestors_pool_left, ancestors_pool_right]
-
-    concatenate = keras.layers.concatenate(pool_layers, axis=-1)
-
-    final_hidden = Dense(sigmoid_units, activation='sigmoid',  # , kernel_initializer="random_normal",
-                         kernel_regularizer=regularizers.l2(sigmoid_l2_reg), )(concatenate)
-    output = Dense(n_classes, activation='softmax',
-                   name='output')(final_hidden)
-    model = Model(inputs=inputs, outputs=[output])
-    # model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
-    # model.add(Flatten())
-
-    # model.add(Dense(n_classes, activation='softmax'))
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=SGD(0.1),
-                  #optimizer=Adam(0.0001),
-                  metrics=['accuracy', precision, recall, f1])
-    print(model.summary())
-    return model
-
-def get_words_model(embedding_matrix):
-    input = Input(shape=((max_sentence_length*2)-1,), name="input")
-
-    emb = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                        trainable=False)
-    emb.build((None,))
-    emb.set_weights([embedding_matrix])
-    emb = emb(input)
-
-
-    lstm = LSTM(LSTM_units, input_shape=((max_sentence_length*2)-1, embbed_size), #, return_sequences=True,
-                kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(emb)
-
-    #pool_left = GlobalMaxPooling1D()(lstm_left)
-    #pool_right = GlobalMaxPooling1D()(lstm_right)
-
-    #concatenate = keras.layers.concatenate([pool_left, pool_right], axis=-1)
-    # we_hidden = Dense(sigmoid_units, activation='sigmoid',
-    #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
-    # we_hidden = Dropout(dropout1)(we_hidden)
-    final_hidden = Dense(sigmoid_units, activation='sigmoid',  # , kernel_initializer="random_normal",
-                         kernel_regularizer=regularizers.l2(sigmoid_l2_reg), )(lstm)
-    output = Dense(n_classes, activation='softmax',
-                   name='output')(final_hidden)
-    model = Model(inputs=input, outputs=output)
-
-    # model.add(Dense(n_classes, activation='softmax'))
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=SGD(0.1),
-                  #optimizer=Adam(0.001),
-                  metrics=['accuracy', precision, recall, f1])
-    print(model.summary())
-    return model
-
-
-def get_xu_model(embedding_matrix):
-    #input_left = Input(shape=(max_sentence_length, embbed_size),  name='left_input')
-    #input_right = Input(shape=(max_sentence_length, embbed_size),  name='right_input')
-
-    input_left = Input(shape=(max_sentence_length,), name='left_input')
-    input_right = Input(shape=(max_sentence_length,), name='right_input')
-
-    e_left = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                       trainable=True)
-    e_left.build((None,))
-    #e_left.set_weights([embedding_matrix])
-    e_left = e_left(input_left)
-
-    e_left = Dropout(0.5)(e_left)
-
-    e_right = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                        trainable=True)
-    e_right.build((None,))
-    #e_right.set_weights([embedding_matrix])
-    e_right = e_right(input_right)
-
-    e_right = Dropout(0.5)(e_right)
-
-    lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
-                     kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_left)
-    lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
-                      kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_right)
-
-    pool_left = GlobalMaxPooling1D()(lstm_left)
-    pool_right = GlobalMaxPooling1D()(lstm_right)
-
-    concatenate = keras.layers.concatenate([pool_left, pool_right], axis=-1)
-    #we_hidden = Dense(sigmoid_units, activation='sigmoid',
-    #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
-    #we_hidden = Dropout(dropout1)(we_hidden)
-    final_hidden = Dense(sigmoid_units, activation='sigmoid', #, kernel_initializer="random_normal",
-                         kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
-    output = Dense(n_classes, activation='softmax',
-                   name='output')(final_hidden)
-    model = Model(inputs=[input_left, input_right], outputs=[output])
-    #model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sentence_length))
-    #model.add(Flatten())
-
-    #model.add(Dense(n_classes, activation='softmax'))
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=SGD(0.1),
-                  #optimizer=Adam(0.001),
-                  metrics=['accuracy', precision, recall, f1])
-    print(model.summary())
-    return model
-
-#https://github.com/fchollet/keras/issues/5400
-def precision(y_true, y_pred):
-    """Precision metric.
-
-    Only computes a batch-wise average of precision.
-
-    Computes the precision, a metric for multi-label classification of
-    how many selected items are relevant.
-    """
-    # print(y_true, y_pred)
-    true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
-    predicted_positives = K.sum(K.round(K.clip(y_pred[...,1:], 0, 1)))
-    p = true_positives / (predicted_positives + K.epsilon())
-    return p
-
-
-def recall(y_true, y_pred):
-    """Recall metric.
-
-    Only computes a batch-wise average of recall.
-
-    Computes the recall, a metric for multi-label classification of
-    how many relevant items are selected.
-    """
-    true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
-    possible_positives = K.sum(K.round(K.clip(y_true[...,1:], 0, 1)))
-    r = true_positives / (possible_positives + K.epsilon())
-    return r
-
-
-def f1(y_true, y_pred):
-    def precision(y_true, y_pred):
-        """Precision metric.
-
-        Only computes a batch-wise average of precision.
-
-        Computes the precision, a metric for multi-label classification of
-        how many selected items are relevant.
-        """
-        true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
-        predicted_positives = K.sum(K.round(K.clip(y_pred[...,1:], 0, 1)))
-        p = true_positives / (predicted_positives + K.epsilon())
-        return p
-
-    def recall(y_true, y_pred):
-        """Recall metric.
-
-        Only computes a batch-wise average of recall.
-
-        Computes the recall, a metric for multi-label classification of
-        how many relevant items are selected.
-        """
-        true_positives = K.sum(K.round(K.clip(y_true[...,1:] * y_pred[...,1:], 0, 1)))
-        possible_positives = K.sum(K.round(K.clip(y_true[...,1:], 0, 1)))
-        r = true_positives / (possible_positives + K.epsilon())
-        return r
-    precision_v = precision(y_true, y_pred)
-    recall_v = recall(y_true, y_pred)
-    return (2.0*precision_v*recall_v)/(precision_v+recall_v)
-
 
 class Metrics(Callback):
     def on_train_begin(self, logs={}):
@@ -432,13 +144,9 @@ class Metrics(Callback):
     def on_epoch_end(self, epoch, logs={}):
         #print(dir(self.model))
         #print(len(self.validation_data))
-        val_predict = (np.asarray(self.model.predict([self.validation_data[0], self.validation_data[1],
-                                                     #self.validation_data[2], self.validation_data[3]
-                                                     ]
-                                                      ))).round()
-        #val_predict = (np.asarray(self.model.predict(self.validation_data[0],
-        #                                             ))).round()
-        val_targ = self.validation_data[2]
+        val_predict = (np.asarray(self.model.predict([self.validation_data[i] for i in range(n_inputs)],
+                                                     ))).round()
+        val_targ = self.validation_data[n_inputs]
         #val_targ = self.validation_data[1]
         #probs = np.asarray(self.model.predict([self.validation_data[0], self.validation_data[1]],
         #                                              ))
@@ -449,14 +157,26 @@ class Metrics(Callback):
         self.val_f1s.append(_val_f1)
         self.val_recalls.append(_val_recall)
         self.val_precisions.append(_val_precision)
-        s = "predicted not false: {}/{}\n{}".format(len([x for x in val_predict if np.argmax(x) != 0]),
-                                                len([x for x in val_targ if x[0] < 0.5]), _confusion_matrix)
+        s = "predicted not false: {}/{}\n{}\n".format(len([x for x in val_predict if np.argmax(x) != 0]),
+                                                len([x for x in val_targ if x[0] < 0.5]),
+                                                    _confusion_matrix)
         print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f}\n".format(s, _val_f1, _val_precision, _val_recall),)
-        #for i in range(len(self.validation_data[2])):
-        #    if np.argmax(val_targ[i]) != np.argmax(val_predict[i]):
-        #        print(i, np.argmax(val_targ[i]), np.argmax(val_predict[i]), probs[i])
+
+
+        # for i in range(len(val_targ)):
+        #     true_label = np.argmax(val_targ[i])
+        #     predicted = np.argmax(val_predict[i])
+        #     if predicted != true_label:
+        #         error_type = "wrong label"
+        #         if true_label == 0:
+        #             error_type = "FP"
+        #         elif predicted == 0:
+        #             error_type = "FN"
+        #         print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted,
+        #                                               str([self.validation_data[j][i] for j in range(n_inputs)])))
         #print(val_predict, val_targ)
-        # print("true not false: {}".format()
+        #print("true not false: {}".format()
+        print()
         return
 
 
@@ -527,53 +247,88 @@ def main():
         np.save(sys.argv[3] + "_y.npy", classes)
 
     elif sys.argv[1] == "train":
-        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
         if os.path.isfile("model.json"):
             os.remove("model.json")
         if os.path.isfile("model.h5"):
             os.remove("model.h5")
-        X_words_train = np.load(sys.argv[2] + "_x_words.npy")
-        X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
-        X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
+
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
 
-        emb_index, emb_matrix = get_glove_vectors()
-        wn_index = get_wordnet_indexes()
         # print(emb_index)
-        X_words_left = preprocess_sequences(X_words_train[0], emb_index)
-        X_words_right = preprocess_sequences(X_words_train[1], emb_index)
+        inputs = {}
+        if words_channel:
+            emb_index, emb_matrix = get_glove_vectors()
+            X_words_train = np.load(sys.argv[2] + "_x_words.npy")
+            X_words_left = preprocess_sequences(X_words_train[0], emb_index)
+            X_words_right = preprocess_sequences(X_words_train[1], emb_index)
+            # skip root word
+            # X_words_train = np.concatenate((X_words_left, X_words_right[..., 1:]), 1)
+            inputs["left_words"] = X_words_left
+            inputs["right_words"] = X_words_right
 
-        # skip root word
-        #X_words_train = np.concatenate((X_words_left, X_words_right[..., 1:]), 1)
+        else:
+            emb_matrix = None
 
-        X_wn_left = preprocess_sequences(X_wordnet_train[0], wn_index)
-        X_wn_right = preprocess_sequences(X_wordnet_train[1], wn_index)
+        if wordnet_channel:
+            wn_index = get_wordnet_indexes()
+            X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
+            X_wn_left = preprocess_sequences(X_wordnet_train[0], wn_index)
+            X_wn_right = preprocess_sequences(X_wordnet_train[1], wn_index)
+            inputs["left_wordnet"] = X_wn_left
+            inputs["right_wordnet"] = X_wn_right
 
-        #X_ids_left = preprocess_ids(X_ancestors_train[0], id_to_index)
-        #X_ids_right = preprocess_ids(X_ancestors_train[1], id_to_index)
+        if ancestors_channel:
+            is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
+            X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
+            X_ids_left = preprocess_ids(X_ancestors_train[0], id_to_index)
+            X_ids_right = preprocess_ids(X_ancestors_train[1], id_to_index)
 
-        #X_ancestors_train = np.concatenate((X_ids_left, X_ids_right[..., 1:]), 1)
+            #X_ancestors_train = np.concatenate((X_ids_left, X_ids_right[..., 1:]), 1)
+            inputs["left_ancestors"] = X_ids_left
+            inputs["right_ancestors"] = X_ids_right
+        else:
+            id_to_index = None
 
-        model = get_model(emb_matrix, id_to_index, words=True, ancestors=False, wordnet=False)
+        model = get_model(emb_matrix, id_to_index)
+
         #model = get_words_model(emb_matrix)
         #model = get_xu_model(emb_matrix)
 
-        inputs = {
-                  #"left_ancestors": X_ids_left, "right_ancestors": X_ids_right,
-                  "left_words":X_words_left, "right_words": X_words_right,
-                  #"left_wordnet": X_wn_left, "right_wordnet": X_wn_right
-                 }
+
         #print(inputs)
         if len(sys.argv) > 3:
-            X_test = np.load(sys.argv[3] + "_x_words.npy")
+
             Y_test = np.load(sys.argv[3] + "_y.npy")
             Y_test = to_categorical(Y_test, num_classes=n_classes)
-            #Y_test = Y_test[...,1:]
+            val_inputs = {}
+
+            if words_channel:
+                X_words_test = np.load(sys.argv[3] + "_x_words.npy")
+                X_words_test_left = preprocess_sequences(X_words_test[0], emb_index)
+                X_words_test_right = preprocess_sequences(X_words_test[1], emb_index)
+                val_inputs["left_words"] = X_words_test_left
+                val_inputs["right_words"] = X_words_test_right
+
+            if wordnet_channel:
+                X_wordnet_test = np.load(sys.argv[3] + "_x_wordnet.npy")
+                X_wn_test_left = preprocess_sequences(X_wordnet_test[0], wn_index)
+                X_wn_test_right = preprocess_sequences(X_wordnet_test[1], wn_index)
+                val_inputs["left_wordnet"] = X_wn_test_left
+                val_inputs["right_wordnet"] = X_wn_test_right
+
+            #X_ancestors_test = np.load(sys.argv[3] + "_x_ancestors.npy")
+
+            val_outputs = {"output": Y_test}
+
             test_labels = np.load(sys.argv[3] + "_labels.npy")
 
-            model.fit(X_words_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
-                      batch_size=batch_size, callbacks=[metrics], verbose=2)
+            #model.fit(X_words_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
+            #          batch_size=batch_size, callbacks=[metrics], verbose=2)
+            history = model.fit(inputs,
+                                {"output": Y_train}, validation_data=(val_inputs, val_outputs), epochs=n_epochs,
+                                batch_size=batch_size, verbose=2, callbacks=[metrics])
+            write_plots(history)
 
         else:
 
