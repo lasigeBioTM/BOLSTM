@@ -5,6 +5,8 @@ logging.basicConfig(level=10)
 import collections
 import numpy as np
 np.random.seed(1)
+from tensorflow import set_random_seed
+set_random_seed(1)
 
 from keras.utils.np_utils import to_categorical
 from keras.models import model_from_json
@@ -350,27 +352,32 @@ def main():
         print("Saved model to disk")
 
     elif sys.argv[1] == "predict":
-        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
-        emb_index, emb_matrix = get_glove_vectors()
-        wn_index = get_wordnet_indexes()
-        X_words_test = np.load(sys.argv[2] + "_x_words.npy")
-        X_ancestors_test = np.load(sys.argv[2] + "_x_ancestors.npy")
-        X_wn_test = np.load(sys.argv[2] + "_x_wordnet.npy")
-        #X_words_test_left = [one_hot(" ".join(d), vocab_size) for d in X_words_test[0]]
-        #X_words_test_right = [one_hot(" ".join(d), vocab_size) for d in X_words_test[1]]
-        #X_words_test = [pad_sequences(X_words_test_left, maxlen=max_sentence_length, padding='post'),
-        #                pad_sequences(X_words_test_right, maxlen=max_sentence_length, padding='post')]
 
-        X_words_test_left = preprocess_sequences(X_words_test[0], emb_index)
-        X_words_test_right = preprocess_sequences(X_words_test[1], emb_index)
-        # X_words_test = [X_words_test_left, X_words_test_right]
-        # X_words_test = np.concatenate((X_words_test_left, X_words_test_right[..., 1:]), 1)
+        inputs = {}
 
-        X_wordnet_test_left = preprocess_sequences(X_wn_test[0], wn_index)
-        X_wordnet_test_right = preprocess_sequences(X_wn_test[1], wn_index)
-
-        #X_ids_left = preprocess_ids(X_ancestors_test[0], id_to_index)
-        #X_ids_right = preprocess_ids(X_ancestors_test[1], id_to_index)
+        if words_channel:
+            emb_index, emb_matrix = get_glove_vectors()
+            X_words_test = np.load(sys.argv[2] + "_x_words.npy")
+            X_words_test_left = preprocess_sequences(X_words_test[0], emb_index)
+            X_words_test_right = preprocess_sequences(X_words_test[1], emb_index)
+            # X_words_test = [X_words_test_left, X_words_test_right]
+            # X_words_test = np.concatenate((X_words_test_left, X_words_test_right[..., 1:]), 1)
+            inputs["left_words"] = X_words_test_left
+            inputs["right_words"] = X_words_test_right
+        if wordnet_channel:
+            wn_index = get_wordnet_indexes()
+            X_wn_test = np.load(sys.argv[2] + "_x_wordnet.npy")
+            X_wordnet_test_left = preprocess_sequences(X_wn_test[0], wn_index)
+            X_wordnet_test_right = preprocess_sequences(X_wn_test[1], wn_index)
+            inputs["left_wordnet"] = X_wordnet_test_left
+            inputs["right_wordnet"] = X_wordnet_test_right
+        if ancestors_channel:
+            is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
+            X_ancestors_test = np.load(sys.argv[2] + "_x_ancestors.npy")
+            X_ids_left = preprocess_ids(X_ancestors_test[0], id_to_index)
+            X_ids_right = preprocess_ids(X_ancestors_test[1], id_to_index)
+            inputs["left_ancestors"] = X_ids_left
+            inputs["right_ancestors"] = X_ids_right
 
         # load json and create model
         json_file = open('model.json', 'r')
@@ -385,11 +392,7 @@ def main():
         test_labels = np.load(sys.argv[2] + "_labels.npy")
 
         #scores = loaded_model.predict(X_words_test)
-        scores = loaded_model.predict({
-                                       "left_words": X_words_test_left, "right_words": X_words_test_right,
-                                       #"left_ancestors": X_ids_left, "right_ancestors": X_ids_right
-                                       #"left_wordnet": X_wordnet_test_left, "right_wordnet": X_wordnet_test_right
-                                       })
+        scores = loaded_model.predict(inputs)
         with open("{}_results.txt".format(sys.argv[2].split("/")[-1]), 'w') as f:
             for i, pair in enumerate(test_labels):
                 f.write(" ".join((pair[0], pair[1], str(np.argmax(scores[i])))) + "\n")
