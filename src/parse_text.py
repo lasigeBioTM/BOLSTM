@@ -4,6 +4,8 @@ import spacy
 import sys
 from spacy.tokenizer import Tokenizer
 import re
+from subprocess import PIPE, Popen
+import os
 import logging
 import networkx as nx
 import en_core_web_lg
@@ -86,6 +88,40 @@ def get_head_tokens(entities, sentence):
     return sentence_head_tokens
 
 
+def run_sst(token_seq):
+    chunk_size = 500
+    wordnet_tags = {}
+    sent_ids = list(token_seq.keys())
+    chunks = [sent_ids[i:i + chunk_size] for i in range(0, len(sent_ids), chunk_size)]
+    for i, chunk in enumerate(chunks):
+        sentence_file = open("temp/sentences_{}.txt".format(i), 'w')
+        for sent in chunk:
+            sentence_file.write("{}\t{}\t.\n".format(sent, "\t".join(token_seq[sent])))
+        sentence_file.close()
+        os.chdir("sst-light-0.4/")
+        sst_args = ["./sst", "bitag",
+                    "./MODELS/WSJPOSc_base_20", "./DATA/WSJPOSc.TAGSET",
+                    "./MODELS/SEM07_base_12", "./DATA/WNSS_07.TAGSET",
+                    "../temp/sentences_{}.txt".format(i), "0", "0"]
+        p = Popen(sst_args, stdout=PIPE)
+        p.communicate()
+        os.chdir("..")
+        with open("temp/sentences_{}.txt.tags".format(i)) as f:
+            output = f.read()
+        sstoutput = parse_sst_results(output)
+        wordnet_tags.update(sstoutput)
+
+    return wordnet_tags
+
+def parse_sst_results(results):
+    sentences = {}
+    lines = results.strip().split("\n")
+    for l in lines:
+        values = l.split("\t")
+        wntags = [x.split(" ")[-1].split("-")[-1] for x in values[1:]]
+        sentences[values[0]] = wntags
+    return sentences
+
 def parse_sentence(sentence_text, sentence_entities):
     # use spacy to parse a sentence
     for e in sentence_entities:
@@ -122,7 +158,10 @@ def process_sentence(sentence, sentence_entities, sentence_pairs, wordnet_tags=N
     #print(sentence_head_tokens)
     for (e1, e2) in combinations(sentence_head_tokens, 2):
         #print()
-        #print(e1, e2)
+        #print(sentence_head_tokens[e1], e1, sentence_head_tokens[e2], e2)
+        # reorder according to entity ID
+        if int(sentence_head_tokens[e1].split(".")[-1][1:]) > int(sentence_head_tokens[e2].split(".")[-1][1:]):
+            e1, e2 = e2, e1
         labels.append((sentence_head_tokens[e1], sentence_head_tokens[e2]))
         if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             classes.append(sentence_pairs[(sentence_head_tokens[e1], sentence_head_tokens[e2])])
@@ -134,9 +173,9 @@ def process_sentence(sentence, sentence_entities, sentence_pairs, wordnet_tags=N
         head_token2_idx = int(e2.split("-")[-1])
         try:
             sdp = nx.shortest_path(graph, source=e1, target=e2)
-            if len(sdp) < 3:
-                sdp = nodes_list[head_token1_idx-2:head_token1_idx] + sdp
-                sdp += nodes_list[head_token2_idx+1:head_token2_idx+3]
+            if len(sdp) < 3: # len=2, just entities
+                sdp = [sdp[0]] + nodes_list[head_token1_idx-2:head_token1_idx]
+                sdp += nodes_list[head_token2_idx+1:head_token2_idx+3] + [sdp[-1]]
             # print(e1_text[1:], e2_text[1:], sdp)
             #if len(sdp) == 2:
                 # add context words

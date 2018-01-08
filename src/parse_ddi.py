@@ -3,7 +3,7 @@ import sys
 import os
 import logging
 from subprocess import PIPE, Popen
-from parse_text import process_sentence, parse_sentence
+from parse_text import process_sentence, parse_sentence, run_sst
 from chebi_path import get_lowest_common_ascestor_path, load_chebi, get_all_shortest_paths_to_root, map_to_chebi, get_common_ancestors
 
 
@@ -93,41 +93,10 @@ def parse_ddi_sentences(base_dir, entities):
                     tokens.append(t.text.replace(" ", "_").replace('\t', '_').replace('\n', '_'))
                 #sentence_file.write("{}\t{}\t.\n".format(sentence_id, "\t".join(tokens)))
                 token_seq[sentence_id] = tokens
-
-    chunk_size = 500
-    wordnet_tags = {}
-    sent_ids = list(token_seq.keys())
-    chunks = [sent_ids[i:i + chunk_size] for i in range(0, len(sent_ids), chunk_size)]
-    for i, chunk in enumerate(chunks):
-        sentence_file = open("temp/sentences_{}.txt".format(i), 'w')
-        for sent in chunk:
-            sentence_file.write("{}\t{}\t.\n".format(sent, "\t".join(token_seq[sent])))
-        sentence_file.close()
-        os.chdir("sst-light-0.4/")
-        sst_args = ["./sst", "bitag",
-                    "./MODELS/WSJPOSc_base_20", "./DATA/WSJPOSc.TAGSET",
-                    "./MODELS/SEM07_base_12", "./DATA/WNSS_07.TAGSET",
-                    "../temp/sentences_{}.txt".format(i), "0", "0"]
-        p = Popen(sst_args, stdout=PIPE)
-        p.communicate()
-        os.chdir("..")
-        with open("temp/sentences_{}.txt.tags".format(i)) as f:
-            output = f.read()
-        sstoutput = parse_sst_results(output)
-        wordnet_tags.update(sstoutput)
-
+    wordnet_tags = run_sst(token_seq)
     return parsed_sentences, wordnet_tags
 
-def parse_sst_results(results):
-    sentences = {}
-    lines = results.strip().split("\n")
-    for l in lines:
-        values = l.split("\t")
-        wntags = [x.split(" ")[-1].split("-")[-1] for x in values[1:]]
-        sentences[values[0]] = wntags
-        if values[0].startswith("DDI-MedLine.d185"):
-            print(values[0], wntags)
-    return sentences
+
 
 def get_ddi_sdp_instances(base_dir):
     """
