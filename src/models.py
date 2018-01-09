@@ -17,7 +17,7 @@ from keras import backend as K
 
 
 vocab_size = 10000
-embbed_size = 200
+embbed_size = 100
 chebi_embbed_size = 100
 wordnet_embbed_size = 47
 LSTM_units = 200
@@ -30,10 +30,43 @@ max_sentence_length = 10
 max_ancestors_length = 10
 
 words_channel = True
-wordnet_channel = True
+wordnet_channel = False
 ancestors_channel = False
 
 
+def get_words_channel(words_input, embedding_matrix):
+
+
+    # e_words_left = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
+    #                   trainable=False)
+    # e_words_left.build((None,))
+    # e_words_left.set_weights([embedding_matrix])
+    e_words_left = embedding_matrix
+    e_words_left = e_words_left(words_input[0])
+
+    e_words_left = Dropout(0.5)(e_words_left)
+
+    # e_words_right = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
+    #                    trainable=False)
+    # e_words_right.build((None,))
+    # e_words_right.set_weights([embedding_matrix])
+    e_words_right = embedding_matrix
+    e_words_right = e_words_right(words_input[1])
+
+    e_words_right = Dropout(0.5)(e_words_right)
+
+    words_lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
+                           kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words_left)
+    words_lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
+                            kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words_right)
+
+    words_pool_left = GlobalMaxPooling1D()(words_lstm_left)
+    words_pool_right = GlobalMaxPooling1D()(words_lstm_right)
+
+    # we_hidden = Dense(sigmoid_units, activation='sigmoid',
+    #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
+    # we_hidden = Dropout(dropout1)(we_hidden)
+    return (words_pool_left, words_pool_right)
 
 def get_model(embedding_matrix, id_to_index):
     inputs = []
@@ -43,34 +76,8 @@ def get_model(embedding_matrix, id_to_index):
         words_input_right = Input(shape=(max_sentence_length,), name='right_words')
 
         inputs += [words_input_left, words_input_right]
-
-        e_words_left = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                           trainable=False)
-        e_words_left.build((None,))
-        e_words_left.set_weights([embedding_matrix])
-        e_words_left = e_words_left(words_input_left)
-
-        e_words_left = Dropout(0.5)(e_words_left)
-
-        e_words_right = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                            trainable=False)
-        e_words_right.build((None,))
-        e_words_right.set_weights([embedding_matrix])
-        e_words_right = e_words_right(words_input_right)
-
-        e_words_right = Dropout(0.5)(e_words_right)
-
-        words_lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
-                         kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words_left)
-        words_lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
-                          kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words_right)
-
-        words_pool_left = GlobalMaxPooling1D()(words_lstm_left)
-        words_pool_right = GlobalMaxPooling1D()(words_lstm_right)
-
-        # we_hidden = Dense(sigmoid_units, activation='sigmoid',
-        #                  kernel_regularizer=regularizers.l2(sigmoid_l2_reg),)(concatenate)
-        # we_hidden = Dropout(dropout1)(we_hidden)
+        words_pool_left, words_pool_right = get_words_channel((words_input_left, words_input_right),
+                                                              embedding_matrix)
         pool_layers += [words_pool_left, words_pool_right]
 
     if wordnet_channel:

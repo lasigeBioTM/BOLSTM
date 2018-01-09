@@ -7,7 +7,7 @@ import numpy as np
 np.random.seed(1)
 from tensorflow import set_random_seed
 set_random_seed(1)
-
+from gensim.models.keyedvectors import KeyedVectors
 from keras.utils.np_utils import to_categorical
 from keras.models import model_from_json
 from keras.callbacks import Callback
@@ -15,7 +15,7 @@ from keras.preprocessing.text import one_hot
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.metrics import f1_score
-#from gensim.models.keyedvectors import KeyedVectors
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -35,7 +35,7 @@ if ancestors_channel:
 
 DATA_DIR = "data/"
 n_epochs = 20
-batch_size = 5
+batch_size = 10
 validation_split = 0.1
 
 # https://github.com/keras-team/keras/issues/853#issuecomment-343981960
@@ -91,6 +91,13 @@ def get_glove_vectors():
 
     return embedding_indexes, embedding_weights
 
+
+def get_w2v():
+    embeddings_vectors = {}  # words -> vector
+    embedding_indexes = {}
+    word_vectors = KeyedVectors.load_word2vec_format('data/pubmed_s100w10_min.bin', binary=True)  # C text format
+    return word_vectors
+
 def get_wordnet_indexes():
     embedding_indexes = {}
     with open("sst-light-0.4/DATA/WNSS_07.TAGSET", 'r') as f:
@@ -101,10 +108,7 @@ def get_wordnet_indexes():
             embedding_indexes[l.strip().split("-")[-1]] = i
     return embedding_indexes
 
-def get_w2v():
-    embeddings_vectors = {}  # words -> vector
-    embedding_indexes = {}
-    word_vectors = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)  # C text format
+
 
 
 
@@ -115,7 +119,8 @@ def preprocess_sequences(x_data, embeddings_index):
             #if w.lower() not in embeddings_index:
             #    print("word not in index: {}".format(w.lower()))
         #print(seq)
-        idxs = [embeddings_index.get(w.lower()) for w in seq if w.lower() in embeddings_index]
+        #idxs = [embeddings_index.get(w.lower()) for w in seq if w.lower() in embeddings_index]
+        idxs = [embeddings_index.vocab[w.lower()].index for w in seq if w.lower() in embeddings_index.vocab]
         if None in idxs:
             print(seq, idxs)
         #print(idxs)
@@ -236,7 +241,7 @@ def main():
             train= False
         # TODO: generalize text pre-processing
         if sys.argv[2] == "semeval8":
-            labels, X_train, classes = get_semeval8_sdp_instances(sys.argv[4:], train=train)
+            labels, X_train, classes, X_train_ancestors, X_train_ancestors_ = get_semeval8_sdp_instances(sys.argv[4:], train=train)
             print(len(X_train))
             print(len(X_train[0]))
         elif sys.argv[2] == "ddi":
@@ -260,10 +265,13 @@ def main():
         # print(emb_index)
         inputs = {}
         if words_channel:
-            emb_index, emb_matrix = get_glove_vectors()
+            #emb_index, emb_matrix = get_glove_vectors()
+            word_vectors = get_w2v()
+            w2v_layer = word_vectors.get_keras_embedding()
             X_words_train = np.load(sys.argv[2] + "_x_words.npy")
-            X_words_left = preprocess_sequences(X_words_train[0], emb_index)
-            X_words_right = preprocess_sequences(X_words_train[1], emb_index)
+            # TODO: exclude target entities: first and last elements
+            X_words_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_train[0]], word_vectors)
+            X_words_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_train[1]], word_vectors)
             # skip root word
             # X_words_train = np.concatenate((X_words_left, X_words_right[..., 1:]), 1)
             inputs["left_words"] = X_words_left
@@ -271,6 +279,7 @@ def main():
 
         else:
             emb_matrix = None
+            w2v_layer = None
 
         if wordnet_channel:
             wn_index = get_wordnet_indexes()
@@ -292,7 +301,7 @@ def main():
         else:
             id_to_index = None
 
-        model = get_model(emb_matrix, id_to_index)
+        model = get_model(w2v_layer, id_to_index)
 
         #model = get_words_model(emb_matrix)
         #model = get_xu_model(emb_matrix)
@@ -307,8 +316,8 @@ def main():
 
             if words_channel:
                 X_words_test = np.load(sys.argv[3] + "_x_words.npy")
-                X_words_test_left = preprocess_sequences(X_words_test[0], emb_index)
-                X_words_test_right = preprocess_sequences(X_words_test[1], emb_index)
+                X_words_test_left = preprocess_sequences([["drug"] + x[1:]  for x in X_words_test[0]], word_vectors)
+                X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
                 val_inputs["left_words"] = X_words_test_left
                 val_inputs["right_words"] = X_words_test_right
 
@@ -356,12 +365,14 @@ def main():
         inputs = {}
 
         if words_channel:
-            emb_index, emb_matrix = get_glove_vectors()
+            #emb_index, emb_matrix = get_glove_vectors()
+            emb_index, emb_matrix = None, None
+            word_vectors = get_w2v()
             X_words_test = np.load(sys.argv[2] + "_x_words.npy")
-            X_words_test_left = preprocess_sequences(X_words_test[0], emb_index)
-            X_words_test_right = preprocess_sequences(X_words_test[1], emb_index)
+            X_words_test_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_test[0]], word_vectors)
+            X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
             # X_words_test = [X_words_test_left, X_words_test_right]
-            # X_words_test = np.concatenate((X_words_test_left, X_words_test_right[..., 1:]), 1)
+            X_words_test = np.concatenate((X_words_test_left, X_words_test_right[..., 1:]), 1)
             inputs["left_words"] = X_words_test_left
             inputs["right_words"] = X_words_test_right
         if wordnet_channel:
