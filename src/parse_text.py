@@ -160,9 +160,10 @@ def process_sentence(sentence, sentence_entities, sentence_pairs, wordnet_tags=N
         #print()
         #print(sentence_head_tokens[e1], e1, sentence_head_tokens[e2], e2)
         # reorder according to entity ID
-        if int(sentence_head_tokens[e1].split(".")[-1][1:]) > int(sentence_head_tokens[e2].split(".")[-1][1:]):
+        if int(sentence_head_tokens[e1].split("e")[-1]) > int(sentence_head_tokens[e2].split("e")[-1]):
             e1, e2 = e2, e1
         labels.append((sentence_head_tokens[e1], sentence_head_tokens[e2]))
+        #print(sentence_head_tokens[e1], sentence_head_tokens[e2])
         if (sentence_head_tokens[e1], sentence_head_tokens[e2]) in sentence_pairs:
             classes.append(sentence_pairs[(sentence_head_tokens[e1], sentence_head_tokens[e2])])
         else:
@@ -188,7 +189,11 @@ def process_sentence(sentence, sentence_entities, sentence_pairs, wordnet_tags=N
                     token_idx = int(element.split("-")[-1]) # get the index of the token
                     sdp_token = sentence[token_idx] #get the token obj
 
-                    #vector.append(sdp_token.vector)
+                    #if sdp_token.idx in entity_offsets:
+                    #    vector.append("drug")
+                    #    print("masked entity {}".format(sdp_token.text))
+                    #else:
+                        #vector.append(sdp_token.vector)
                     vector.append(sdp_token.text)
                     if wordnet_tags:
                         wordnet_vector.append(wordnet_tags[token_idx])
