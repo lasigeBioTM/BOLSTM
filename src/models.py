@@ -17,15 +17,15 @@ from keras import backend as K
 
 
 vocab_size = 10000
-embbed_size = 100
+embbed_size = 300
 chebi_embbed_size = 100
 wordnet_embbed_size = 47
-LSTM_units = 200
+LSTM_units = 300
 sigmoid_units = 100
 sigmoid_l2_reg = 0.00001
 dropout1 = 0.5
-#n_classes = 19
-n_classes = 5
+n_classes = 19
+#n_classes = 5
 max_sentence_length = 10
 max_ancestors_length = 10
 
@@ -33,6 +33,16 @@ words_channel = True
 wordnet_channel = False
 ancestors_channel = False
 
+
+def get_words_channel_conc(words_input, embedding_matrix):
+    concatenate = keras.layers.concatenate([words_input[0], words_input[1]], axis=-1)
+    e_words = embedding_matrix
+    e_words = e_words(concatenate)
+    e_words = Dropout(0.5)(e_words)
+    words_lstm = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
+                           kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words)
+    words_pool = GlobalMaxPooling1D()(words_lstm)
+    return words_pool
 
 def get_words_channel(words_input, embedding_matrix):
 
@@ -68,6 +78,7 @@ def get_words_channel(words_input, embedding_matrix):
     # we_hidden = Dropout(dropout1)(we_hidden)
     return (words_pool_left, words_pool_right)
 
+
 def get_model(embedding_matrix, id_to_index):
     inputs = []
     pool_layers = []
@@ -79,6 +90,9 @@ def get_model(embedding_matrix, id_to_index):
         words_pool_left, words_pool_right = get_words_channel((words_input_left, words_input_right),
                                                               embedding_matrix)
         pool_layers += [words_pool_left, words_pool_right]
+        #words_pool = get_words_channel_conc((words_input_left, words_input_right),
+        #                                                      embedding_matrix)
+        #pool_layers += [words_pool]
 
     if wordnet_channel:
         wordnet_left = Input(shape=(max_sentence_length,), name='left_wordnet')
@@ -149,7 +163,10 @@ def get_model(embedding_matrix, id_to_index):
         # we_hidden = Dropout(dropout1)(we_hidden)
         pool_layers += [ancestors_pool_left, ancestors_pool_right]
 
-    concatenate = keras.layers.concatenate(pool_layers, axis=-1)
+    if len(pool_layers) > 1:
+        concatenate = keras.layers.concatenate(pool_layers, axis=-1)
+    else:
+        concatenate = pool_layers[0]
 
     final_hidden = Dense(sigmoid_units, activation='sigmoid',  # , kernel_initializer="random_normal",
                          kernel_regularizer=regularizers.l2(sigmoid_l2_reg), )(concatenate)
@@ -206,21 +223,21 @@ def get_xu_model(embedding_matrix):
     #input_left = Input(shape=(max_sentence_length, embbed_size),  name='left_input')
     #input_right = Input(shape=(max_sentence_length, embbed_size),  name='right_input')
 
-    input_left = Input(shape=(max_sentence_length,), name='left_input')
-    input_right = Input(shape=(max_sentence_length,), name='right_input')
+    input_left = Input(shape=(max_sentence_length,), name='left_words')
+    input_right = Input(shape=(max_sentence_length,), name='right_words')
 
     e_left = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                       trainable=True)
+                       trainable=False)
     e_left.build((None,))
-    #e_left.set_weights([embedding_matrix])
+    e_left.set_weights([embedding_matrix])
     e_left = e_left(input_left)
 
     e_left = Dropout(0.5)(e_left)
 
     e_right = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
-                        trainable=True)
+                        trainable=False)
     e_right.build((None,))
-    #e_right.set_weights([embedding_matrix])
+    e_right.set_weights([embedding_matrix])
     e_right = e_right(input_right)
 
     e_right = Dropout(0.5)(e_right)
@@ -247,8 +264,8 @@ def get_xu_model(embedding_matrix):
 
     #model.add(Dense(n_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy',
-                  optimizer=SGD(0.1),
-                  #optimizer=Adam(0.001),
+                  #optimizer=SGD(0.1),
+                  optimizer=Adam(),
                   metrics=['accuracy', precision, recall, f1])
     print(model.summary())
     return model
