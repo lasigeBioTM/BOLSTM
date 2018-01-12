@@ -17,20 +17,20 @@ from keras import backend as K
 
 
 vocab_size = 10000
-embbed_size = 300
+embbed_size = 200
 chebi_embbed_size = 100
 wordnet_embbed_size = 47
-LSTM_units = 300
+LSTM_units = 200
 sigmoid_units = 100
 sigmoid_l2_reg = 0.00001
 dropout1 = 0.5
-n_classes = 19
-#n_classes = 5
+#n_classes = 19
+n_classes = 5
 max_sentence_length = 10
 max_ancestors_length = 10
 
 words_channel = True
-wordnet_channel = False
+wordnet_channel = True
 ancestors_channel = False
 
 
@@ -79,7 +79,7 @@ def get_words_channel(words_input, embedding_matrix):
     return (words_pool_left, words_pool_right)
 
 
-def get_model(embedding_matrix, id_to_index):
+def get_model(embedding_matrix, wordnet_emb, id_to_index):
     inputs = []
     pool_layers = []
     if words_channel:
@@ -100,14 +100,14 @@ def get_model(embedding_matrix, id_to_index):
 
         inputs += [wordnet_left, wordnet_right]
 
-        e_wn_left = Embedding(len(embedding_matrix), wordnet_embbed_size, input_length=max_sentence_length,
+        e_wn_left = Embedding(len(wordnet_emb), wordnet_embbed_size, input_length=max_sentence_length,
                                  trainable=True)
         e_wn_left.build((None,))
         e_wn_left = e_wn_left(wordnet_left)
 
         e_wn_left = Dropout(0.5)(e_wn_left)
 
-        e_wn_right = Embedding(len(embedding_matrix), wordnet_embbed_size, input_length=max_sentence_length,
+        e_wn_right = Embedding(len(wordnet_emb), wordnet_embbed_size, input_length=max_sentence_length,
                                   trainable=True)
         e_wn_right.build((None,))
         #e_words_right.set_weights([embedding_matrix])
@@ -115,9 +115,9 @@ def get_model(embedding_matrix, id_to_index):
 
         e_wn_right = Dropout(0.5)(e_wn_right)
 
-        wn_lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, wordnet_embbed_size), return_sequences=True,
+        wn_lstm_left = LSTM(wordnet_embbed_size, input_shape=(max_sentence_length, wordnet_embbed_size), return_sequences=True,
                                kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_wn_left)
-        wn_lstm_right = LSTM(LSTM_units, input_shape=(max_sentence_length, wordnet_embbed_size), return_sequences=True,
+        wn_lstm_right = LSTM(wordnet_embbed_size, input_shape=(max_sentence_length, wordnet_embbed_size), return_sequences=True,
                                 kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_wn_right)
 
         wn_pool_left = GlobalMaxPooling1D()(wn_lstm_left)
@@ -179,7 +179,7 @@ def get_model(embedding_matrix, id_to_index):
     # model.add(Dense(n_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy',
                   optimizer=SGD(0.1),
-                  #optimizer=Adam(0.0001),
+                  #optimizer=Adam(),
                   metrics=['accuracy', precision, recall, f1])
     print(model.summary())
     return model
