@@ -35,8 +35,9 @@ if ancestors_channel:
 
 DATA_DIR = "data/"
 n_epochs = 10
-batch_size = 10
+batch_size = 5
 validation_split = 0.1
+PRINTERRORS = True
 
 # https://github.com/keras-team/keras/issues/853#issuecomment-343981960
 
@@ -95,17 +96,21 @@ def get_glove_vectors():
 def get_w2v():
     embeddings_vectors = {}  # words -> vector
     embedding_indexes = {}
-    word_vectors = KeyedVectors.load_word2vec_format('data/pubmed_s100w10_min.bin', binary=True)  # C text format
+    #word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.txt', binary=False)  # C text format
+    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-w2v.bin', binary=True)  # C text format
     return word_vectors
 
 def get_wordnet_indexes():
     embedding_indexes = {}
     with open("sst-light-0.4/DATA/WNSS_07.TAGSET", 'r') as f:
         lines = f.readlines()
-        for i, l in enumerate(lines):
+        i = 0
+        for l in lines:
             if l.startswith("I-"):
                 continue
             embedding_indexes[l.strip().split("-")[-1]] = i
+            i += 1
+    # print(embedding_indexes)
     return embedding_indexes
 
 
@@ -121,7 +126,7 @@ def preprocess_sequences_glove(x_data, embeddings_index):
         #idxs = [embeddings_index.vocab[w.lower()].index for w in seq if w.lower() in embeddings_index.vocab]
         if None in idxs:
             print(seq, idxs)
-        #print(idxs)
+        # print(idxs)
         data.append(idxs)
     #print(data)
     data = pad_sequences(data, maxlen=max_sentence_length)
@@ -185,20 +190,21 @@ class Metrics(Callback):
                                                     _confusion_matrix)
         print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f}\n".format(s, _val_f1, _val_precision, _val_recall),)
 
-
-        # for i in range(len(val_targ)):
-        #     true_label = np.argmax(val_targ[i])
-        #     predicted = np.argmax(val_predict[i])
-        #     if predicted != true_label:
-        #         error_type = "wrong label"
-        #         if true_label == 0:
-        #             error_type = "FP"
-        #         elif predicted == 0:
-        #             error_type = "FN"
-        #         print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted,
-        #                                               str([self.validation_data[j][i] for j in range(n_inputs)])))
-        #print(val_predict, val_targ)
-        #print("true not false: {}".format()
+        if PRINTERRORS:
+            for i in range(len(val_targ)):
+                 true_label = np.argmax(val_targ[i])
+                 predicted = np.argmax(val_predict[i])
+                 if predicted != true_label:
+                     error_type = "wrong label"
+                     if true_label == 0:
+                         error_type = "FP"
+                     elif predicted == 0:
+                         error_type = "FN"
+                     if error_type != "FN":
+                         print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted,
+                                                           str([self.validation_data[j][i] for j in range(n_inputs)])))
+            #print(val_predict, val_targ)
+            #print("true not false: {}".format()
         print()
         return
 
@@ -281,15 +287,15 @@ def main():
         # print(emb_index)
         inputs = {}
         if words_channel:
-            emb_index, emb_matrix = get_glove_vectors()
-            #word_vectors = get_w2v()
-            #w2v_layer = word_vectors.get_keras_embedding()
+            #emb_index, emb_matrix = get_glove_vectors()
+            word_vectors = get_w2v()
+            w2v_layer = word_vectors.get_keras_embedding()
             X_words_train = np.load(sys.argv[2] + "_x_words.npy")
-            X_words_left = preprocess_sequences_glove(X_words_train[0], emb_index)
-            X_words_right = preprocess_sequences_glove(X_words_train[1], emb_index)
+            #X_words_left = preprocess_sequences_glove(X_words_train[0], emb_index)
+            #X_words_right = preprocess_sequences_glove(X_words_train[1], emb_index)
 
-            #X_words_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_train[0]], word_vectors)
-            #X_words_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_train[1]], word_vectors)
+            X_words_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_train[0]], word_vectors)
+            X_words_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_train[1]], word_vectors)
             # skip root word
             # X_words_train = np.concatenate((X_words_left, X_words_right[..., 1:]), 1)
             inputs["left_words"] = X_words_left
@@ -302,8 +308,8 @@ def main():
         if wordnet_channel:
             wn_index = get_wordnet_indexes()
             X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
-            X_wn_left = preprocess_sequences(X_wordnet_train[0], wn_index)
-            X_wn_right = preprocess_sequences(X_wordnet_train[1], wn_index)
+            X_wn_left = preprocess_sequences_glove(X_wordnet_train[0], wn_index)
+            X_wn_right = preprocess_sequences_glove(X_wordnet_train[1], wn_index)
             inputs["left_wordnet"] = X_wn_left
             inputs["right_wordnet"] = X_wn_right
 
@@ -319,10 +325,10 @@ def main():
         else:
             id_to_index = None
 
-        #model = get_model(w2v_layer, id_to_index)
+        model = get_model(w2v_layer, wn_index, id_to_index)
 
         #model = get_words_model(emb_matrix)
-        model = get_xu_model(emb_matrix)
+        #model = get_xu_model(emb_matrix)
 
 
         #print(inputs)
@@ -341,8 +347,8 @@ def main():
 
             if wordnet_channel:
                 X_wordnet_test = np.load(sys.argv[3] + "_x_wordnet.npy")
-                X_wn_test_left = preprocess_sequences(X_wordnet_test[0], wn_index)
-                X_wn_test_right = preprocess_sequences(X_wordnet_test[1], wn_index)
+                X_wn_test_left = preprocess_sequences_glove(X_wordnet_test[0], wn_index)
+                X_wn_test_right = preprocess_sequences_glove(X_wordnet_test[1], wn_index)
                 val_inputs["left_wordnet"] = X_wn_test_left
                 val_inputs["right_wordnet"] = X_wn_test_right
 
@@ -383,23 +389,23 @@ def main():
         inputs = {}
 
         if words_channel:
-            emb_index, emb_matrix = get_glove_vectors()
+            #emb_index, emb_matrix = get_glove_vectors()
             #emb_index, emb_matrix = None, None
             word_vectors = get_w2v()
             X_words_test = np.load(sys.argv[2] + "_x_words.npy")
-            #X_words_test_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_test[0]], word_vectors)
-            #X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
+            X_words_test_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_test[0]], word_vectors)
+            X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
             # X_words_test = [X_words_test_left, X_words_test_right]
-            X_words_test_left = preprocess_sequences_glove(X_words_test[0], emb_index)
-            X_words_test_right = preprocess_sequences_glove(X_words_test[1], emb_index)
+            #X_words_test_left = preprocess_sequences_glove(X_words_test[0], emb_index)
+            #X_words_test_right = preprocess_sequences_glove(X_words_test[1], emb_index)
             #X_words_test = np.concatenate((X_words_test_left, X_words_test_right[..., 1:]), 1)
             inputs["left_words"] = X_words_test_left
             inputs["right_words"] = X_words_test_right
         if wordnet_channel:
             wn_index = get_wordnet_indexes()
             X_wn_test = np.load(sys.argv[2] + "_x_wordnet.npy")
-            X_wordnet_test_left = preprocess_sequences(X_wn_test[0], wn_index)
-            X_wordnet_test_right = preprocess_sequences(X_wn_test[1], wn_index)
+            X_wordnet_test_left = preprocess_sequences_glove(X_wn_test[0], wn_index)
+            X_wordnet_test_right = preprocess_sequences_glove(X_wn_test[1], wn_index)
             inputs["left_wordnet"] = X_wordnet_test_left
             inputs["right_wordnet"] = X_wordnet_test_right
         if ancestors_channel:
