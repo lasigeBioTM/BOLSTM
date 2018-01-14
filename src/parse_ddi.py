@@ -4,7 +4,8 @@ import os
 import logging
 from subprocess import PIPE, Popen
 from parse_text import process_sentence, parse_sentence, run_sst
-from chebi_path import get_lowest_common_ascestor_path, load_chebi, get_all_shortest_paths_to_root, map_to_chebi, get_common_ancestors
+from chebi_path import get_lowest_common_ascestor_path, load_chebi, get_all_shortest_paths_to_root, \
+                        get_path_to_root, map_to_chebi, get_common_ancestors
 
 
 
@@ -20,7 +21,7 @@ label_to_pairtype = {"effect": EFFECT, "mechanism": MECHANISM, "advise": ADVICE,
 
 def get_ancestors(sentence_labels, sentence_entities, name_to_id, synonym_to_id, id_to_name):
     """
-    obtain the path to lowest common ancestor of each entity of each pair
+    obtain the path to lowest common ancestor of each entity of each pair and path from LCA to root
     :param sentence_labels: list of (e1, e2)
     :param sentence_entities: dictionary mapping entity ID to ((e_start, e_end), text, paths_to_root)
     :return: left and right paths to LCA
@@ -36,10 +37,14 @@ def get_ancestors(sentence_labels, sentence_entities, name_to_id, synonym_to_id,
         #right_paths.append(right_path + [lca])
         #print(p[0], sentence_entities[p[0]])
         instance_ancestors = get_common_ancestors(sentence_entities[p[0]][2], sentence_entities[p[1]][2])
+        left_path = get_path_to_root(sentence_entities[p[0]][2])
+        right_path = get_path_to_root(sentence_entities[p[1]][2])
         # print("common ancestors:", sentence_entities[p[0]][1:], sentence_entities[p[1]][1:], instance_ancestors)
         common_ancestors.append(instance_ancestors)
+        left_paths.append(left_path)
+        right_paths.append(right_path)
     #return (left_paths, right_paths)
-    return (common_ancestors, common_ancestors)
+    return common_ancestors, (left_paths, right_paths)
 
 def get_sentence_entities(base_dir, name_to_id, synonym_to_id):
     entities = {} # sentence_id -> entities
@@ -102,7 +107,7 @@ def get_ddi_sdp_instances(base_dir):
     """
     Parse DDI corpus, return vectors of SDP of each relation instance
     :param base_dir: directory containing semeval XML documents and annotations
-    :return: instances (vectors), classes (0/1) and labels (eid1, eid2)
+    :return: labels (eid1, eid2), instances (vectors), classes (0/1), common ancestors, l/r ancestors, l/r wordnet
     """
     is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
     entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id)
@@ -114,6 +119,7 @@ def get_ddi_sdp_instances(base_dir):
     right_instances = []
     left_ancestors = []
     right_ancestors = []
+    common_ancestors = []
     left_wordnet = []
     right_wordnet = []
     classes = []
@@ -141,7 +147,7 @@ def get_ddi_sdp_instances(base_dir):
                                                                            wordnet_sentence)
 
 
-                sentence_ancestors = get_ancestors(sentence_labels, sentence_entities,
+                sentence_ancestors, sentence_subpaths = get_ancestors(sentence_labels, sentence_entities,
                                                    name_to_id, synonym_to_id, id_to_name)
 
 
@@ -151,12 +157,13 @@ def get_ddi_sdp_instances(base_dir):
                 left_instances += sentence_we_instances[0]
                 right_instances += sentence_we_instances[1]
                 classes += sentence_classes
-                left_ancestors += sentence_ancestors[0]
-                right_ancestors += sentence_ancestors[1]
+                common_ancestors += sentence_ancestors
+                left_ancestors += sentence_subpaths[0]
+                right_ancestors += sentence_subpaths[1]
 
                 left_wordnet += sentence_wn_instances[0]
                 right_wordnet += sentence_wn_instances[1]
-    return labels, (left_instances, right_instances), classes,\
+    return labels, (left_instances, right_instances), classes, common_ancestors,\
            (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
 
 

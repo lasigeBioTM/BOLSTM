@@ -10,6 +10,8 @@ import logging
 import networkx as nx
 import en_core_web_lg
 
+SSTDIR = "sst-light-0.4/"
+
 def prevent_sentence_segmentation(doc):
     for token in doc:
         # This will entirely disable spaCy's sentence detection
@@ -98,14 +100,12 @@ def run_sst(token_seq):
         for sent in chunk:
             sentence_file.write("{}\t{}\t.\n".format(sent, "\t".join(token_seq[sent])))
         sentence_file.close()
-        os.chdir("sst-light-0.4/")
-        sst_args = ["./sst", "bitag",
-                    "./MODELS/WSJPOSc_base_20", "./DATA/WSJPOSc.TAGSET",
-                    "./MODELS/SEM07_base_12", "./DATA/WNSS_07.TAGSET",
-                    "../temp/sentences_{}.txt".format(i), "0", "0"]
+        sst_args = ["sst", "bitag",
+                    "{}/MODELS/WSJPOSc_base_20".format(SSTDIR), "{}/DATA/WSJPOSc.TAGSET".format(SSTDIR),
+                    "{}/MODELS/SEM07_base_12".format(SSTDIR), "{}/DATA/WNSS_07.TAGSET".format(SSTDIR),
+                    "temp/sentences_{}.txt".format(i), "0", "0"]
         p = Popen(sst_args, stdout=PIPE)
         p.communicate()
-        os.chdir("..")
         with open("temp/sentences_{}.txt.tags".format(i)) as f:
             output = f.read()
         sstoutput = parse_sst_results(output)

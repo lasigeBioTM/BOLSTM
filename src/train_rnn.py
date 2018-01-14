@@ -34,10 +34,10 @@ if ancestors_channel:
     n_inputs += 2
 
 DATA_DIR = "data/"
-n_epochs = 10
+n_epochs = 20
 batch_size = 5
 validation_split = 0.1
-PRINTERRORS = True
+PRINTERRORS = False
 
 # https://github.com/keras-team/keras/issues/853#issuecomment-343981960
 
@@ -96,8 +96,8 @@ def get_glove_vectors():
 def get_w2v():
     embeddings_vectors = {}  # words -> vector
     embedding_indexes = {}
-    #word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.txt', binary=False)  # C text format
-    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-w2v.bin', binary=True)  # C text format
+    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.txt', binary=False)  # C text format
+    #word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-w2v.bin', binary=True)  # C text format
     return word_vectors
 
 def get_wordnet_indexes():
@@ -223,6 +223,7 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
     #instances = np.empty((0, max_sentence_length))
     left_instances = []
     right_instances = []
+    common_ancestors = []
     left_ancestors = []
     right_ancestors = []
     left_wordnet = []
@@ -230,7 +231,7 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
     classes = np.empty((0,))
 
     for dir in dirs:
-        dir_labels, dir_instances, dir_classes, dir_ancestors, dir_wordnet = get_ddi_sdp_instances(dir)
+        dir_labels, dir_instances, dir_classes, dir_common, dir_ancestors, dir_wordnet = get_ddi_sdp_instances(dir)
         #dir_instances = np.array(dir_instances)
         #print(dir_instances)
         #dir_instances = sequence.pad_sequences(dir_instances, maxlen=max_sentence_length)
@@ -241,13 +242,15 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
         #instances = np.concatenate((instances, dir_instances), axis=0)
         left_instances += dir_instances[0]
         right_instances += dir_instances[1]
+        common_ancestors += dir_common
         left_ancestors += dir_ancestors[0]
         right_ancestors += dir_ancestors[1]
         left_wordnet += dir_wordnet[0]
         right_wordnet += dir_wordnet[1]
         classes = np.concatenate((classes, dir_classes), axis=0)
 
-    return labels, (left_instances, right_instances), classes, (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
+    return labels, (left_instances, right_instances), classes, common_ancestors,\
+           (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
 
 
 
@@ -267,11 +270,12 @@ def main():
             print(len(X_train))
             print(len(X_train[0]))
         elif sys.argv[2] == "ddi":
-            labels, X_train, classes, X_train_ancestors, X_train_wordnet = get_ddi_data(sys.argv[4:])
+            labels, X_train, classes, X_train_ancestors, X_train_subpaths, X_train_wordnet = get_ddi_data(sys.argv[4:])
             print(len(X_train))
+            np.save(sys.argv[3] + "_x_ancestors.npy", X_train_ancestors)
+            np.save(sys.argv[3] + "_x_subpaths.npy", X_train_subpaths)
         np.save(sys.argv[3] + "_labels.npy", labels)
         np.save(sys.argv[3] + "_x_words.npy", X_train)
-        np.save(sys.argv[3] + "_x_ancestors.npy", X_train_ancestors)
         np.save(sys.argv[3] + "_x_wordnet.npy", X_train_wordnet)
         np.save(sys.argv[3] + "_y.npy", classes)
 
@@ -315,13 +319,15 @@ def main():
 
         if ancestors_channel:
             is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
+            X_subpaths_train = np.load(sys.argv[2] + "_x_subpaths.npy")
             X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
-            X_ids_left = preprocess_ids(X_ancestors_train[0], id_to_index)
-            X_ids_right = preprocess_ids(X_ancestors_train[1], id_to_index)
-
+            X_ids_left = preprocess_ids(X_subpaths_train[0], id_to_index)
+            X_ids_right = preprocess_ids(X_subpaths_train[1], id_to_index)
+            X_ancestors = preprocess_ids(X_ancestors_train, id_to_index)
             #X_ancestors_train = np.concatenate((X_ids_left, X_ids_right[..., 1:]), 1)
             inputs["left_ancestors"] = X_ids_left
             inputs["right_ancestors"] = X_ids_right
+            inputs["common_ancestors"] = X_ancestors
         else:
             id_to_index = None
 
@@ -351,6 +357,17 @@ def main():
                 X_wn_test_right = preprocess_sequences_glove(X_wordnet_test[1], wn_index)
                 val_inputs["left_wordnet"] = X_wn_test_left
                 val_inputs["right_wordnet"] = X_wn_test_right
+
+            if ancestors_channel:
+                X_subpaths_test = np.load(sys.argv[3] + "_x_subpaths.npy")
+                X_ancestors_test = np.load(sys.argv[3] + "_x_ancestors.npy")
+                X_ids_left = preprocess_ids(X_subpaths_test[0], id_to_index)
+                X_ids_right = preprocess_ids(X_subpaths_test[1], id_to_index)
+                X_ancestors = preprocess_ids(X_ancestors_test, id_to_index)
+                # X_ancestors_train = np.concatenate((X_ids_left, X_ids_right[..., 1:]), 1)
+                val_inputs["left_ancestors"] = X_ids_left
+                val_inputs["right_ancestors"] = X_ids_right
+                val_inputs["common_ancestors"] = X_ancestors
 
             #X_ancestors_test = np.load(sys.argv[3] + "_x_ancestors.npy")
 
@@ -411,10 +428,13 @@ def main():
         if ancestors_channel:
             is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
             X_ancestors_test = np.load(sys.argv[2] + "_x_ancestors.npy")
-            X_ids_left = preprocess_ids(X_ancestors_test[0], id_to_index)
-            X_ids_right = preprocess_ids(X_ancestors_test[1], id_to_index)
+            X_subpaths_test = np.load(sys.argv[2] + "_x_subpaths.npy")
+            X_ids_left = preprocess_ids(X_subpaths_test[0], id_to_index)
+            X_ids_right = preprocess_ids(X_subpaths_test[1], id_to_index)
+            X_ancestors = preprocess_ids(X_ancestors_test, id_to_index)
             inputs["left_ancestors"] = X_ids_left
             inputs["right_ancestors"] = X_ids_right
+            inputs["common_ancestors"] = X_ancestors
 
         # load json and create model
         json_file = open('model.json', 'r')
@@ -438,6 +458,7 @@ def main():
         limit = int(sys.argv[3])
         X_words_train = np.load(sys.argv[2] + "_x_words.npy")
         X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
+        X_subpaths_train = np.load(sys.argv[2] + "_x_subpaths.npy")
         X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
         train_labels = np.load(sys.argv[2] + "_labels.npy")
@@ -451,11 +472,13 @@ def main():
         print("right words:")
         print(X_words_train[1][:limit])
         print()
-        #print("chebi ancestors:")
-        #print(len(X_ancestors_train))
+        print("chebi ancestors:")
+        #print(len(X_subpaths_train))
         #print(len(X_ancestors_train[0]))
-        #print(X_ancestors_train[0][:limit])
-        #print()
+        print(X_ancestors_train[:limit])
+        print(X_subpaths_train[0][:limit])
+        print(X_subpaths_train[1][:limit])
+        print()
 
         print("wordnet:")
         print(X_wordnet_train[0][:limit])

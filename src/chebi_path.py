@@ -90,7 +90,13 @@ def get_common_ancestors(id1, id2):
     a = [ssm.get_name(x) for x in a]
     return a
 
-def get_path_to_root(drugname, is_a_graph, name_to_id, synonym_to_id, id_to_name):
+def get_path_to_root(id1):
+    e1 = ssm.get_id(id1.replace(":", "_"))
+    a = ssm.common_ancestors(e1, e1)
+    a = [ssm.get_name(x) for x in a]
+    return a
+
+def get_path_to_root_alt(drugname, is_a_graph, name_to_id, synonym_to_id, id_to_name):
     source_id = name_to_id.get(drugname)
     if source_id is None:
         source_id = synonym_to_id[drugname][0]

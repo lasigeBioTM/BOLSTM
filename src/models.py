@@ -30,7 +30,7 @@ max_sentence_length = 10
 max_ancestors_length = 10
 
 words_channel = True
-wordnet_channel = True
+wordnet_channel = False
 ancestors_channel = False
 
 
