@@ -34,8 +34,8 @@ if ancestors_channel:
     n_inputs += 2
 
 DATA_DIR = "data/"
-n_epochs = 20
-batch_size = 5
+n_epochs = 100
+batch_size = 128
 validation_split = 0.1
 PRINTERRORS = False
 
@@ -96,8 +96,8 @@ def get_glove_vectors():
 def get_w2v():
     embeddings_vectors = {}  # words -> vector
     embedding_indexes = {}
-    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.txt', binary=False)  # C text format
-    #word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-w2v.bin', binary=True)  # C text format
+    #word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.txt', binary=False)  # C text format
+    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.bin', binary=True)  # C text format
     return word_vectors
 
 def get_wordnet_indexes():
@@ -155,7 +155,7 @@ def preprocess_ids(x_data, id_to_index):
     data = []
     for i, seq in enumerate(x_data):
         # print(seq)
-        idxs = [id_to_index[d] for d in seq if d]
+        idxs = [id_to_index[d.replace("_", ":")] for d in seq if d and d.startswith("CHEBI")]
         data.append(idxs)
     data = pad_sequences(data, maxlen=max_ancestors_length)
     return data
@@ -316,6 +316,8 @@ def main():
             X_wn_right = preprocess_sequences_glove(X_wordnet_train[1], wn_index)
             inputs["left_wordnet"] = X_wn_left
             inputs["right_wordnet"] = X_wn_right
+        else:
+            wn_index = None
 
         if ancestors_channel:
             is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
@@ -476,7 +478,11 @@ def main():
         #print(len(X_subpaths_train))
         #print(len(X_ancestors_train[0]))
         print(X_ancestors_train[:limit])
+        print()
+        print("chebi subpaths")
+        print("left")
         print(X_subpaths_train[0][:limit])
+        print("right")
         print(X_subpaths_train[1][:limit])
         print()
 
