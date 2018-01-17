@@ -1,3 +1,4 @@
+import random
 import sys
 import logging
 import os
@@ -34,7 +35,7 @@ if ancestors_channel:
     n_inputs += 2
 
 DATA_DIR = "data/"
-n_epochs = 100
+n_epochs = 30
 batch_size = 128
 validation_split = 0.1
 PRINTERRORS = False
@@ -288,6 +289,12 @@ def main():
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
 
+        list_order = np.arange(len(Y_train))
+        random.shuffle(list_order)
+
+        Y_train = Y_train[list_order]
+
+        print("train order:", list_order)
         # print(emb_index)
         inputs = {}
         if words_channel:
@@ -302,8 +309,8 @@ def main():
             X_words_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_train[1]], word_vectors)
             # skip root word
             # X_words_train = np.concatenate((X_words_left, X_words_right[..., 1:]), 1)
-            inputs["left_words"] = X_words_left
-            inputs["right_words"] = X_words_right
+            inputs["left_words"] = X_words_left[list_order]
+            inputs["right_words"] = X_words_right[list_order]
 
         else:
             emb_matrix = None
@@ -314,8 +321,8 @@ def main():
             X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
             X_wn_left = preprocess_sequences_glove(X_wordnet_train[0], wn_index)
             X_wn_right = preprocess_sequences_glove(X_wordnet_train[1], wn_index)
-            inputs["left_wordnet"] = X_wn_left
-            inputs["right_wordnet"] = X_wn_right
+            inputs["left_wordnet"] = X_wn_left[list_order]
+            inputs["right_wordnet"] = X_wn_right[list_order]
         else:
             wn_index = None
 
@@ -327,9 +334,9 @@ def main():
             X_ids_right = preprocess_ids(X_subpaths_train[1], id_to_index)
             X_ancestors = preprocess_ids(X_ancestors_train, id_to_index)
             #X_ancestors_train = np.concatenate((X_ids_left, X_ids_right[..., 1:]), 1)
-            inputs["left_ancestors"] = X_ids_left
-            inputs["right_ancestors"] = X_ids_right
-            inputs["common_ancestors"] = X_ancestors
+            inputs["left_ancestors"] = X_ids_left[list_order]
+            inputs["right_ancestors"] = X_ids_right[list_order]
+            inputs["common_ancestors"] = X_ancestors[list_order]
         else:
             id_to_index = None
 
