@@ -12,6 +12,7 @@ from gensim.models.keyedvectors import KeyedVectors
 from keras.utils.np_utils import to_categorical
 from keras.models import model_from_json
 from keras.callbacks import Callback
+from keras.callbacks import ReduceLROnPlateau
 from keras.preprocessing.text import one_hot
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
@@ -35,10 +36,10 @@ if ancestors_channel:
     n_inputs += 2
 
 DATA_DIR = "data/"
-n_epochs = 30
+n_epochs = 10
 batch_size = 128
 validation_split = 0.1
-PRINTERRORS = False
+PRINTERRORS = True
 
 # https://github.com/keras-team/keras/issues/853#issuecomment-343981960
 
@@ -46,8 +47,8 @@ def write_plots(history):
     plt.figure()
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
-    plt.title('model F1')
-    plt.ylabel('F1')
+    plt.title('model eval')
+    plt.ylabel('score')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.savefig("model_acc.png")
@@ -98,7 +99,7 @@ def get_w2v():
     embeddings_vectors = {}  # words -> vector
     embedding_indexes = {}
     #word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.txt', binary=False)  # C text format
-    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.bin', binary=True)  # C text format
+    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-w2v.bin', binary=True)  # C text format
     return word_vectors
 
 def get_wordnet_indexes():
@@ -148,7 +149,7 @@ def preprocess_sequences(x_data, embeddings_index):
         #print(idxs)
         data.append(idxs)
     #print(data)
-    data = pad_sequences(data, maxlen=max_sentence_length)
+    data = pad_sequences(data, maxlen=max_sentence_length, padding='post')
     return data
 
 def preprocess_ids(x_data, id_to_index):
@@ -164,6 +165,11 @@ def preprocess_ids(x_data, id_to_index):
 
 
 class Metrics(Callback):
+    def __init__(self, labels, **kwargs):
+        self.labels = labels
+        super(Metrics, self).__init__()
+
+
     def on_train_begin(self, logs={}):
         self.val_f1s = []
         self.val_recalls = []
@@ -202,15 +208,16 @@ class Metrics(Callback):
                      elif predicted == 0:
                          error_type = "FN"
                      if error_type != "FN":
-                         print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted,
-                                                           str([self.validation_data[j][i] for j in range(n_inputs)])))
+                         #print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted,
+                         #                                  str([self.validation_data[j][i] for j in range(n_inputs)])))
+                         print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted, self.labels[i]))
             #print(val_predict, val_targ)
             #print("true not false: {}".format()
         print()
         return
 
 
-metrics = Metrics()
+
 
 
 
@@ -285,7 +292,7 @@ def main():
             os.remove("model.json")
         if os.path.isfile("model.h5"):
             os.remove("model.h5")
-
+        train_labels = np.load(sys.argv[2] + "_labels.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
 
@@ -293,25 +300,33 @@ def main():
         random.shuffle(list_order)
 
         Y_train = Y_train[list_order]
-
+        train_labels = train_labels[list_order]
         print("train order:", list_order)
         # print(emb_index)
         inputs = {}
         if words_channel:
             #emb_index, emb_matrix = get_glove_vectors()
             word_vectors = get_w2v()
-            w2v_layer = word_vectors.get_keras_embedding()
+            w2v_layer = word_vectors.get_keras_embedding(train_embeddings=False)
             X_words_train = np.load(sys.argv[2] + "_x_words.npy")
             #X_words_left = preprocess_sequences_glove(X_words_train[0], emb_index)
             #X_words_right = preprocess_sequences_glove(X_words_train[1], emb_index)
 
             X_words_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_train[0]], word_vectors)
             X_words_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_train[1]], word_vectors)
+            #X_words_left = preprocess_sequences(X_words_train[0], word_vectors)
+            #X_words_right = preprocess_sequences(X_words_train[1], word_vectors)
+
             # skip root word
-            # X_words_train = np.concatenate((X_words_left, X_words_right[..., 1:]), 1)
+
+            #print(np.array(X_words_train[1]))
+            #X_words_train = np.concatenate((np.array(X_words_train[0]), np.array(X_words_train[1])), 1)
+            #X_words_train = [X_words_train[0][i] + X_words_train[1][i] for i in range(len(X_words_train[0]))]
+            #X_words_train = preprocess_sequences(X_words_train, word_vectors)
+
             inputs["left_words"] = X_words_left[list_order]
             inputs["right_words"] = X_words_right[list_order]
-
+            #inputs["words"] = X_words_train[list_order]
         else:
             emb_matrix = None
             w2v_layer = None
@@ -348,7 +363,7 @@ def main():
 
         #print(inputs)
         if len(sys.argv) > 3:
-
+            Y_labels = np.load(sys.argv[3] + "_labels.npy")
             Y_test = np.load(sys.argv[3] + "_y.npy")
             Y_test = to_categorical(Y_test, num_classes=n_classes)
             val_inputs = {}
@@ -386,16 +401,19 @@ def main():
 
             #model.fit(X_words_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
             #          batch_size=batch_size, callbacks=[metrics], verbose=2)
+            metrics = Metrics(Y_labels)
             history = model.fit(inputs,
                                 {"output": Y_train}, validation_data=(val_inputs, val_outputs), epochs=n_epochs,
                                 batch_size=batch_size, verbose=2, callbacks=[metrics])
             write_plots(history)
 
         else:
-
+            metrics = Metrics(train_labels)
+            reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
+                                          patience=5, min_lr=0.001)
             history = model.fit(inputs,
                       {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
-                      batch_size=batch_size, verbose=2, callbacks=[metrics])
+                      batch_size=batch_size, verbose=2, callbacks=[metrics, reduce_lr ])
                                                                    #keras.callbacks.EarlyStopping(patience=3)])
             #history = model.fit({"input": X_words_train}, {"output": Y_train},
             #                    validation_split=validation_split, epochs=n_epochs,
@@ -421,12 +439,16 @@ def main():
             X_words_test = np.load(sys.argv[2] + "_x_words.npy")
             X_words_test_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_test[0]], word_vectors)
             X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
-            # X_words_test = [X_words_test_left, X_words_test_right]
+            #X_words_test = [X_words_test[0][i] + X_words_test[1][i] for i in range(len(X_words_test[0]))]
+            #X_words_test = preprocess_sequences(X_words_test, word_vectors)
+            inputs["left_words"] = X_words_test_left
+            inputs["right_words"] = X_words_test_right
+            #inputs["words"] = X_words_test
             #X_words_test_left = preprocess_sequences_glove(X_words_test[0], emb_index)
             #X_words_test_right = preprocess_sequences_glove(X_words_test[1], emb_index)
             #X_words_test = np.concatenate((X_words_test_left, X_words_test_right[..., 1:]), 1)
-            inputs["left_words"] = X_words_test_left
-            inputs["right_words"] = X_words_test_right
+            #inputs["left_words"] = X_words_test_left
+            #inputs["right_words"] = X_words_test_right
         if wordnet_channel:
             wn_index = get_wordnet_indexes()
             X_wn_test = np.load(sys.argv[2] + "_x_wordnet.npy")
