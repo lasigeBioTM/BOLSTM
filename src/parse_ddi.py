@@ -3,7 +3,8 @@ import sys
 import os
 import logging
 from subprocess import PIPE, Popen
-from parse_text import process_sentence, parse_sentence, run_sst
+from parse_text import process_sentence_spacy, process_sentence_corenlp,\
+                    parse_sentence_spacy, parse_sentence_corenlp, run_sst
 from chebi_path import get_lowest_common_ascestor_path, load_chebi, get_all_shortest_paths_to_root, \
                         get_path_to_root, map_to_chebi, get_common_ancestors
 
@@ -46,7 +47,7 @@ def get_ancestors(sentence_labels, sentence_entities, name_to_id, synonym_to_id,
     #return (left_paths, right_paths)
     return common_ancestors, (left_paths, right_paths)
 
-def get_sentence_entities(base_dir, name_to_id, synonym_to_id):
+def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=100):
     entities = {} # sentence_id -> entities
     for f in os.listdir(base_dir):
         logging.info("processing entities: {}".format(f))
@@ -59,6 +60,9 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id):
             sentence_entities = {}
             if len(sentence.findall('pair')) > 0: # skip sentences without pairs
                 for e in sentence.findall('entity'):
+                    e_id = e.get("id")
+                    if int(e_id.split("e")[-1]) > entity_id_max:
+                        continue
                     sep_offsets = e.get("charOffset").split(";")
                     offsets = []
                     for o in sep_offsets:
@@ -75,11 +79,11 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id):
                     #e_path = get_all_shortest_paths_to_root(chebi_name, is_a_graph, name_to_id, synonym_to_id, id_to_name)
                     #e_path = []
                     #sentence_entities[e.get("id")] = (offsets, e_text, e_path)
-                    sentence_entities[e.get("id")] = (offsets, e_text, chebi_id)
+                    sentence_entities[e_id] = (offsets, e_text, chebi_id)
                 entities[sentence_id] = sentence_entities
     return entities
 
-def parse_ddi_sentences(base_dir, entities):
+def parse_ddi_sentences_corenlp(base_dir, entities):
 
     parsed_sentences = {}
     # first iterate all documents, and preprocess all sentences
@@ -91,9 +95,34 @@ def parse_ddi_sentences(base_dir, entities):
         for sentence in root:
             sentence_id = sentence.get("id")
             if len(sentence.findall('pair')) > 0:  # skip sentences without pairs
-                parsed_sentence = parse_sentence(sentence.get("text"), entities[sentence_id])
+                parsed_sentence = parse_sentence_corenlp(sentence.get("text"), entities[sentence_id])
                 parsed_sentences[sentence_id] = parsed_sentence
                 tokens = []
+                #for t in parsed_sentence:
+                for t in parsed_sentence.token:
+                    tokens.append(t.word.replace(" ", "_").replace('\t', '_').replace('\n', '_'))
+                #sentence_file.write("{}\t{}\t.\n".format(sentence_id, "\t".join(tokens)))
+                token_seq[sentence_id] = tokens
+    wordnet_tags = run_sst(token_seq)
+    return parsed_sentences, wordnet_tags
+
+
+def parse_ddi_sentences_spacy(base_dir, entities):
+
+    parsed_sentences = {}
+    # first iterate all documents, and preprocess all sentences
+    token_seq = {}
+    for f in os.listdir(base_dir):
+        logging.info("parsing {}".format(f))
+        tree = ET.parse(base_dir + f)
+        root = tree.getroot()
+        for sentence in root:
+            sentence_id = sentence.get("id")
+            if len(sentence.findall('pair')) > 0:  # skip sentences without pairs
+                parsed_sentence = parse_sentence_spacy(sentence.get("text"), entities[sentence_id])
+                parsed_sentences[sentence_id] = parsed_sentence
+                tokens = []
+                #for t in parsed_sentence:
                 for t in parsed_sentence:
                     tokens.append(t.text.replace(" ", "_").replace('\t', '_').replace('\n', '_'))
                 #sentence_file.write("{}\t{}\t.\n".format(sentence_id, "\t".join(tokens)))
@@ -102,17 +131,18 @@ def parse_ddi_sentences(base_dir, entities):
     return parsed_sentences, wordnet_tags
 
 
-
-def get_ddi_sdp_instances(base_dir):
+def get_ddi_sdp_instances(base_dir, parser="spacy"):
     """
     Parse DDI corpus, return vectors of SDP of each relation instance
     :param base_dir: directory containing semeval XML documents and annotations
     :return: labels (eid1, eid2), instances (vectors), classes (0/1), common ancestors, l/r ancestors, l/r wordnet
     """
     is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
-    entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id)
-
-    parsed_sentences, wordnet_sentences = parse_ddi_sentences(base_dir, entities)
+    entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=9)
+    if parser == "spacy":
+        parsed_sentences, wordnet_sentences = parse_ddi_sentences_spacy(base_dir, entities)
+    else:
+        parsed_sentences, wordnet_sentences = parse_ddi_sentences_corenlp(base_dir, entities)
     #print(wordnet_sentences.keys())
     # print(sstoutput)
     left_instances = []
@@ -126,8 +156,6 @@ def get_ddi_sdp_instances(base_dir):
     labels = []
     for f in os.listdir(base_dir):
         logging.info("generating instances: {}".format(f))
-        #if f != "L-Glutamine_ddi.xml":
-        #    continue
         tree = ET.parse(base_dir + f)
         root = tree.getroot()
         for sentence in root:
@@ -139,12 +167,18 @@ def get_ddi_sdp_instances(base_dir):
                 parsed_sentence = parsed_sentences[sentence_id]
                 wordnet_sentence = wordnet_sentences[sentence_id]
                 # sentence_pairs: {(e1id, e2id): pairtype_label}
-
-                sentence_labels, sentence_we_instances,\
-                sentence_wn_instances, sentence_classes = process_sentence(parsed_sentence,
-                                                                           sentence_entities,
-                                                                           sentence_pairs,
-                                                                           wordnet_sentence)
+                if parser == "spacy":
+                    sentence_labels, sentence_we_instances,\
+                    sentence_wn_instances, sentence_classes = process_sentence_spacy(parsed_sentence,
+                                                                               sentence_entities,
+                                                                               sentence_pairs,
+                                                                               wordnet_sentence)
+                else:
+                    sentence_labels, sentence_we_instances, \
+                    sentence_wn_instances, sentence_classes = process_sentence_corenlp(parsed_sentence,
+                                                                                     sentence_entities,
+                                                                                     sentence_pairs,
+                                                                                     wordnet_sentence)
 
 
                 sentence_ancestors, sentence_subpaths = get_ancestors(sentence_labels, sentence_entities,
@@ -167,6 +201,38 @@ def get_ddi_sdp_instances(base_dir):
            (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
 
 
+
+def calculate_similarity():
+    is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
+    base_dir = "data/ddi2013Train/DrugBank/"
+    for f in os.listdir(base_dir):
+        logging.info("generating instances: {}".format(f))
+        #if f != "L-Glutamine_ddi.xml":
+        #    continue
+        main_chebi_name = map_to_chebi(f, name_to_id, synonym_to_id)
+        tree = ET.parse(base_dir + f)
+        root = tree.getroot()
+        for sentence in root:
+            sentence_id = sentence.get("id")
+            sentence_pairs = {(p.get("e1"), p.get("e2")): label_to_pairtype[p.get("type")] for p in
+                              sentence.findall('pair') if p.get("ddi") == "true"}
+            sentence_entities = {}
+            if len(sentence.findall('pair')) > 0:  # skip sentences without pairs
+                for e in sentence.findall('entity'):
+                    sep_offsets = e.get("charOffset").split(";")
+                    offsets = []
+                    for o in sep_offsets:
+                        start, end = o.split("-")
+                        offsets.append(int(start))
+                        offsets.append(int(end) + 1)
+                    e_text = e.get("text")
+                    chebi_name = map_to_chebi(e_text, name_to_id, synonym_to_id)
+                    if chebi_name in name_to_id:
+                        chebi_id = name_to_id[chebi_name]
+                    else:
+                        chebi_id = synonym_to_id[chebi_name][0]
+
+                    #
 
 # print("Drugbank")
 # labels, instances, classes = get_ddi_sdp_instances("data/ddi2013Train/DrugBank/")
