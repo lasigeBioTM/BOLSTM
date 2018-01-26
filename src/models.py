@@ -29,10 +29,10 @@ wordnet_embbed_size = 47
 LSTM_units = 200
 sigmoid_units = 100
 sigmoid_l2_reg = 0.00001
-dropout1 = 0.5
+dropout1 = 0.7
 #n_classes = 19
 n_classes = 5
-max_sentence_length = 80
+max_sentence_length = 40
 max_ancestors_length = 10
 
 words_channel = True
@@ -60,7 +60,7 @@ def get_words_channel_single(words_input, embedding_matrix):
 
     #attention = attention_3d_block(e_words)
 
-    e_words = Dropout(dropout1)(e_words)
+    #e_words = Dropout(dropout1)(e_words)
     words_lstm = Bidirectional(LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
                            kernel_regularizer=regularizers.l2(sigmoid_l2_reg)))(e_words)
     words_lstm = Dropout(dropout1)(words_lstm)
@@ -90,7 +90,7 @@ def get_words_channel(words_input, embedding_matrix):
     e_words_left = embedding_matrix
     e_words_left = e_words_left(words_input[0])
 
-    e_words_left = Dropout(dropout1)(e_words_left)
+    #e_words_left = Dropout(dropout1)(e_words_left)
 
     # e_words_right = Embedding(len(embedding_matrix), embbed_size, input_length=max_sentence_length,
     #                    trainable=False)
@@ -99,7 +99,7 @@ def get_words_channel(words_input, embedding_matrix):
     e_words_right = embedding_matrix
     e_words_right = e_words_right(words_input[1])
 
-    e_words_right = Dropout(dropout1)(e_words_right)
+    #e_words_right = Dropout(dropout1)(e_words_right)
 
     words_lstm_left = LSTM(LSTM_units, input_shape=(max_sentence_length, embbed_size), return_sequences=True,
                            kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_words_left)
@@ -124,29 +124,47 @@ def get_chebi_channel(chebi_input, id_to_index):
     e_ancestors_left.build((None,))
     e_ancestors_left = e_ancestors_left(chebi_input[0])
 
-    e_ancestors_left = Dropout(0.5)(e_ancestors_left)
+    e_ancestors_left = Dropout(dropout1)(e_ancestors_left)
 
     e_ancestors_right = Embedding(len(id_to_index), chebi_embbed_size, input_length=max_ancestors_length,
                                   trainable=True)
     e_ancestors_right.build((None,))
     # e_right.set_weights([embedding_matrix])
-    e_ancestors_right = e_ancestors_right(chebi_input[0])
+    e_ancestors_right = e_ancestors_right(chebi_input[1])
 
-    e_ancestors_right = Dropout(0.5)(e_ancestors_right)
+    e_ancestors_right = Dropout(dropout1)(e_ancestors_right)
 
-    #ancestors_lstm_left = LSTM(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size), return_sequences=True,
-    #                           kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_ancestors_left)
-    #ancestors_lstm_right = LSTM(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size),
-    #                            return_sequences=True,
-    #                            kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_ancestors_right)
+    ancestors_lstm_left = LSTM(chebi_embbed_size, input_shape=(max_ancestors_length, chebi_embbed_size), return_sequences=True,
+                               kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_ancestors_left)
+    ancestors_lstm_right = LSTM(chebi_embbed_size, input_shape=(max_ancestors_length, chebi_embbed_size),
+                                return_sequences=True,
+                                kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_ancestors_right)
 
 
-    #ancestors_pool_left = GlobalMaxPooling1D()(ancestors_lstm_left)
-    #ancestors_pool_right = GlobalMaxPooling1D()(ancestors_lstm_right)
+    ancestors_pool_left = GlobalMaxPooling1D()(ancestors_lstm_left)
+    ancestors_pool_right = GlobalMaxPooling1D()(ancestors_lstm_right)
 
-    ancestors_dense_left = Dense(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size))(e_ancestors_left)
-    ancestors_dense_right = Dense(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size))(e_ancestors_right)
-    return ancestors_dense_left, ancestors_dense_right
+    #ancestors_dense_left = Dense(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size))(e_ancestors_left)
+    #ancestors_dense_right = Dense(LSTM_units, input_shape=(max_ancestors_length, chebi_embbed_size))(e_ancestors_right)
+    #return ancestors_dense_left, ancestors_dense_right
+    #return ancestors_dense_left, ancestors_dense_right
+    return ancestors_pool_left, ancestors_pool_right
+
+
+def get_chebi_ancestors_channel(chebi_input, id_to_index):
+    e_ancestors = Embedding(len(id_to_index), chebi_embbed_size, input_length=max_ancestors_length,
+                                 trainable=True)
+    e_ancestors.build((None,))
+    e_ancestors = e_ancestors(chebi_input[0])
+
+    e_ancestors = Dropout(0.5)(e_ancestors)
+    ancestors_lstm = LSTM(chebi_embbed_size, input_shape=(max_ancestors_length, chebi_embbed_size),
+                               return_sequences=False,
+                               kernel_regularizer=regularizers.l2(sigmoid_l2_reg))(e_ancestors)
+
+
+    return ancestors_lstm
+
 
 def get_model(embedding_matrix, wordnet_emb, id_to_index):
     inputs = []
@@ -160,13 +178,13 @@ def get_model(embedding_matrix, wordnet_emb, id_to_index):
         #words_input = Input(shape=(max_sentence_length,), name='words')
         #inputs += [words_input]
 
-        words_pool_left, words_pool_right = get_words_channel((words_input_left, words_input_right),
-                                                              embedding_matrix)
-        pool_layers += [words_pool_left, words_pool_right]
-        #words_pool = get_words_channel_conc((words_input_left, words_input_right),
+        #words_pool_left, words_pool_right = get_words_channel((words_input_left, words_input_right),
         #                                                      embedding_matrix)
+        #pool_layers += [words_pool_left, words_pool_right]
+        words_pool = get_words_channel_conc((words_input_left, words_input_right),
+                                                              embedding_matrix)
         #words_pool = get_words_channel_single(words_input, embedding_matrix)
-        #pool_layers += [words_pool]
+        pool_layers += [words_pool]
 
     if wordnet_channel:
         wordnet_left = Input(shape=(max_sentence_length,), name='left_wordnet')
@@ -229,8 +247,8 @@ def get_model(embedding_matrix, wordnet_emb, id_to_index):
 
     # model.add(Dense(n_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy',
-                  optimizer=SGD(0.1),
-                  #optimizer=Adam(),
+                  #optimizer=SGD(0.1),
+                  optimizer=Adam(0.001),
                   #optimizer=RMSprop(),
                   metrics=['accuracy', precision, recall, f1])
     print(model.summary())
