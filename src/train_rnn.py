@@ -36,7 +36,7 @@ if ancestors_channel:
     n_inputs += 2
 
 DATA_DIR = "data/"
-n_epochs = 10
+n_epochs = 30
 batch_size = 128
 validation_split = 0.1
 PRINTERRORS = True
@@ -45,8 +45,8 @@ PRINTERRORS = True
 
 def write_plots(history):
     plt.figure()
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
+    plt.plot(history.history['f1'])
+    plt.plot(history.history['val_f1'])
     plt.title('model eval')
     plt.ylabel('score')
     plt.xlabel('epoch')
@@ -143,7 +143,11 @@ def preprocess_sequences(x_data, embeddings_index):
             #    print("word not in index: {}".format(w.lower()))
         #print(seq)
         #idxs = [embeddings_index.get(w.lower()) for w in seq if w.lower() in embeddings_index]
-        idxs = [embeddings_index.vocab[w.lower()].index for w in seq if w.lower() in embeddings_index.vocab]
+        #idxs = [embeddings_index.vocab[w.lower()].index for w in seq if w.lower() in embeddings_index.vocab]
+        idxs= []
+        for w in seq:
+            if w.lower() in embeddings_index.vocab:
+                idxs.append(embeddings_index.vocab[w.lower()].index)
         if None in idxs:
             print(seq, idxs)
         #print(idxs)
@@ -165,8 +169,10 @@ def preprocess_ids(x_data, id_to_index):
 
 
 class Metrics(Callback):
-    def __init__(self, labels, **kwargs):
+    def __init__(self, labels, words, **kwargs):
         self.labels = labels
+        self.words_left = words[0]
+        self.words_right = words[1]
         super(Metrics, self).__init__()
 
 
@@ -207,10 +213,13 @@ class Metrics(Callback):
                          error_type = "FP"
                      elif predicted == 0:
                          error_type = "FN"
-                     if error_type != "FN":
+                     if error_type != "wrong label":
                          #print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted,
                          #                                  str([self.validation_data[j][i] for j in range(n_inputs)])))
-                         print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted, self.labels[i]))
+                         print("{}: {}->{}; inputs: {} {} {}".format(error_type, true_label,
+                                                               predicted, self.labels[i],
+                                                                     self.words_left[i], self.words_right[i]),
+                               file=sys.stderr)
             #print(val_predict, val_targ)
             #print("true not false: {}".format()
         print()
@@ -267,13 +276,14 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
 def main():
 
     if sys.argv[1] == "preprocessing":
-        from parse_semeval8 import get_semeval8_sdp_instances
+
         #labels, X_train, classes = get_ddi_data(sys.argv[3:])
         train = True
         if "test" in sys.argv[3].lower():
             train= False
         # TODO: generalize text pre-processing
         if sys.argv[2] == "semeval8":
+            from parse_semeval8 import get_semeval8_sdp_instances
             labels, X_train, classes, X_train_ancestors, X_train_wordnet = get_semeval8_sdp_instances(sys.argv[4:], train=train)
             print(len(X_train))
             print(len(X_train[0]))
@@ -297,7 +307,7 @@ def main():
         Y_train = to_categorical(Y_train, num_classes=n_classes)
 
         list_order = np.arange(len(Y_train))
-        random.shuffle(list_order)
+        #random.shuffle(list_order)
 
         Y_train = Y_train[list_order]
         train_labels = train_labels[list_order]
@@ -401,7 +411,7 @@ def main():
 
             #model.fit(X_words_train, Y_train, validation_data=(X_test, Y_test), epochs=n_epochs,
             #          batch_size=batch_size, callbacks=[metrics], verbose=2)
-            metrics = Metrics(Y_labels)
+            metrics = Metrics(Y_labels, X_words_test)
             history = model.fit(inputs,
                                 {"output": Y_train}, validation_data=(val_inputs, val_outputs), epochs=n_epochs,
                                 batch_size=batch_size, verbose=2, callbacks=[metrics])
@@ -485,12 +495,18 @@ def main():
             for i, pair in enumerate(test_labels):
                 f.write(" ".join((pair[0], pair[1], str(np.argmax(scores[i])))) + "\n")
 
+    elif sys.argv[1] == "dummy_predict":
+        test_labels = np.load(sys.argv[2] + "_labels.npy")
+        with open("{}_results.txt".format(sys.argv[2].split("/")[-1]), 'w') as f:
+            for i, pair in enumerate(test_labels):
+                f.write(" ".join((pair[0], pair[1], "3")) + "\n")
+
     elif sys.argv[1] == "showdata":
         limit = int(sys.argv[3])
         X_words_train = np.load(sys.argv[2] + "_x_words.npy")
-        X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
-        X_subpaths_train = np.load(sys.argv[2] + "_x_subpaths.npy")
-        X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
+        #X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
+        #X_subpaths_train = np.load(sys.argv[2] + "_x_subpaths.npy")
+        #X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
         train_labels = np.load(sys.argv[2] + "_labels.npy")
 
@@ -503,22 +519,22 @@ def main():
         print("right words:")
         print(X_words_train[1][:limit])
         print()
-        print("chebi ancestors:")
+        #print("chebi ancestors:")
         #print(len(X_subpaths_train))
         #print(len(X_ancestors_train[0]))
-        print(X_ancestors_train[:limit])
-        print()
-        print("chebi subpaths")
-        print("left")
-        print(X_subpaths_train[0][:limit])
-        print("right")
-        print(X_subpaths_train[1][:limit])
-        print()
+        #print(X_ancestors_train[:limit])
+        #print()
+        #print("chebi subpaths")
+        #print("left")
+        #print(X_subpaths_train[0][:limit])
+        #print("right")
+        #print(X_subpaths_train[1][:limit])
+        #print()
 
-        print("wordnet:")
-        print(X_wordnet_train[0][:limit])
-        print(X_wordnet_train[1][:limit])
-        print()
+        #print("wordnet:")
+        #print(X_wordnet_train[0][:limit])
+        #print(X_wordnet_train[1][:limit])
+        #print()
 
         print("classes")
         print(Y_train[:limit])
@@ -528,7 +544,61 @@ def main():
         print(counter)
         print(counter[1] + counter[2] + counter[3] + counter[4])
 
+        analyze_entity_distances(train_labels, Y_train, X_words_train)
 
+        analyze_sdps(Y_train, X_words_train)
+
+
+def analyze_sdps(Y_train, X_words_train):
+    pass
+
+def analyze_entity_distances(train_labels, Y_train, X_words_train):
+    entity_id_max = 10
+    print()
+    print("entity id distribution of entities in positive pairs")
+    c = {}
+    for i, p in enumerate(train_labels):
+        if "DDI-DrugBank.d335.s3.e0" in p:
+            print(i, Y_train[i], p)
+        if Y_train[i] == 0:
+            continue
+        eid1 = int(p[0].split("e")[-1])
+        eid2 = int(p[1].split("e")[-1])
+        if eid1 not in c:
+            c[eid1] = 0
+        if eid2 not in c:
+            c[eid2] = 0
+        c[eid1] += 1
+        c[eid2] += 2
+    for e in c:
+        print(e, c[e], c[e] / sum(c.values()))
+    print("percentage of entities with id>{}".format(entity_id_max))
+    print(sum([c[e] / sum(c.values()) for e in c if e > entity_id_max]))
+    print()
+
+    print()
+    print("entity id distribution of entities in all pairs")
+    c = {}
+    for i, p in enumerate(train_labels):
+        eid1 = int(p[0].split("e")[-1])
+        eid2 = int(p[1].split("e")[-1])
+        if eid1 not in c:
+            c[eid1] = 0
+        if eid2 not in c:
+            c[eid2] = 0
+        c[eid1] += 1
+        c[eid2] += 2
+    for e in c:
+        print(e, c[e], c[e] / sum(c.values()))
+    print("percentage of entities with id>{}".format(entity_id_max))
+    print(sum([c[e] / sum(c.values()) for e in c if e > entity_id_max]))
+    print()
+
+    digits1 = [x for x in X_words_train[0] if any([y.replace(".", "").isdigit() for y in x])]
+    digits2 = [x for x in X_words_train[1] if any([y.replace(".", "").isdigit() for y in x])]
+    print(digits1, digits2)
+    print(len(digits1), len(digits2))
+    print(len(X_words_train[0]), len(X_words_train[1]))
 
 if __name__ == "__main__":
     main()
