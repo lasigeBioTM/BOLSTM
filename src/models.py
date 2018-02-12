@@ -26,7 +26,7 @@ from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_
 
 vocab_size = 10000
 embbed_size = 200
-chebi_embbed_size = 50
+chebi_embbed_size = 100
 wordnet_embbed_size = 47
 LSTM_units = 100
 sigmoid_units = 10
