@@ -1,0 +1,41 @@
+SCORES FOR the file: chebi_common_dditestdrugbank_results.txt.tsv
+Gold Dataset: /
+
+Partial Evaluation: only detection of DDI (regadless to the type)
+tp	fp	fn	total	prec	recall	F1
+451	133	193	644	0.7723	0.7003	0.7345
+
+
+Detection and Classification of DDI
+tp	fp	fn	total	prec	recall	F1
+353	231	291	644	0.6045	0.5481	0.5749
+
+
+________________________________________________________________________
+
+SCORES FOR DDI TYPE
+Scores for ddi with type mechanism
+tp	fp	fn	total	prec	recall	F1
+140	78	138	278	0.6422	0.5036	0.5645
+
+
+Scores for ddi with type effect
+tp	fp	fn	total	prec	recall	F1
+153	120	145	298	0.5604	0.5134	0.5359
+
+
+Scores for ddi with type advise
+tp	fp	fn	total	prec	recall	F1
+47	31	167	214	0.6026	0.2196	0.3219
+
+
+Scores for ddi with type int
+tp	fp	fn	total	prec	recall	F1
+13	2	81	94	0.8667	0.1383	0.2385
+
+
+MACRO-AVERAGE MEASURES:
+	P	R	F1
+	0.668	0.3437	0.4539
+________________________________________________________________________
+

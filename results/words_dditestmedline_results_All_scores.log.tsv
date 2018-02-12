@@ -1,0 +1,41 @@
+SCORES FOR the file: words_dditestmedline_results.txt.tsv
+Gold Dataset: /
+
+Partial Evaluation: only detection of DDI (regadless to the type)
+tp	fp	fn	total	prec	recall	F1
+23	13	38	61	0.6389	0.377	0.4742
+
+
+Detection and Classification of DDI
+tp	fp	fn	total	prec	recall	F1
+18	18	43	61	0.5	0.2951	0.3711
+
+
+________________________________________________________________________
+
+SCORES FOR DDI TYPE
+Scores for ddi with type mechanism
+tp	fp	fn	total	prec	recall	F1
+7	4	17	24	0.6364	0.2917	0.4
+
+
+Scores for ddi with type effect
+tp	fp	fn	total	prec	recall	F1
+10	12	52	62	0.4545	0.1613	0.2381
+
+
+Scores for ddi with type advise
+tp	fp	fn	total	prec	recall	F1
+1	1	6	7	0.5	0.1429	0.2222
+
+
+Scores for ddi with type int
+tp	fp	fn	total	prec	recall	F1
+0	1	2	2	0	0	0
+
+
+MACRO-AVERAGE MEASURES:
+	P	R	F1
+	0.3977	0.149	0.2167
+________________________________________________________________________
+
