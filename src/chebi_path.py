@@ -78,7 +78,7 @@ def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"
                 print("not a synonym:", syn.split('"'))
 
     #print(synonym_to_id)
-    print("done.")
+    print("done.", len(name_to_id), len(synonym_to_id))
     return is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index
 
 
