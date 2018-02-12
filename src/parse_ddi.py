@@ -41,14 +41,18 @@ def get_ancestors(sentence_labels, sentence_entities, name_to_id, synonym_to_id,
         left_path = get_path_to_root(sentence_entities[p[0]][2])
         right_path = get_path_to_root(sentence_entities[p[1]][2])
         # print("common ancestors:", sentence_entities[p[0]][1:], sentence_entities[p[1]][1:], instance_ancestors)
+        instance_ancestors = [i for i in instance_ancestors if i.startswith("CHEBI")]
+        left_path = [i for i in left_path if i.startswith("CHEBI")]
+        right_path = [i for i in right_path if i.startswith("CHEBI")]
         common_ancestors.append(instance_ancestors)
         left_paths.append(left_path)
         right_paths.append(right_path)
     #return (left_paths, right_paths)
     return common_ancestors, (left_paths, right_paths)
 
-def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=100):
+def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=10):
     entities = {} # sentence_id -> entities
+    pair_entities = set() # list of entities not in interactions
     for f in os.listdir(base_dir):
         logging.info("processing entities: {}".format(f))
         #if f != "L-Glutamine_ddi.xml":
@@ -57,12 +61,22 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=100
         root = tree.getroot()
         for sentence in root:
             sentence_id = sentence.get("id")
+            sentence_text = sentence.get("text")
             sentence_entities = {}
-            if len(sentence.findall('pair')) > 0: # skip sentences without pairs
+            all_pairs = sentence.findall('pair')
+            pos_pairs = {(p.get("e1"), p.get("e2")): label_to_pairtype[p.get("type")] for p in
+                               all_pairs if p.get("ddi") == "true"}
+            for p in pos_pairs:
+                pair_entities.add(p[0])
+                pair_entities.add(p[1])
+
+            if len(all_pairs) > 0: # skip sentences without pairs
+
                 for e in sentence.findall('entity'):
                     e_id = e.get("id")
                     if int(e_id.split("e")[-1]) > entity_id_max:
                         continue
+
                     sep_offsets = e.get("charOffset").split(";")
                     offsets = []
                     for o in sep_offsets:
@@ -70,6 +84,8 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=100
                         offsets.append(int(start))
                         offsets.append(int(end)+1)
                     e_text = e.get("text")
+                    if offsets[0] == 0 and sentence_text[offsets[-1]] == ":":
+                        logging.debug("skipped title: {} -> {}".format(e_text, sentence_text))
                     chebi_name = map_to_chebi(e_text, name_to_id, synonym_to_id)
                     if chebi_name in name_to_id:
                         chebi_id = name_to_id[chebi_name]
@@ -81,7 +97,7 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=100
                     #sentence_entities[e.get("id")] = (offsets, e_text, e_path)
                     sentence_entities[e_id] = (offsets, e_text, chebi_id)
                 entities[sentence_id] = sentence_entities
-    return entities
+    return entities, pair_entities
 
 def parse_ddi_sentences_corenlp(base_dir, entities):
 
@@ -138,7 +154,7 @@ def get_ddi_sdp_instances(base_dir, parser="spacy"):
     :return: labels (eid1, eid2), instances (vectors), classes (0/1), common ancestors, l/r ancestors, l/r wordnet
     """
     is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
-    entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=9)
+    entities, positive_entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=20)
     if parser == "spacy":
         parsed_sentences, wordnet_sentences = parse_ddi_sentences_spacy(base_dir, entities)
     else:
@@ -154,6 +170,8 @@ def get_ddi_sdp_instances(base_dir, parser="spacy"):
     right_wordnet = []
     classes = []
     labels = []
+    all_pos_gv = set()
+    all_neg_gv = set()
     for f in os.listdir(base_dir):
         logging.info("generating instances: {}".format(f))
         tree = ET.parse(base_dir + f)
@@ -169,10 +187,12 @@ def get_ddi_sdp_instances(base_dir, parser="spacy"):
                 # sentence_pairs: {(e1id, e2id): pairtype_label}
                 if parser == "spacy":
                     sentence_labels, sentence_we_instances,\
-                    sentence_wn_instances, sentence_classes = process_sentence_spacy(parsed_sentence,
+                    sentence_wn_instances, sentence_classes, pos_gv, neg_gv = process_sentence_spacy(parsed_sentence,
                                                                                sentence_entities,
                                                                                sentence_pairs,
-                                                                               wordnet_sentence)
+                                                                                     positive_entities,
+                                                                               wordnet_sentence
+                                                                                     )
                 else:
                     sentence_labels, sentence_we_instances, \
                     sentence_wn_instances, sentence_classes = process_sentence_corenlp(parsed_sentence,
@@ -197,8 +217,14 @@ def get_ddi_sdp_instances(base_dir, parser="spacy"):
 
                 left_wordnet += sentence_wn_instances[0]
                 right_wordnet += sentence_wn_instances[1]
+
+                all_pos_gv.update(pos_gv)
+                all_neg_gv.update(neg_gv)
+
+    #print(base_dir, all_pos_gv, all_neg_gv)
+    #print(all_neg_gv - all_pos_gv)
     return labels, (left_instances, right_instances), classes, common_ancestors,\
-           (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
+           (left_ancestors, right_ancestors), (left_wordnet, right_wordnet), all_neg_gv, all_pos_gv
 
 
 
