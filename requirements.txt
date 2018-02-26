@@ -1,5 +1,4 @@
 beautifulsoup4==4.6.0
-bioc==1.1.dev2
 bleach==1.5.0
 boto==2.48.0
 bs4==0.0.1
@@ -13,8 +12,6 @@ cytoolz==0.8.2
 decorator==4.1.2
 dill==0.2.7.1
 docutils==0.13.1
-en-core-web-lg==2.0.0
-en-core-web-sm==2.0.0
 enum34==1.1.6
 ftfy==4.4.3
 fuzzywuzzy==0.15.1
@@ -31,17 +28,15 @@ msgpack-python==0.4.8
 murmurhash==0.28.0
 networkx==2.0
 numpy==1.13.3
-obonet==0.2.2
 pathlib==1.0.1
 plac==0.9.6
 preshed==1.0.0
-protobuf==3.5.0
-PyMySQL==0.7.11
 pyparsing==2.2.0
 python-dateutil==2.6.1
 python-Levenshtein==0.12.0
 pytz==2017.3
 PyYAML==3.12
+rdflib
 regex==2017.4.5
 requests==2.18.4
 scikit-learn==0.19.1
