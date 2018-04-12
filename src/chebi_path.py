@@ -40,6 +40,7 @@ def exit_handler():
 
 atexit.register(exit_handler)
 
+# parse chebi ontology
 paths_cache = {} # store chebi ID->paths
 chemical_entity = "CHEBI:24431"
 role = "CHEBI:50906"

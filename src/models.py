@@ -24,6 +24,7 @@ from keras import regularizers
 from keras import backend as K
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 
+#store model archite
 vocab_size = 10000
 embbed_size = 200
 chebi_embbed_size = 100
@@ -36,25 +37,6 @@ dropout1 = 0.5
 n_classes = 5
 max_sentence_length = 20
 max_ancestors_length = 20
-
-#words_channel = True
-#wordnet_channel = True
-#common_ancestors_channel = False
-#concat_ancestors_channel = False
-
-# https://github.com/philipperemy/keras-attention-mechanism
-def attention_3d_block(inputs):
-    # inputs.shape = (batch_size, time_steps, input_dim)
-    input_dim = int(inputs.shape[2])
-    a = Permute((2, 1))(inputs)
-    a = Reshape((input_dim, max_sentence_length*2))(a) # this line is not useful. It's just to know which dimension is what.
-    a = Dense(max_sentence_length*2, activation='softmax')(a)
-    #if SINGLE_ATTENTION_VECTOR:
-    a = Lambda(lambda x: K.mean(x, axis=1), name='dim_reduction')(a)
-    a = RepeatVector(input_dim)(a)
-    a_probs = Permute((2, 1), name='attention_vec')(a)
-    output_attention_mul = merge([inputs, a_probs], name='attention_mul', mode='mul')
-    return output_attention_mul
 
 
 def get_words_channel_single(words_input, embedding_matrix):

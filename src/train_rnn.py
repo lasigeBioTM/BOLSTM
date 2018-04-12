@@ -38,6 +38,11 @@ PRINTERRORS = False
 # https://github.com/keras-team/keras/issues/853#issuecomment-343981960
 
 def write_plots(history, modelname):
+    """
+    Write plots regarding model training
+    :param history: history object returned by fit function
+    :param modelname: name of model to be used as part of filename
+    """
     plt.figure()
     plt.plot(history.history['f1'])
     plt.plot(history.history['val_f1'])
@@ -56,11 +61,16 @@ def write_plots(history, modelname):
     plt.legend(['train', 'test'], loc='upper left')
     plt.savefig("{}_loss.png".format(modelname))
 
-def get_glove_vectors():
+def get_glove_vectors(filename='glove.6B.300d.txt'):
+    """
+    Open
+    :param filename: file containing the word vectors trained with glove
+    :return: index of each word and vectors
+    """
     embeddings_vectors = {"": np.zeros(embbed_size, dtype='float32')} # words -> vector
     embedding_indexes = {"": 0}
     # load embeddings indexes: word -> coefs
-    f = open(os.path.join(DATA_DIR, 'glove.6B.300d.txt'))
+    f = open(os.path.join(DATA_DIR, filename))
     #f = open(os.path.join(DATA_DIR, 'PubMed-and-PMC-w2v.txt'))
     for i, line in enumerate(f):
         #if i == 0:
@@ -89,14 +99,20 @@ def get_glove_vectors():
     return embedding_indexes, embedding_weights
 
 
-def get_w2v():
-    embeddings_vectors = {}  # words -> vector
-    embedding_indexes = {}
+def get_w2v(filename='data/PubMed-w2v.bin'):
+    """
+    Open Word2Vec file using gensim package
+    :return: word vectors in KeyedVectors gensim object
+    """
     #word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-and-PMC-w2v.txt', binary=False)  # C text format
-    word_vectors = KeyedVectors.load_word2vec_format('data/PubMed-w2v.bin', binary=True)  # C text format
+    word_vectors = KeyedVectors.load_word2vec_format(filename, binary=True)  # C text format
     return word_vectors
 
 def get_wordnet_indexes():
+    """
+    Get the wordnet classes considered by SST, ignoring BI tags
+    :return: embedding_indexes: tag -> index
+    """
     embedding_indexes = {}
     with open("sst-light-0.4/DATA/WNSS_07.TAGSET", 'r') as f:
         lines = f.readlines()
@@ -111,6 +127,12 @@ def get_wordnet_indexes():
 
 
 def preprocess_sequences_glove(x_data, embeddings_index):
+    """
+    Replace words in x_data with index of word in embeddings_index and pad sequence
+    :param x_data: list of sequences of words (sentences)
+    :param embeddings_index: word -> index in embedding matrix
+    :return: matrix to be used as training data
+    """
     data = []
     for i, seq in enumerate(x_data):
         #for w in seq:
@@ -130,6 +152,12 @@ def preprocess_sequences_glove(x_data, embeddings_index):
 
 
 def preprocess_sequences(x_data, embeddings_index):
+    """
+    Replace words in x_data with index of word in embeddings_index and pad sequence
+    :param x_data: list of sequences of words (sentences)
+    :param embeddings_index: word -> index in embedding matrix
+    :return: matrix to be used as training data
+    """
     data = []
     for i, seq in enumerate(x_data):
         #for w in seq:
@@ -151,7 +179,14 @@ def preprocess_sequences(x_data, embeddings_index):
     return data
 
 def preprocess_ids(x_data, id_to_index, maxlen):
-    # process a sequence of ontology:IDs, so a embedding index is not necessary
+    """
+    process a sequence of ontology:IDs, so an embedding index is not necessary
+    :param x_data:
+    :param id_to_index:
+    :param maxlen:
+    :return: matrix to be used as training data
+    """
+    #
     data = []
     for i, seq in enumerate(x_data):
         # print(seq)
@@ -163,6 +198,9 @@ def preprocess_ids(x_data, id_to_index, maxlen):
 
 
 class Metrics(Callback):
+    """
+    Implementation of P, R and F1 metrics for fit function callback
+    """
     def __init__(self, labels, words, n_inputs, **kwargs):
         self.labels = labels
         self.words_left = words[0]
@@ -203,49 +241,33 @@ class Metrics(Callback):
         print("\n{} VAL_f1:{:6.3f} VAL_p:{:6.3f} VAL_r{:6.3f}\n".format(s, self._val_f1,
                                                                         self._val_precision, self._val_recall),)
 
-        if PRINTERRORS:
-            for i in range(len(val_targ)):
-                 true_label = np.argmax(val_targ[i])
-                 predicted = np.argmax(val_predict[i])
-                 if predicted != true_label:
-                     error_type = "wrong label"
-                     if true_label == 0:
-                         error_type = "FP"
-                     elif predicted == 0:
-                         error_type = "FN"
-                     if error_type == "FP":
-                         #print("{}: {}->{}; inputs: {}".format(error_type, true_label, predicted,
-                         #                                  str([self.validation_data[j][i] for j in range(self.n_inputs)])))
-                         print("{}: {}->{}; inputs: {} {} {}".format(error_type, true_label,
-                                                               predicted, self.labels[i],
-                                                                     self.words_left[i], self.words_right[i]),
-                               file=sys.stderr)
-            #print(val_predict, val_targ)
-            #print("true not false: {}".format()
-        print()
         return
 
 
 
-
-
-
 def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine/"]):
+    """
+    Generate data instances for the documents in the subdirectories of the corpus
+    :param dirs: list of directories to be scanned for XML files
+    :return: column vectors where each element corresponds to a label or a sequence of values of a particular
+    data instance.
+    """
 
+    # import function to process a directory with XML DDI files
     from parse_ddi import get_ddi_sdp_instances
 
     #dirs = ["data/DDICorpus/Test/DDIExtraction/DrugBank/", "data/DDICorpus/Test/DDIExtraction/MedLine/"]
     labels = []
     #instances = np.empty((0, max_sentence_length, embbed_size))
     #instances = np.empty((0, max_sentence_length))
-    left_instances = []
+    left_instances = [] # word indexes
     right_instances = []
-    common_ancestors = []
+    common_ancestors = [] # ontology IDs
     left_ancestors = []
     right_ancestors = []
-    left_wordnet = []
+    left_wordnet = [] # wordnet IDs
     right_wordnet = []
-    all_pos_gv = set()
+    all_pos_gv = set() # anti positive governors
     all_neg_gv = set()
     classes = np.empty((0,))
 
@@ -271,19 +293,14 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
         all_pos_gv.update(pos_gv)
         all_neg_gv.update(neg_gv)
 
-    print(neg_gv - pos_gv)
     return labels, (left_instances, right_instances), classes, common_ancestors,\
            (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
 
-
-
-
-
 def main():
-
     if sys.argv[1] == "preprocessing":
-
-        #labels, X_train, classes = get_ddi_data(sys.argv[3:])
+        # generate data instances and write to disk as numpy arrays
+        # args: corpus_type (semeval8 or ddi) corpus_name1 (corpus_name2) (...)
+        # e.g. python3 src/train_rnn.py preprocessing ddi temp/dditrain data/DDICorpus/Train/MedLine/ data/DDICorpus/Train/DrugBank/
         train = True
         if "test" in sys.argv[3].lower():
             train= False
@@ -303,7 +320,10 @@ def main():
         np.save(sys.argv[3] + "_x_wordnet.npy", X_train_wordnet)
         np.save(sys.argv[3] + "_y.npy", classes)
 
-    elif sys.argv[1] == "train" or sys.argv[1] == "train_test":
+    elif sys.argv[1] == "train":
+        # open numpy arrays with data and train model
+
+        # number of input channels is determined by args after corpus_name and model_name
         n_inputs = 0
         if "words" in sys.argv[4:]:
             n_inputs += 2
@@ -314,22 +334,24 @@ def main():
         if "common_ancestors" in sys.argv[4:]:
             n_inputs += 1
 
-        if os.path.isfile("{}.json".format(sys.argv[3])):
-            os.remove("{}.json".format(sys.argv[3]))
-        if os.path.isfile("{}.h5".format(sys.argv[3])):
-            os.remove("{}.h5".format(sys.argv[3]))
+        # remove previous model files
+        if os.path.isfile("models/{}.json".format(sys.argv[3])):
+            os.remove("models/{}.json".format(sys.argv[3]))
+        if os.path.isfile("models/{}.h5".format(sys.argv[3])):
+            os.remove("models/{}.h5".format(sys.argv[3]))
         train_labels = np.load(sys.argv[2] + "_labels.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
 
+        # get random instance order (to shuffle docs types and labels)
         list_order = np.arange(len(Y_train))
         random.seed(1)
         random.shuffle(list_order)
-
         Y_train = Y_train[list_order]
         train_labels = train_labels[list_order]
         print("train order:", list_order)
-        # print(emb_index)
+
+        # store features in this dictionry according to args
         inputs = {}
         if "words" in sys.argv[4:]:
             #emb_index, emb_matrix = get_glove_vectors()
@@ -384,18 +406,14 @@ def main():
 
         model = get_model(w2v_layer, sys.argv[4:], wn_index, id_to_index)
 
+        # alternative models
         #model = get_words_model(emb_matrix)
         #model = get_xu_model(emb_matrix)
 
 
-        #print(inputs)
-
-
 
         metrics = Metrics(train_labels, X_words_train, n_inputs)
-        #reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
-        #                              patience=5, min_lr=0.001)
-        checkpointer = ModelCheckpoint(filepath="{}.h5".format(sys.argv[3]), verbose=1, save_best_only=True)
+        checkpointer = ModelCheckpoint(filepath="models/{}.h5".format(sys.argv[3]), verbose=1, save_best_only=True)
         history = model.fit(inputs,
                   {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
                   batch_size=batch_size, verbose=2, callbacks=[metrics, checkpointer])
@@ -408,14 +426,14 @@ def main():
 
         # serialize model to JSON
         model_json = model.to_json()
-        with open("{}.json".format(sys.argv[3]), "w") as json_file:
+        with open("models/{}.json".format(sys.argv[3]), "w") as json_file:
             json_file.write(model_json)
             # serialize weights to HDF5
         #model.save_weights("{}.h5".format(sys.argv[3]))
         print("Saved model to disk")
 
     elif sys.argv[1] == "predict":
-
+        # open numpy files according to the input channels specified, open model files and apply model to data
         inputs = {}
 
         if "words" in sys.argv[4:]:
@@ -455,12 +473,12 @@ def main():
             inputs["common_ancestors"] = X_ancestors
 
         # load json and create model
-        json_file = open('{}.json'.format(sys.argv[3]), 'r')
+        json_file = open('models/{}.json'.format(sys.argv[3]), 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         loaded_model = model_from_json(loaded_model_json)
         # load weights into new model
-        loaded_model.load_weights("{}.h5".format(sys.argv[3]))
+        loaded_model.load_weights("models/{}.h5".format(sys.argv[3]))
         print("Loaded model {} from disk".format(sys.argv[3]))
 
 
@@ -468,6 +486,7 @@ def main():
 
         #scores = loaded_model.predict(X_words_test)
         scores = loaded_model.predict(inputs)
+        # write results to file
         with open("{}_{}_results.txt".format(sys.argv[3], sys.argv[2].split("/")[-1]), 'w') as f:
             for i, pair in enumerate(test_labels):
                 f.write(" ".join((pair[0], pair[1], str(np.argmax(scores[i])))) + "\n")
@@ -678,6 +697,7 @@ def analyze_lens(Y_train, X_words_train, X_wordnet_train, X_subpaths_train, X_an
     neg_values = [neg_word_left, neg_word_right, neg_wordnet_left, neg_wordnet_right, neg_chebi_left, neg_chebi_right,
                   neg_common]
     print("negitive pairs\n: {}".format("\n".join([str(x / neg) for x in neg_values])))
+
 
 if __name__ == "__main__":
     main()
