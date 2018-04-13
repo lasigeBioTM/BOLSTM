@@ -27,22 +27,6 @@ def prevent_sentence_segmentation(doc):
     return doc
 
 
-#nlp = spacy.load('en_core_web_lg', disable=['ner'])
-#tokenizer = Tokenizer(nlp.vocab)
-
-#def create_tokenizer(nlp):
-#    prefix_re = spacy.util.compile_suffix_regex(nlp.Defaults.prefixes)
-#    suffix_re = spacy.util.compile_suffix_regex(nlp.Defaults.suffixes)
-    # infix_re = spacy.util.compile_infix_regex((r'''(?<=[\w*])(;)(?=[\w*])''',))
-#    infix_re = spacy.util.compile_suffix_regex(nlp.Defaults.infixes + (r'''(?<=[A-Za-z])[;](?=[A-Za-z])''', ';'))
-
-#    return Tokenizer(nlp.vocab,
-#            rules={},
-#            prefix_search=prefix_re.search,
-#            suffix_search=suffix_re.search,
-#            infix_finditer=infix_re.finditer
-#            )
-#nlp = spacy.load('en_core_web_lg', disable=['ner'], create_make_doc=create_tokenizer)
 nlp = en_core_web_lg.load(disable=['ner'])
 nlp.add_pipe(prevent_sentence_segmentation, name='prevent-sbd', before='parser')
 

@@ -2,7 +2,10 @@
 
 ## Getting Started
 Code necessary to run the BO-LSTM model. Use the Dockerfile or the [docker hub image](https://hub.docker.com/r/andrelamurias/chebiddi/) setup the experimental environment.
+
 Use *prepare_ddi.sh* to generate training instances and *pipeline_ddi.sh* to run the experiments.
+
+Use *train.sh* to train a BO-LSTM classification model and *predict.sh* to run the model on new data.
 
 ## Preparing data
 *python3 src/train_rnn.py preprocessing ddi temp/dditrain data/DDICorpus/Train/MedLine/ data/DDICorpus/Train/DrugBank/*

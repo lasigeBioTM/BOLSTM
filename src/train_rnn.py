@@ -272,6 +272,9 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
     classes = np.empty((0,))
 
     for dir in dirs:
+        if not os.path.isdir(dir):
+            print("{} does not exist!".format(dir))
+            sys.exit()
         dir_labels, dir_instances, dir_classes, dir_common, dir_ancestors, dir_wordnet, neg_gv, pos_gv = get_ddi_sdp_instances(dir)
         #dir_instances = np.array(dir_instances)
         #print(dir_instances)
@@ -312,7 +315,7 @@ def main():
             print(len(X_train[0]))
         elif sys.argv[2] == "ddi":
             labels, X_train, classes, X_train_ancestors, X_train_subpaths, X_train_wordnet = get_ddi_data(sys.argv[4:])
-            print(len(X_train))
+            #print(len(X_train))
             np.save(sys.argv[3] + "_x_ancestors.npy", X_train_ancestors)
             np.save(sys.argv[3] + "_x_subpaths.npy", X_train_subpaths)
         np.save(sys.argv[3] + "_labels.npy", labels)
