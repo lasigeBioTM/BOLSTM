@@ -245,7 +245,7 @@ class Metrics(Callback):
 
 
 
-def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine/"]):
+def get_ddi_data(dirs, name_to_id, synonym_to_id, id_to_name):
     """
     Generate data instances for the documents in the subdirectories of the corpus
     :param dirs: list of directories to be scanned for XML files
@@ -275,7 +275,8 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
         if not os.path.isdir(dir):
             print("{} does not exist!".format(dir))
             sys.exit()
-        dir_labels, dir_instances, dir_classes, dir_common, dir_ancestors, dir_wordnet, neg_gv, pos_gv = get_ddi_sdp_instances(dir)
+        dir_labels, dir_instances, dir_classes, dir_common, dir_ancestors, dir_wordnet, \
+        neg_gv, pos_gv = get_ddi_sdp_instances(dir, name_to_id, synonym_to_id, id_to_name)
         #dir_instances = np.array(dir_instances)
         #print(dir_instances)
         #dir_instances = sequence.pad_sequences(dir_instances, maxlen=max_sentence_length)
@@ -299,200 +300,215 @@ def get_ddi_data(dirs=["data/ddi2013Train/DrugBank/", "data/ddi2013Train/MedLine
     return labels, (left_instances, right_instances), classes, common_ancestors,\
            (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
 
+def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_train,
+          X_subpaths_train, X_ancestors_train, id_to_index):
+    # open numpy arrays with data and train model
+
+    # number of input channels is determined by args after corpus_name and model_name
+    n_inputs = 0
+    if "words" in channels:
+        n_inputs += 2
+    if "wordnet" in channels:
+        n_inputs += 2
+    if "concat_ancestors" in channels:
+        n_inputs += 2
+    if "common_ancestors" in channels:
+        n_inputs += 1
+
+    # remove previous model files
+    if os.path.isfile("models/{}.json".format(modelname)):
+        os.remove("models/{}.json".format(modelname))
+    if os.path.isfile("models/{}.h5".format(modelname)):
+        os.remove("models/{}.h5".format(modelname))
+
+    #print(train_labels)
+    Y_train = to_categorical(Y_train, num_classes=n_classes)
+    # get random instance order (to shuffle docs types and labels)
+    list_order = np.arange(len(Y_train))
+    print(list_order)
+    random.seed(1)
+    random.shuffle(list_order)
+    Y_train = Y_train[list_order]
+    train_labels = train_labels[list_order]
+    print("train order:", list_order)
+
+    # store features in this dictionry according to args
+    inputs = {}
+    if "words" in channels:
+        # emb_index, emb_matrix = get_glove_vectors()
+        word_vectors = get_w2v()
+        w2v_layer = word_vectors.get_keras_embedding(train_embeddings=False)
+        X_words_left = preprocess_sequences(X_words_train[0], word_vectors)
+        X_words_right = preprocess_sequences(X_words_train[1], word_vectors)
+        inputs["left_words"] = X_words_left[list_order]
+        inputs["right_words"] = X_words_right[list_order]
+    else:
+        emb_matrix = None
+        w2v_layer = None
+
+    if "wordnet" in channels:
+        wn_index = get_wordnet_indexes()
+        X_wn_left = preprocess_sequences_glove(X_wordnet_train[0], wn_index)
+        X_wn_right = preprocess_sequences_glove(X_wordnet_train[1], wn_index)
+        inputs["left_wordnet"] = X_wn_left[list_order]
+        inputs["right_wordnet"] = X_wn_right[list_order]
+    else:
+        wn_index = None
+
+    if "concat_ancestors" in channels or "common_ancestors" in channels:
+        #is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
+        X_ids_left = preprocess_ids(X_subpaths_train[0], id_to_index, max_ancestors_length)
+        X_ids_right = preprocess_ids(X_subpaths_train[1], id_to_index, max_ancestors_length)
+        X_ancestors = preprocess_ids(X_ancestors_train, id_to_index, max_ancestors_length * 2)
+        # X_ancestors_train = np.concatenate((X_ids_left, X_ids_right[..., 1:]), 1)
+        inputs["left_ancestors"] = X_ids_left[list_order]
+        inputs["right_ancestors"] = X_ids_right[list_order]
+        inputs["common_ancestors"] = X_ancestors[list_order]
+    else:
+        id_to_index = None
+
+    model = get_model(w2v_layer, channels, wn_index, id_to_index)
+    # serialize model to JSON
+    model_json = model.to_json()
+    with open("models/{}.json".format(modelname), "w") as json_file:
+        json_file.write(model_json)
+    # alternative models
+    # model = get_words_model(emb_matrix)
+    # model = get_xu_model(emb_matrix)
+
+    metrics = Metrics(train_labels, X_words_train, n_inputs)
+    checkpointer = ModelCheckpoint(filepath="models/{}.h5".format(modelname), verbose=1, save_best_only=True)
+    history = model.fit(inputs,
+                        {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
+                        batch_size=batch_size, verbose=2, callbacks=[metrics, checkpointer])
+
+    # keras.callbacks.EarlyStopping(patience=3)])
+    # history = model.fit({"input": X_words_train}, {"output": Y_train},
+    #                    validation_split=validation_split, epochs=n_epochs,
+    #                    batch_size=batch_size, verbose=2, callbacks=[metrics])
+    write_plots(history, modelname)
+
+    # serialize weights to HDF5 - weights are saved using checkpointer
+    # model.save_weights("{}.h5".format(sys.argv[3]))
+    print("Saved model to disk")
+
+
+def predict(modelname, corpusname, channels, test_labels, X_words_test, X_wn_test, X_subpaths_test,
+            X_ancestors_test, id_to_index):
+    inputs = {}
+
+    if "words" in channels:
+        # emb_index, emb_matrix = get_glove_vectors()
+        # emb_index, emb_matrix = None, None
+        word_vectors = get_w2v()
+        X_words_test_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_test[0]], word_vectors)
+        X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
+        inputs["left_words"] = X_words_test_left
+        inputs["right_words"] = X_words_test_right
+    if "wordnet" in channels:
+        wn_index = get_wordnet_indexes()
+        X_wordnet_test_left = preprocess_sequences_glove(X_wn_test[0], wn_index)
+        X_wordnet_test_right = preprocess_sequences_glove(X_wn_test[1], wn_index)
+        inputs["left_wordnet"] = X_wordnet_test_left
+        inputs["right_wordnet"] = X_wordnet_test_right
+
+    if "common_ancestors" in channels or "concat_ancestors" in channels:
+        X_ids_left = preprocess_ids(X_subpaths_test[0], id_to_index, max_ancestors_length)
+        X_ids_right = preprocess_ids(X_subpaths_test[1], id_to_index, max_ancestors_length)
+        X_ancestors = preprocess_ids(X_ancestors_test, id_to_index, max_ancestors_length * 2)
+        inputs["left_ancestors"] = X_ids_left
+        inputs["right_ancestors"] = X_ids_right
+        inputs["common_ancestors"] = X_ancestors
+
+    # load json and create model
+    json_file = open('models/{}.json'.format(modelname), 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    loaded_model = model_from_json(loaded_model_json)
+    # load weights into new model
+    loaded_model.load_weights("models/{}.h5".format(modelname))
+    print("Loaded model {} from disk".format(modelname))
+
+    #test_labels = np.load(sys.argv[2] + "_labels.npy")
+
+    # scores = loaded_model.predict(X_words_test)
+    scores = loaded_model.predict(inputs)
+    # write results to file
+    # assuming DDI results
+    from parse_ddi import pairtype_tolabel
+    with open("{}_{}_results.txt".format(modelname, corpusname.replace("/", ".")), 'w') as f:
+        f.write("\t".join(["entity1", "entity2", "pred_class\n"]))
+        for i, pair in enumerate(test_labels):
+            f.write("\t".join((pair[0], pair[1], pairtype_tolabel[(np.argmax(scores[i]))] + "\n")))
+
 def main():
-    if sys.argv[1] == "preprocessing":
+    if sys.argv[1].startswith("preprocessing"):
         # generate data instances and write to disk as numpy arrays
         # args: corpus_type (semeval8 or ddi) corpus_name1 (corpus_name2) (...)
         # e.g. python3 src/train_rnn.py preprocessing ddi temp/dditrain data/DDICorpus/Train/MedLine/ data/DDICorpus/Train/DrugBank/
-        train = True
+        train_data = True
         if "test" in sys.argv[3].lower():
-            train= False
+            train_data = False
         # TODO: generalize text pre-processing
         if sys.argv[2] == "semeval8":
             from parse_semeval8 import get_semeval8_sdp_instances
-            labels, X_train, classes, X_train_ancestors, X_train_wordnet = get_semeval8_sdp_instances(sys.argv[4:], train=train)
+            labels, X_train, classes, X_train_ancestors, X_train_wordnet = get_semeval8_sdp_instances(sys.argv[4:], train=train_data)
             print(len(X_train))
             print(len(X_train[0]))
         elif sys.argv[2] == "ddi":
-            labels, X_train, classes, X_train_ancestors, X_train_subpaths, X_train_wordnet = get_ddi_data(sys.argv[4:])
+            is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("data/chebi.obo")
+            train_labels, X_train, Y_train, X_train_ancestors, X_train_subpaths, \
+                   X_train_wordnet = get_ddi_data([sys.argv[4]], name_to_id, synonym_to_id, id_to_name)
             #print(len(X_train))
-            np.save(sys.argv[3] + "_x_ancestors.npy", X_train_ancestors)
-            np.save(sys.argv[3] + "_x_subpaths.npy", X_train_subpaths)
-        np.save(sys.argv[3] + "_labels.npy", labels)
-        np.save(sys.argv[3] + "_x_words.npy", X_train)
-        np.save(sys.argv[3] + "_x_wordnet.npy", X_train_wordnet)
-        np.save(sys.argv[3] + "_y.npy", classes)
+
+        if sys.argv[1].endswith("_train"):
+            train_labels = np.array(train_labels)
+            train(sys.argv[3], sys.argv[5:], Y_train, train_labels, X_train, X_train_wordnet, X_train_subpaths,
+                  X_train_ancestors, id_to_index)
+        elif sys.argv[1].endswith("_predict"):
+            train_labels = np.array(train_labels)
+            predict(sys.argv[3], sys.argv[4], sys.argv[5:], train_labels, X_train, X_train_wordnet, X_train_subpaths,
+                    X_train_ancestors, id_to_index)
+        else:
+            if sys.argv[2] == "ddi":
+                np.save(sys.argv[3] + "_x_ancestors.npy", X_train_ancestors)
+                np.save(sys.argv[3] + "_x_subpaths.npy", X_train_subpaths)
+            np.save(sys.argv[3] + "_labels.npy", labels)
+            np.save(sys.argv[3] + "_x_words.npy", X_train)
+            np.save(sys.argv[3] + "_x_wordnet.npy", X_train_wordnet)
+            np.save(sys.argv[3] + "_y.npy", classes)
 
     elif sys.argv[1] == "train":
-        # open numpy arrays with data and train model
-
-        # number of input channels is determined by args after corpus_name and model_name
-        n_inputs = 0
-        if "words" in sys.argv[4:]:
-            n_inputs += 2
-        if "wordnet" in sys.argv[4:]:
-            n_inputs += 2
-        if "concat_ancestors" in sys.argv[4:]:
-            n_inputs += 2
-        if "common_ancestors" in sys.argv[4:]:
-            n_inputs += 1
-
-        # remove previous model files
-        if os.path.isfile("models/{}.json".format(sys.argv[3])):
-            os.remove("models/{}.json".format(sys.argv[3]))
-        if os.path.isfile("models/{}.h5".format(sys.argv[3])):
-            os.remove("models/{}.h5".format(sys.argv[3]))
+        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("data/chebi.obo")
         train_labels = np.load(sys.argv[2] + "_labels.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
-
-        # get random instance order (to shuffle docs types and labels)
-        list_order = np.arange(len(Y_train))
-        random.seed(1)
-        random.shuffle(list_order)
-        Y_train = Y_train[list_order]
-        train_labels = train_labels[list_order]
-        print("train order:", list_order)
-
-        # store features in this dictionry according to args
-        inputs = {}
         if "words" in sys.argv[4:]:
-            #emb_index, emb_matrix = get_glove_vectors()
-            word_vectors = get_w2v()
-            w2v_layer = word_vectors.get_keras_embedding(train_embeddings=False)
             X_words_train = np.load(sys.argv[2] + "_x_words.npy")
-            #X_words_left = preprocess_sequences_glove(X_words_train[0], emb_index)
-            #X_words_right = preprocess_sequences_glove(X_words_train[1], emb_index)
-
-            #X_words_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_train[0]], word_vectors)
-            #X_words_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_train[1]], word_vectors)
-            X_words_left = preprocess_sequences(X_words_train[0], word_vectors)
-            X_words_right = preprocess_sequences(X_words_train[1], word_vectors)
-
-            # skip root word
-
-            #print(np.array(X_words_train[1]))
-            #X_words_train = np.concatenate((np.array(X_words_train[0]), np.array(X_words_train[1])), 1)
-            #X_words_train = [X_words_train[0][i] + X_words_train[1][i] for i in range(len(X_words_train[0]))]
-            #X_words_train = preprocess_sequences(X_words_train, word_vectors)
-
-            inputs["left_words"] = X_words_left[list_order]
-            inputs["right_words"] = X_words_right[list_order]
-            #inputs["words"] = X_words_train[list_order]
-        else:
-            emb_matrix = None
-            w2v_layer = None
-
         if "wordnet" in sys.argv[4:]:
-            wn_index = get_wordnet_indexes()
             X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
-            X_wn_left = preprocess_sequences_glove(X_wordnet_train[0], wn_index)
-            X_wn_right = preprocess_sequences_glove(X_wordnet_train[1], wn_index)
-            inputs["left_wordnet"] = X_wn_left[list_order]
-            inputs["right_wordnet"] = X_wn_right[list_order]
-        else:
-            wn_index = None
-
         if "concat_ancestors" in sys.argv[4:] or "common_ancestors" in sys.argv[4:]:
-            is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
             X_subpaths_train = np.load(sys.argv[2] + "_x_subpaths.npy")
             X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
-            X_ids_left = preprocess_ids(X_subpaths_train[0], id_to_index, max_ancestors_length)
-            X_ids_right = preprocess_ids(X_subpaths_train[1], id_to_index, max_ancestors_length)
-            X_ancestors = preprocess_ids(X_ancestors_train, id_to_index, max_ancestors_length*2)
-            #X_ancestors_train = np.concatenate((X_ids_left, X_ids_right[..., 1:]), 1)
-            inputs["left_ancestors"] = X_ids_left[list_order]
-            inputs["right_ancestors"] = X_ids_right[list_order]
-            inputs["common_ancestors"] = X_ancestors[list_order]
-        else:
-            id_to_index = None
 
-        model = get_model(w2v_layer, sys.argv[4:], wn_index, id_to_index)
-
-        # alternative models
-        #model = get_words_model(emb_matrix)
-        #model = get_xu_model(emb_matrix)
-
-
-
-        metrics = Metrics(train_labels, X_words_train, n_inputs)
-        checkpointer = ModelCheckpoint(filepath="models/{}.h5".format(sys.argv[3]), verbose=1, save_best_only=True)
-        history = model.fit(inputs,
-                  {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
-                  batch_size=batch_size, verbose=2, callbacks=[metrics, checkpointer])
-
-                                                               #keras.callbacks.EarlyStopping(patience=3)])
-        #history = model.fit({"input": X_words_train}, {"output": Y_train},
-        #                    validation_split=validation_split, epochs=n_epochs,
-        #                    batch_size=batch_size, verbose=2, callbacks=[metrics])
-        write_plots(history, sys.argv[3])
-
-        # serialize model to JSON
-        model_json = model.to_json()
-        with open("models/{}.json".format(sys.argv[3]), "w") as json_file:
-            json_file.write(model_json)
-            # serialize weights to HDF5
-        #model.save_weights("{}.h5".format(sys.argv[3]))
-        print("Saved model to disk")
+        train(sys.argv[3], sys.argv[4:], Y_train, train_labels, X_words_train, X_wordnet_train,
+              X_subpaths_train, X_ancestors_train, id_to_index)
 
     elif sys.argv[1] == "predict":
         # open numpy files according to the input channels specified, open model files and apply model to data
-        inputs = {}
+        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("data/chebi.obo")
 
         if "words" in sys.argv[4:]:
-            #emb_index, emb_matrix = get_glove_vectors()
-            #emb_index, emb_matrix = None, None
-            word_vectors = get_w2v()
             X_words_test = np.load(sys.argv[2] + "_x_words.npy")
-            X_words_test_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_test[0]], word_vectors)
-            X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
-            #X_words_test = [X_words_test[0][i] + X_words_test[1][i] for i in range(len(X_words_test[0]))]
-            #X_words_test = preprocess_sequences(X_words_test, word_vectors)
-            inputs["left_words"] = X_words_test_left
-            inputs["right_words"] = X_words_test_right
-            #inputs["words"] = X_words_test
-            #X_words_test_left = preprocess_sequences_glove(X_words_test[0], emb_index)
-            #X_words_test_right = preprocess_sequences_glove(X_words_test[1], emb_index)
-            #X_words_test = np.concatenate((X_words_test_left, X_words_test_right[..., 1:]), 1)
-            #inputs["left_words"] = X_words_test_left
-            #inputs["right_words"] = X_words_test_right
         if "wordnet" in sys.argv[4:]:
-            wn_index = get_wordnet_indexes()
             X_wn_test = np.load(sys.argv[2] + "_x_wordnet.npy")
-            X_wordnet_test_left = preprocess_sequences_glove(X_wn_test[0], wn_index)
-            X_wordnet_test_right = preprocess_sequences_glove(X_wn_test[1], wn_index)
-            inputs["left_wordnet"] = X_wordnet_test_left
-            inputs["right_wordnet"] = X_wordnet_test_right
-
         if "common_ancestors" in sys.argv[4:] or "concat_ancestors" in sys.argv[4:]:
-            is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
             X_ancestors_test = np.load(sys.argv[2] + "_x_ancestors.npy")
             X_subpaths_test = np.load(sys.argv[2] + "_x_subpaths.npy")
-            X_ids_left = preprocess_ids(X_subpaths_test[0], id_to_index, max_ancestors_length)
-            X_ids_right = preprocess_ids(X_subpaths_test[1], id_to_index, max_ancestors_length)
-            X_ancestors = preprocess_ids(X_ancestors_test, id_to_index, max_ancestors_length*2)
-            inputs["left_ancestors"] = X_ids_left
-            inputs["right_ancestors"] = X_ids_right
-            inputs["common_ancestors"] = X_ancestors
-
-        # load json and create model
-        json_file = open('models/{}.json'.format(sys.argv[3]), 'r')
-        loaded_model_json = json_file.read()
-        json_file.close()
-        loaded_model = model_from_json(loaded_model_json)
-        # load weights into new model
-        loaded_model.load_weights("models/{}.h5".format(sys.argv[3]))
-        print("Loaded model {} from disk".format(sys.argv[3]))
-
-
         test_labels = np.load(sys.argv[2] + "_labels.npy")
+        predict(sys.argv[3], sys.argv[2], sys.argv[4:], test_labels, X_words_test, X_wn_test, X_subpaths_test,
+                X_ancestors_test, id_to_index)
 
-        #scores = loaded_model.predict(X_words_test)
-        scores = loaded_model.predict(inputs)
-        # write results to file
-        with open("{}_{}_results.txt".format(sys.argv[3], sys.argv[2].split("/")[-1]), 'w') as f:
-            for i, pair in enumerate(test_labels):
-                f.write(" ".join((pair[0], pair[1], str(np.argmax(scores[i])))) + "\n")
 
     elif sys.argv[1] == "dummy_predict":
         test_labels = np.load(sys.argv[2] + "_labels.npy")

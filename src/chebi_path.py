@@ -50,7 +50,7 @@ root_concept = "CHEBI:00000"
 # TODO: create ROOT concept
 
 def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"):
-    print("loading chebi...")
+    print("loading chebi from {}...".format(path))
     #graph = obonet.read_obo("data/chebi.obo")
     graph = obonet.read_obo(path)
     graph.add_node(root_concept, name="ROOT")
@@ -62,12 +62,13 @@ def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"
     #sys.exit()
     graph = graph.to_directed()
     is_a_graph=networkx.MultiDiGraph([(u,v,d) for u,v,d in graph.edges(data=True) if d['edgetype'] == "is_a"] )
-    print(networkx.is_directed_acyclic_graph(is_a_graph))
+    #print(networkx.is_directed_acyclic_graph(is_a_graph))
     id_to_name = {id_: data['name'] for id_, data in graph.nodes(data=True)}
     name_to_id = {data['name']: id_ for id_, data in graph.nodes(data=True)}
     id_to_index = {e: i+1 for i, e in enumerate(graph.nodes())} # ids should start on 1 and not 0
     id_to_index[""] = 0
     synonym_to_id = {}
+    print("synonyms to ids...")
     for n in graph.nodes(data=True):
         # print(n[1].get("synonym"))
         for syn in n[1].get("synonym", []):
@@ -75,11 +76,11 @@ def load_chebi(path="ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo"
             if len(syn_name) > 2:
                 syn_name = syn.split('"')[1]
                 synonym_to_id.setdefault(syn_name, []).append(n[0])
-            else:
-                print("not a synonym:", syn.split('"'))
+            #else:
+                #print("not a synonym:", syn.split('"'))
 
     #print(synonym_to_id)
-    print("done.", len(name_to_id), len(synonym_to_id))
+    print("done.", len(name_to_id), "ids", len(synonym_to_id), "synonyms")
     return is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index
 
 

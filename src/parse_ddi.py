@@ -18,7 +18,8 @@ INTTYPE = 4
 
 pairtypes = (MECHANISM, EFFECT, ADVICE, INTTYPE)
 label_to_pairtype = {"effect": EFFECT, "mechanism": MECHANISM, "advise": ADVICE, "int": INTTYPE}
-
+pairtype_tolabel = {v: k for k, v in label_to_pairtype.items()}
+pairtype_tolabel[NORELATION] = "norelation"
 
 def get_ancestors(sentence_labels, sentence_entities, name_to_id, synonym_to_id, id_to_name):
     """
@@ -147,13 +148,12 @@ def parse_ddi_sentences_spacy(base_dir, entities):
     return parsed_sentences, wordnet_tags
 
 
-def get_ddi_sdp_instances(base_dir, parser="spacy"):
+def get_ddi_sdp_instances(base_dir, name_to_id, synonym_to_id, id_to_name, parser="spacy"):
     """
     Parse DDI corpus, return vectors of SDP of each relation instance
     :param base_dir: directory containing semeval XML documents and annotations
     :return: labels (eid1, eid2), instances (vectors), classes (0/1), common ancestors, l/r ancestors, l/r wordnet
     """
-    is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
     entities, positive_entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=20)
     if parser == "spacy":
         parsed_sentences, wordnet_sentences = parse_ddi_sentences_spacy(base_dir, entities)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -e
-# $1: corpus path
-python src/train_rnn.py preprocessing ddi temp/predict_corpus $1
-python src/train_rnn.py predict temp/predict_corpus full_model words wordnet common_ancestors concat_ancestors
+# $1: model name (in models/)
+# $2: corpus path
+python src/train_rnn.py preprocessing_predict ddi $1 $2 words wordnet common_ancestors concat_ancestors
