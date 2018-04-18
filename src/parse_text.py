@@ -18,7 +18,7 @@ neg_gv_list = {'cerubidine', 'trial', '5-fu', 'total', 'multivitamins', 'element
 
 os.environ["CORENLP_HOME"] = "stanford-corenlp-full-2017-06-09/"
 
-SSTDIR = "sst-light-0.4/"
+SSTDIR = "/sst-light-0.4/"
 
 def prevent_sentence_segmentation(doc):
     for token in doc:

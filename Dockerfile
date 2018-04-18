@@ -15,15 +15,32 @@ RUN cd obonet && python3 setup.py install
 
 
 RUN mkdir ./temp
+#RUN echo "deb http://http.debian.net/debian jessie-backports main" | \
+#      tee --append /etc/apt/sources.list.d/jessie-backports.list > /dev/null
+#RUN apt-get update && apt-get install -y -t jessie-backports openjdk-8-jdk
+#RUN update-java-alternatives -s java-1.8.0-openjdk-amd64
+#COPY evaluateDDI.jar ./
+RUN mkdir models
+COPY models/full_model.* models/
+RUN mkdir data
+COPY data/chebi.obo data/
+COPY data/PubMed-w2v.bin data/
+COPY predict.sh predict.sh
+COPY train.sh train.sh
+COPY src/ src/
 
-COPY ./sst-light-0.4 ./sst-light-0.4
+#RUN apt-get update && apt-get install -y tar && apt-get autoclean -y
+#COPY ./sst-light-0.4.tar.gz ./sst-light-0.4.tar.gz
+#RUN tar -xvzf sst-light-0.4.tar.gz && rm sst-light-0.4.tar.gz
+#RUN sed -i '1i #include <cstring>' sst-light-0.4/sst-light.cpp
+#RUN   sed -i "s|iostream.h|iostream|g" /etc/sysctl.conf
+RUN apt-get update && apt-get install -y zip && apt-get autoclean -y
+#COPY ./sst-light-0.4.zip /sst-light-0.4.zip
+#RUN unzip sst-light-0.4.zip
+COPY ./sst-light-0.4 /sst-light-0.4
 RUN cd sst-light-0.4 && make
 ENV PATH="/sst-light-0.4:$PATH"
 RUN pip3 install stanford-corenlp
-RUN echo "deb http://http.debian.net/debian jessie-backports main" | \
-      tee --append /etc/apt/sources.list.d/jessie-backports.list > /dev/null
-RUN apt-get update && apt-get install -y -t jessie-backports openjdk-8-jdk
-RUN update-java-alternatives -s java-1.8.0-openjdk-amd64
-
-
-COPY evaluateDDI.jar ./
+RUN apt-get update && apt-get install -y tar && apt-get autoclean -y
+COPY ./sst-light-0.4.tar.gz ./sst-light-0.4.tar.gz
+RUN tar -xvzf sst-light-0.4.tar.gz && rm sst-light-0.4.tar.gz

@@ -58,7 +58,7 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=10)
         logging.info("processing entities: {}".format(f))
         #if f != "L-Glutamine_ddi.xml":
         #    continue
-        tree = ET.parse(base_dir + f)
+        tree = ET.parse(base_dir + "/" + f)
         root = tree.getroot()
         for sentence in root:
             sentence_id = sentence.get("id")

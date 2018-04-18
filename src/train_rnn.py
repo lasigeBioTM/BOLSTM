@@ -393,10 +393,10 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
     print("Saved model to disk")
 
 
-def predict(modelname, corpusname, channels, test_labels, X_words_test, X_wn_test, X_subpaths_test,
+def predict(modelname, corpusname, outputpath, channels, test_labels, X_words_test, X_wn_test, X_subpaths_test,
             X_ancestors_test, id_to_index):
     inputs = {}
-
+    print(channels)
     if "words" in channels:
         # emb_index, emb_matrix = get_glove_vectors()
         # emb_index, emb_matrix = None, None
@@ -436,7 +436,7 @@ def predict(modelname, corpusname, channels, test_labels, X_words_test, X_wn_tes
     # write results to file
     # assuming DDI results
     from parse_ddi import pairtype_tolabel
-    with open("{}_{}_results.txt".format(modelname, corpusname.replace("/", ".")), 'w') as f:
+    with open("{}/{}_{}results.txt".format(outputpath, modelname, corpusname.replace("/", ".")), 'w') as f:
         f.write("\t".join(["entity1", "entity2", "pred_class\n"]))
         for i, pair in enumerate(test_labels):
             f.write("\t".join((pair[0], pair[1], pairtype_tolabel[(np.argmax(scores[i]))] + "\n")))
@@ -467,7 +467,7 @@ def main():
                   X_train_ancestors, id_to_index)
         elif sys.argv[1].endswith("_predict"):
             train_labels = np.array(train_labels)
-            predict(sys.argv[3], sys.argv[4], sys.argv[5:], train_labels, X_train, X_train_wordnet, X_train_subpaths,
+            predict(sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6:], train_labels, X_train, X_train_wordnet, X_train_subpaths,
                     X_train_ancestors, id_to_index)
         else:
             if sys.argv[2] == "ddi":
@@ -506,7 +506,7 @@ def main():
             X_ancestors_test = np.load(sys.argv[2] + "_x_ancestors.npy")
             X_subpaths_test = np.load(sys.argv[2] + "_x_subpaths.npy")
         test_labels = np.load(sys.argv[2] + "_labels.npy")
-        predict(sys.argv[3], sys.argv[2], sys.argv[4:], test_labels, X_words_test, X_wn_test, X_subpaths_test,
+        predict(sys.argv[3], sys.argv[2], "", sys.argv[4:], test_labels, X_words_test, X_wn_test, X_subpaths_test,
                 X_ancestors_test, id_to_index)
 
 
