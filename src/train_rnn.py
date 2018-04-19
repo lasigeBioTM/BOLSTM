@@ -340,6 +340,7 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
         w2v_layer = word_vectors.get_keras_embedding(train_embeddings=False)
         X_words_left = preprocess_sequences(X_words_train[0], word_vectors)
         X_words_right = preprocess_sequences(X_words_train[1], word_vectors)
+        del word_vectors
         inputs["left_words"] = X_words_left[list_order]
         inputs["right_words"] = X_words_right[list_order]
     else:
@@ -368,6 +369,8 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
         id_to_index = None
 
     model = get_model(w2v_layer, channels, wn_index, id_to_index)
+    del id_to_index
+    del wn_index
     # serialize model to JSON
     model_json = model.to_json()
     with open("models/{}.json".format(modelname), "w") as json_file:
@@ -403,12 +406,14 @@ def predict(modelname, corpusname, outputpath, channels, test_labels, X_words_te
         word_vectors = get_w2v()
         X_words_test_left = preprocess_sequences([["drug"] + x[1:] for x in X_words_test[0]], word_vectors)
         X_words_test_right = preprocess_sequences([x[:-1] + ["drug"] for x in X_words_test[1]], word_vectors)
+        del word_vectors
         inputs["left_words"] = X_words_test_left
         inputs["right_words"] = X_words_test_right
     if "wordnet" in channels:
         wn_index = get_wordnet_indexes()
         X_wordnet_test_left = preprocess_sequences_glove(X_wn_test[0], wn_index)
         X_wordnet_test_right = preprocess_sequences_glove(X_wn_test[1], wn_index)
+        del wn_index
         inputs["left_wordnet"] = X_wordnet_test_left
         inputs["right_wordnet"] = X_wordnet_test_right
 
@@ -416,6 +421,7 @@ def predict(modelname, corpusname, outputpath, channels, test_labels, X_words_te
         X_ids_left = preprocess_ids(X_subpaths_test[0], id_to_index, max_ancestors_length)
         X_ids_right = preprocess_ids(X_subpaths_test[1], id_to_index, max_ancestors_length)
         X_ancestors = preprocess_ids(X_ancestors_test, id_to_index, max_ancestors_length * 2)
+        del id_to_index
         inputs["left_ancestors"] = X_ids_left
         inputs["right_ancestors"] = X_ids_right
         inputs["common_ancestors"] = X_ancestors
