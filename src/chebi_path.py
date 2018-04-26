@@ -11,7 +11,7 @@ from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
 
 from DiShIn import ssm
-ssm.semantic_base("src/DiShIn/chebi.db")
+ssm.semantic_base("/src/DiShIn/chebi.db")
 
 global chebi_cache
 global paths_cache
@@ -20,7 +20,7 @@ global role
 global subatomic_particle
 global application
 
-chebi_cache_file = "temp/chebi_cache.pickle"
+chebi_cache_file = "/temp/chebi_cache.pickle"
 
 # store string-> chebi ID
 if os.path.isfile(chebi_cache_file):

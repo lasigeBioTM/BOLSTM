@@ -17,6 +17,7 @@ neg_gv_list = {'cerubidine', 'trial', '5-fu', 'total', 'multivitamins', 'element
 
 
 SSTDIR = "/sst-light-0.4/"
+TEMP_DIR = "/temp/"
 
 def prevent_sentence_segmentation(doc):
     for token in doc:
@@ -135,17 +136,17 @@ def run_sst(token_seq):
     sent_ids = list(token_seq.keys())
     chunks = [sent_ids[i:i + chunk_size] for i in range(0, len(sent_ids), chunk_size)]
     for i, chunk in enumerate(chunks):
-        sentence_file = open("temp/sentences_{}.txt".format(i), 'w')
+        sentence_file = open("{}/sentences_{}.txt".format(TEMP_DIR, i), 'w')
         for sent in chunk:
             sentence_file.write("{}\t{}\t.\n".format(sent, "\t".join(token_seq[sent])))
         sentence_file.close()
         sst_args = ["sst", "bitag",
                     "{}/MODELS/WSJPOSc_base_20".format(SSTDIR), "{}/DATA/WSJPOSc.TAGSET".format(SSTDIR),
                     "{}/MODELS/SEM07_base_12".format(SSTDIR), "{}/DATA/WNSS_07.TAGSET".format(SSTDIR),
-                    "temp/sentences_{}.txt".format(i), "0", "0"]
+                    "{}/sentences_{}.txt".format(TEMP_DIR, i), "0", "0"]
         p = Popen(sst_args, stdout=PIPE)
         p.communicate()
-        with open("temp/sentences_{}.txt.tags".format(i)) as f:
+        with open("{}/sentences_{}.txt.tags".format(TEMP_DIR, i)) as f:
             output = f.read()
         sstoutput = parse_sst_results(output)
         wordnet_tags.update(sstoutput)

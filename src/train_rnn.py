@@ -29,7 +29,9 @@ from models import get_model, get_xu_model, embbed_size, max_sentence_length, ma
 
 
 
-DATA_DIR = "data/"
+DATA_DIR = "/data/"
+SSTLIGHT_DIR = "/sst-light-0.4/"
+MODELS_DIR = "/models/"
 n_epochs = 500
 batch_size = 128
 validation_split = 0.2
@@ -99,7 +101,7 @@ def get_glove_vectors(filename='glove.6B.300d.txt'):
     return embedding_indexes, embedding_weights
 
 
-def get_w2v(filename='data/PubMed-w2v.bin'):
+def get_w2v(filename='{}/PubMed-w2v.bin'.format(DATA_DIR)):
     """
     Open Word2Vec file using gensim package
     :return: word vectors in KeyedVectors gensim object
@@ -114,7 +116,7 @@ def get_wordnet_indexes():
     :return: embedding_indexes: tag -> index
     """
     embedding_indexes = {}
-    with open("sst-light-0.4/DATA/WNSS_07.TAGSET", 'r') as f:
+    with open("{}/DATA/WNSS_07.TAGSET".format(SSTLIGHT_DIR), 'r') as f:
         lines = f.readlines()
         i = 0
         for l in lines:
@@ -316,10 +318,10 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
         n_inputs += 1
 
     # remove previous model files
-    if os.path.isfile("models/{}.json".format(modelname)):
-        os.remove("models/{}.json".format(modelname))
-    if os.path.isfile("models/{}.h5".format(modelname)):
-        os.remove("models/{}.h5".format(modelname))
+    if os.path.isfile("{}/{}.json".format(MODELS_DIR, modelname)):
+        os.remove("{}/{}.json".format(MODELS_DIR, modelname))
+    if os.path.isfile("{}/{}.h5".format(MODELS_DIR, modelname)):
+        os.remove("{}/{}.h5".format(MODELS_DIR, modelname))
 
     #print(train_labels)
     Y_train = to_categorical(Y_train, num_classes=n_classes)
@@ -373,14 +375,14 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
     del wn_index
     # serialize model to JSON
     model_json = model.to_json()
-    with open("models/{}.json".format(modelname), "w") as json_file:
+    with open("{}/{}.json".format(MODELS_DIR, modelname), "w") as json_file:
         json_file.write(model_json)
     # alternative models
     # model = get_words_model(emb_matrix)
     # model = get_xu_model(emb_matrix)
 
     metrics = Metrics(train_labels, X_words_train, n_inputs)
-    checkpointer = ModelCheckpoint(filepath="models/{}.h5".format(modelname), verbose=1, save_best_only=True)
+    checkpointer = ModelCheckpoint(filepath="{}/{}.h5".format(MODELS_DIR, modelname), verbose=1, save_best_only=True)
     history = model.fit(inputs,
                         {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
                         batch_size=batch_size, verbose=2, callbacks=[metrics, checkpointer])
@@ -427,13 +429,13 @@ def predict(modelname, corpusname, outputpath, channels, test_labels, X_words_te
         inputs["common_ancestors"] = X_ancestors
 
     # load json and create model
-    json_file = open('models/{}.json'.format(modelname), 'r')
+    json_file = open('{}/{}.json'.format(MODELS_DIR, modelname), 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("models/{}.h5".format(modelname))
-    print("Loaded model {} from disk".format(modelname))
+    loaded_model.load_weights("{}/{}.h5".format(MODELS_DIR, modelname))
+    print("Loaded model {}/{} from disk".format(MODELS_DIR, modelname))
 
     #test_labels = np.load(sys.argv[2] + "_labels.npy")
 
@@ -462,7 +464,7 @@ def main():
             print(len(X_train))
             print(len(X_train[0]))
         elif sys.argv[2] == "ddi":
-            is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("data/chebi.obo")
+            is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("{}/chebi.obo".format(DATA_DIR))
             train_labels, X_train, Y_train, X_train_ancestors, X_train_subpaths, \
                    X_train_wordnet = get_ddi_data([sys.argv[4]], name_to_id, synonym_to_id, id_to_name)
             del id_to_name
@@ -489,7 +491,7 @@ def main():
             np.save(sys.argv[3] + "_y.npy", classes)
 
     elif sys.argv[1] == "train":
-        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("data/chebi.obo")
+        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("{}/chebi.obo".format(DATA_DIR))
         train_labels = np.load(sys.argv[2] + "_labels.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
@@ -506,7 +508,7 @@ def main():
 
     elif sys.argv[1] == "predict":
         # open numpy files according to the input channels specified, open model files and apply model to data
-        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("data/chebi.obo")
+        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("{}/chebi.obo".format(DATA_DIR))
 
         if "words" in sys.argv[4:]:
             X_words_test = np.load(sys.argv[2] + "_x_words.npy")
