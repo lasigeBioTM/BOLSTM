@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y default-jre && apt-get autoclean -y
 
 COPY ./requirements.txt ./
 RUN pip3 install -r requirements.txt
-RUN python3 -m spacy download en_core_web_lg
+RUN python3 -m spacy download en_core_web_sm
 
 RUN git clone https://github.com/AndreLamurias/obonet.git
 RUN cd obonet && python3 setup.py install
@@ -27,20 +27,12 @@ COPY data/chebi.obo data/
 COPY data/PubMed-w2v.bin data/
 COPY predict.sh predict.sh
 COPY train.sh train.sh
-COPY src/ src/
 
-#RUN apt-get update && apt-get install -y tar && apt-get autoclean -y
-#COPY ./sst-light-0.4.tar.gz ./sst-light-0.4.tar.gz
-#RUN tar -xvzf sst-light-0.4.tar.gz && rm sst-light-0.4.tar.gz
-#RUN sed -i '1i #include <cstring>' sst-light-0.4/sst-light.cpp
-#RUN   sed -i "s|iostream.h|iostream|g" /etc/sysctl.conf
+
 RUN apt-get update && apt-get install -y zip && apt-get autoclean -y
-#COPY ./sst-light-0.4.zip /sst-light-0.4.zip
-#RUN unzip sst-light-0.4.zip
 COPY ./sst-light-0.4 /sst-light-0.4
 RUN cd sst-light-0.4 && make
 ENV PATH="/sst-light-0.4:$PATH"
-RUN pip3 install stanford-corenlp
-RUN apt-get update && apt-get install -y tar && apt-get autoclean -y
-COPY ./sst-light-0.4.tar.gz ./sst-light-0.4.tar.gz
-RUN tar -xvzf sst-light-0.4.tar.gz && rm sst-light-0.4.tar.gz
+
+
+COPY src/ src/
