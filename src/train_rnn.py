@@ -465,6 +465,10 @@ def main():
             is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("data/chebi.obo")
             train_labels, X_train, Y_train, X_train_ancestors, X_train_subpaths, \
                    X_train_wordnet = get_ddi_data([sys.argv[4]], name_to_id, synonym_to_id, id_to_name)
+            del id_to_name
+            del synonym_to_id
+            del name_to_id
+            del is_a_graph
             #print(len(X_train))
 
         if sys.argv[1].endswith("_train"):

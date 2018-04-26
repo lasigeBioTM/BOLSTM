@@ -3,8 +3,8 @@ import sys
 import os
 import logging
 from subprocess import PIPE, Popen
-from parse_text import process_sentence_spacy, process_sentence_corenlp,\
-                    parse_sentence_spacy, parse_sentence_corenlp, run_sst
+from parse_text import process_sentence_spacy,\
+                    parse_sentence_spacy, run_sst
 from chebi_path import get_lowest_common_ascestor_path, load_chebi, get_all_shortest_paths_to_root, \
                         get_path_to_root, map_to_chebi, get_common_ancestors
 
@@ -100,28 +100,6 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=10)
                 entities[sentence_id] = sentence_entities
     return entities, pair_entities
 
-def parse_ddi_sentences_corenlp(base_dir, entities):
-
-    parsed_sentences = {}
-    # first iterate all documents, and preprocess all sentences
-    token_seq = {}
-    for f in os.listdir(base_dir):
-        logging.info("parsing {}".format(f))
-        tree = ET.parse(base_dir + f)
-        root = tree.getroot()
-        for sentence in root:
-            sentence_id = sentence.get("id")
-            if len(sentence.findall('pair')) > 0:  # skip sentences without pairs
-                parsed_sentence = parse_sentence_corenlp(sentence.get("text"), entities[sentence_id])
-                parsed_sentences[sentence_id] = parsed_sentence
-                tokens = []
-                #for t in parsed_sentence:
-                for t in parsed_sentence.token:
-                    tokens.append(t.word.replace(" ", "_").replace('\t', '_').replace('\n', '_'))
-                #sentence_file.write("{}\t{}\t.\n".format(sentence_id, "\t".join(tokens)))
-                token_seq[sentence_id] = tokens
-    wordnet_tags = run_sst(token_seq)
-    return parsed_sentences, wordnet_tags
 
 
 def parse_ddi_sentences_spacy(base_dir, entities):
@@ -157,8 +135,6 @@ def get_ddi_sdp_instances(base_dir, name_to_id, synonym_to_id, id_to_name, parse
     entities, positive_entities = get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=20)
     if parser == "spacy":
         parsed_sentences, wordnet_sentences = parse_ddi_sentences_spacy(base_dir, entities)
-    else:
-        parsed_sentences, wordnet_sentences = parse_ddi_sentences_corenlp(base_dir, entities)
     #print(wordnet_sentences.keys())
     # print(sstoutput)
     left_instances = []
@@ -193,12 +169,6 @@ def get_ddi_sdp_instances(base_dir, name_to_id, synonym_to_id, id_to_name, parse
                                                                                      positive_entities,
                                                                                wordnet_sentence
                                                                                      )
-                else:
-                    sentence_labels, sentence_we_instances, \
-                    sentence_wn_instances, sentence_classes = process_sentence_corenlp(parsed_sentence,
-                                                                                     sentence_entities,
-                                                                                     sentence_pairs,
-                                                                                     wordnet_sentence)
 
 
                 sentence_ancestors, sentence_subpaths = get_ancestors(sentence_labels, sentence_entities,
