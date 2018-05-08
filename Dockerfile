@@ -36,3 +36,5 @@ ENV PATH="/sst-light-0.4:$PATH"
 
 
 COPY src/ src/
+COPY data/DDICorpus/Test/DDIExtraction/All/ /ddicorpus_test/
+
