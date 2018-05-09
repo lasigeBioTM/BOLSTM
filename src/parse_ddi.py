@@ -109,7 +109,7 @@ def parse_ddi_sentences_spacy(base_dir, entities):
     token_seq = {}
     for f in os.listdir(base_dir):
         logging.info("parsing {}".format(f))
-        tree = ET.parse(base_dir + f)
+        tree = ET.parse(base_dir + "/" + f)
         root = tree.getroot()
         for sentence in root:
             sentence_id = sentence.get("id")
@@ -150,7 +150,7 @@ def get_ddi_sdp_instances(base_dir, name_to_id, synonym_to_id, id_to_name, parse
     all_neg_gv = set()
     for f in os.listdir(base_dir):
         logging.info("generating instances: {}".format(f))
-        tree = ET.parse(base_dir + f)
+        tree = ET.parse(base_dir + "/" + f)
         root = tree.getroot()
         for sentence in root:
             sentence_id = sentence.get("id")

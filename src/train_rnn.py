@@ -444,6 +444,11 @@ def predict(modelname, corpusname, outputpath, channels, test_labels, X_words_te
     # write results to file
     # assuming DDI results
     from parse_ddi import pairtype_tolabel
+    if outputpath.endswith("/"):
+        outputpath = outputpath[:-1]
+    if not os.path.exists(outputpath):
+        print("created output path:", outputpath)
+        os.makedirs(outputpath, exist_ok=False)
     with open("{}/{}_{}results.txt".format(outputpath, modelname, corpusname.replace("/", ".")), 'w') as f:
         f.write("\t".join(["entity1", "entity2", "pred_class\n"]))
         for i, pair in enumerate(test_labels):
