@@ -465,7 +465,7 @@ def main():
         # TODO: generalize text pre-processing
         if sys.argv[2] == "semeval8":
             from parse_semeval8 import get_semeval8_sdp_instances
-            labels, X_train, classes, X_train_ancestors, X_train_wordnet = get_semeval8_sdp_instances(sys.argv[4:], train=train_data)
+            train_labels, X_train, classes, X_train_ancestors, X_train_wordnet = get_semeval8_sdp_instances(sys.argv[4:], train=train_data)
             print(len(X_train))
             print(len(X_train[0]))
         elif sys.argv[2] == "ddi":
@@ -490,7 +490,7 @@ def main():
             if sys.argv[2] == "ddi":
                 np.save(sys.argv[3] + "_x_ancestors.npy", X_train_ancestors)
                 np.save(sys.argv[3] + "_x_subpaths.npy", X_train_subpaths)
-            np.save(sys.argv[3] + "_labels.npy", labels)
+            np.save(sys.argv[3] + "_labels.npy", train_labels)
             np.save(sys.argv[3] + "_x_words.npy", X_train)
             np.save(sys.argv[3] + "_x_wordnet.npy", X_train_wordnet)
             np.save(sys.argv[3] + "_y.npy", classes)
