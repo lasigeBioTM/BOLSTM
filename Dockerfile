@@ -22,10 +22,10 @@ RUN mkdir ./temp
 #RUN update-java-alternatives -s java-1.8.0-openjdk-amd64
 #COPY evaluateDDI.jar ./
 RUN mkdir models
-COPY models/full_model.* models/
+#COPY models/full_model.* models/
 RUN mkdir data
-COPY data/chebi.obo data/
-COPY data/PubMed-w2v.bin data/
+#COPY data/chebi.obo data/
+#COPY data/PubMed-w2v.bin data/
 COPY predict.sh predict.sh
 COPY train.sh train.sh
 
@@ -36,6 +36,6 @@ RUN cd sst-light-0.4 && make
 ENV PATH="/sst-light-0.4:$PATH"
 
 
-COPY src/ src/
-COPY data/DDICorpus/Test/DDIExtraction/All/ /ddicorpus_test/
+#COPY src/ src/
+#COPY data/DDICorpus/Test/DDIExtraction/All/ /ddicorpus_test/
 

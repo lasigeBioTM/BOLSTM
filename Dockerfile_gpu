@@ -1,20 +1,20 @@
-FROM nvidia/cuda
+FROM tensorflow/tensorflow:latest-gpu-py3
 MAINTAINER Andre Lamurias (alamurias@lasige.di.fc.ul.pt)
-
+WORKDIR /
 RUN apt-get update && apt-get install -y pandoc && apt-get autoclean -y
 RUN apt-get update && apt-get install -y git && apt-get autoclean -y
 RUN apt-get update && apt-get install -y wget && apt-get autoclean -y
 RUN apt-get update && apt-get install -y default-jre && apt-get autoclean -y
-RUN apt-get update && apt-get install -y python3=3.5.* python3-pip && apt-get autoclean -y
-RUN alias python=python3
+#RUN apt-get update && apt-get install -y python3=3.5.* python3-pip && apt-get autoclean -y
+#RUN alias python=python3
 
 COPY ./requirements.txt ./
-RUN pip3 install -r requirements.txt
-RUN pip3 install tensorflow-gpu==1.5.0
-RUN python3 -m spacy download en_core_web_sm
+RUN pip install -r requirements.txt
+#RUN pip install tensorflow-gpu==1.5.0
+RUN python -m spacy download en_core_web_sm
 
 RUN git clone https://github.com/AndreLamurias/obonet.git
-RUN cd obonet && python3 setup.py install
+RUN cd obonet && python setup.py install
 
 
 RUN mkdir ./temp
