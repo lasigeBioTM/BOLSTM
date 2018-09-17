@@ -493,7 +493,7 @@ def main():
             np.save(sys.argv[3] + "_labels.npy", train_labels)
             np.save(sys.argv[3] + "_x_words.npy", X_train)
             np.save(sys.argv[3] + "_x_wordnet.npy", X_train_wordnet)
-            np.save(sys.argv[3] + "_y.npy", classes)
+            #np.save(sys.argv[3] + "_y.npy", classes)
 
     elif sys.argv[1] == "train":
         is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("{}/chebi.obo".format(DATA_DIR))

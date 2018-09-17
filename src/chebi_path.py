@@ -19,6 +19,8 @@ global chemical_entity
 global role
 global subatomic_particle
 global application
+global multiple_match_count
+global no_match_count
 
 chebi_cache_file = "/temp/chebi_cache.pickle"
 
@@ -181,6 +183,7 @@ def map_to_chebi(text, name_to_id, synonym_to_id):
     :param synonym_to_id:
     :return:
     """
+    used_syn = False
     if text in name_to_id or text in synonym_to_id:
         return text
     elif text in chebi_cache:
@@ -192,9 +195,10 @@ def map_to_chebi(text, name_to_id, synonym_to_id):
         #print("best synonyms of ", text, ":", drug_syn)
         #print("synonyms", text, drug, drug_syn)
         if drug_syn[0][1] > drug[1]:
+            used_syn = True
             drug = drug_syn[0]
     chebi_cache[text] = drug[0]
-    return drug[0]
+    return drug[0], used_syn
 
 def main():
     is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
