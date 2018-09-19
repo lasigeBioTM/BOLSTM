@@ -500,6 +500,10 @@ def main():
         train_labels = np.load(sys.argv[2] + "_labels.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
         Y_train = to_categorical(Y_train, num_classes=n_classes)
+        X_words_train = None
+        X_wordnet_train = None
+        X_subpaths_train = None
+        X_ancestors_train = None
         if "words" in sys.argv[4:]:
             X_words_train = np.load(sys.argv[2] + "_x_words.npy")
         if "wordnet" in sys.argv[4:]:
@@ -514,7 +518,10 @@ def main():
     elif sys.argv[1] == "predict":
         # open numpy files according to the input channels specified, open model files and apply model to data
         is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("{}/chebi.obo".format(DATA_DIR))
-
+        X_words_test = None
+        X_wordnet_test = None
+        X_subpaths_test = None
+        X_ancestors_test = None
         if "words" in sys.argv[4:]:
             X_words_test = np.load(sys.argv[2] + "_x_words.npy")
         if "wordnet" in sys.argv[4:]:
