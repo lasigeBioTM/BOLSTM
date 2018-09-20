@@ -87,7 +87,7 @@ def get_sentence_entities(base_dir, name_to_id, synonym_to_id, entity_id_max=10)
                     e_text = e.get("text")
                     if offsets[0] == 0 and sentence_text[offsets[-1]] == ":":
                         logging.debug("skipped title: {} -> {}".format(e_text, sentence_text))
-                    chebi_name = map_to_chebi(e_text, name_to_id, synonym_to_id)
+                    chebi_name, used_syn = map_to_chebi(e_text, name_to_id, synonym_to_id)
                     if chebi_name in name_to_id:
                         chebi_id = name_to_id[chebi_name]
                     else:
@@ -205,7 +205,7 @@ def calculate_similarity():
         logging.info("generating instances: {}".format(f))
         #if f != "L-Glutamine_ddi.xml":
         #    continue
-        main_chebi_name = map_to_chebi(f, name_to_id, synonym_to_id)
+        main_chebi_name, used_syn = map_to_chebi(f, name_to_id, synonym_to_id)
         tree = ET.parse(base_dir + f)
         root = tree.getroot()
         for sentence in root:
@@ -222,7 +222,7 @@ def calculate_similarity():
                         offsets.append(int(start))
                         offsets.append(int(end) + 1)
                     e_text = e.get("text")
-                    chebi_name = map_to_chebi(e_text, name_to_id, synonym_to_id)
+                    chebi_name, used_syn = map_to_chebi(e_text, name_to_id, synonym_to_id)
                     if chebi_name in name_to_id:
                         chebi_id = name_to_id[chebi_name]
                     else:

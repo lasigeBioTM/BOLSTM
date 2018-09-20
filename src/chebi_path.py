@@ -185,9 +185,9 @@ def map_to_chebi(text, name_to_id, synonym_to_id):
     """
     used_syn = False
     if text in name_to_id or text in synonym_to_id:
-        return text
+        return text, used_syn
     elif text in chebi_cache:
-        return chebi_cache[text]
+        return chebi_cache[text], used_syn
     drug = process.extractOne(text, name_to_id.keys(), scorer=fuzz.token_sort_ratio)
     #print("best names of ", text, ":", drug)
     if drug[1] < 70:
@@ -208,7 +208,7 @@ def main():
     drug_names = ["tertiary alcohol", "citric acid-d4", "role"]
     drug_ids = []
     for d in drug_names:
-        chebi_name = map_to_chebi(d, name_to_id, synonym_to_id)
+        chebi_name, used_syn = map_to_chebi(d, name_to_id, synonym_to_id)
         drug_ids.append(chebi_name)
 
     print(drug_ids)
