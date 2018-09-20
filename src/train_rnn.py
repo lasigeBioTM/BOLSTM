@@ -2,7 +2,7 @@ import random
 import sys
 import logging
 import os
-logging.basicConfig(level=10)
+
 import collections
 import numpy as np
 np.random.seed(1)
@@ -16,8 +16,10 @@ from keras.callbacks import ReduceLROnPlateau
 from keras.preprocessing.text import one_hot
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
-
+logging.basicConfig(level=logging.WARNING)
 import matplotlib
+logger = logging.getLogger('matplotlib')
+logger.setLevel(logging.WARNING)
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
@@ -32,9 +34,9 @@ from models import get_model, get_xu_model, embbed_size, max_sentence_length, ma
 DATA_DIR = "/data/"
 SSTLIGHT_DIR = "/sst-light-0.4/"
 MODELS_DIR = "/models/"
-n_epochs = 500
-batch_size = 128
-validation_split = 0.2
+n_epochs = 100
+batch_size = 64
+validation_split = 0.4
 PRINTERRORS = False
 
 # https://github.com/keras-team/keras/issues/853#issuecomment-343981960
@@ -499,7 +501,7 @@ def main():
         is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("{}/chebi.obo".format(DATA_DIR))
         train_labels = np.load(sys.argv[2] + "_labels.npy")
         Y_train = np.load(sys.argv[2] + "_y.npy")
-        Y_train = to_categorical(Y_train, num_classes=n_classes)
+        #Y_train = to_categorical(Y_train, num_classes=n_classes)
         X_words_train = None
         X_wordnet_train = None
         X_subpaths_train = None
