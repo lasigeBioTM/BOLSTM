@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="4006277">
+	<sentence id="4006277.s0" text="Branchio-oto-renal (BOR) syndrome is a developmental complex presenting with various combinations of ear pits, branchial cleft cysts, deafness and renal anomalies, which is inherited as an autosomal dominant trait.">
+		<entity id="4006277.s0.e0" charOffset="101-109"
+			type="HP" text="ear pits" ontology_id="HP_0004467"/>
+		<entity id="4006277.s0.e1" charOffset="111-120"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="4006277.s0.e3" charOffset="111-126"
+			type="HP" text="deafness" ontology_id="HP_0000404"/>
+		<entity id="4006277.s0.e4" charOffset="134-142"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+		<entity id="4006277.s0.e5" charOffset="147-162"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="4006277.s0.e2" charOffset="189-207"
+			type="HP" text="branchial cleft" ontology_id="HP_0009794"/>
+		<entity id="4006277.s0.e6" charOffset="189-213"
+			type="HP" text="autosomal dominant trait" ontology_id="HP_0000006"/>
+		<entity id="4006277.s0.e7" charOffset="199-207"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="4006277.s1" text="This report describes a father and 2 children with BOR syndrome in which gustatory lacrimation (GL) was also present in 2 of them.">
+		<entity id="4006277.s1.e0" charOffset="73-94"
+			type="HP" text="gustatory lacrimation" ontology_id="HP_0100274"/>
+	</sentence>
+	<sentence id="4006277.s2" text="GL is considered to be a rare, non-hereditary type of anomalous, cranial nerve-end organ innervation.">
+		<entity id="4006277.s2.e0" charOffset="64-99"
+			type="HP" text="cranial nerve-end organ innervation" ontology_id="HP_0001291"/>
+	</sentence>
+	<sentence id="4006277.s3" text="Since lacrimal stenosis, which can clinically mimic GL, is also a feature of the BOR syndrome, future reports require lacrimal reflex testing and duct patency evaluation to define this variation in the BOR phenotype.">
+		<entity id="4005277.s3.e0" charOffset="5-22"
+			type="HP" text="lacrimal stenosis" ontology_id="HP_0007925"/>
+	</sentence>
+</document>

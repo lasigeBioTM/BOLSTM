@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3799714">
+	<sentence id="3799714.s0" text="The family on which this report is based is of interest because it contains individuals with the branchio-oto-renal (BOR) syndrome who have renal hypoplasia or malformations of the kidney or collecting system including duplication; only branchial and ear anomalies; and apparent nonpenetrance of the syndrome.">
+		<entity id="3799714.s0.e0" charOffset="140-156"
+			type="HP" text="renal hypoplasia" ontology_id="HP_0000089"/>
+		<entity id="3799714.s0.e1" charOffset="160-208"
+			type="HP" text="malformations of the kidney or collecting system" ontology_id="HP_0004742"/>
+		<entity id="3799714.s0.e4" charOffset="160-230"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="3799714.s0.e5" charOffset="160-187"
+			type="HP" text="ear anomalies" ontology_id="HP_0000598"/>
+		<entity id="3799714.s0.e6" charOffset="237-246"
+			type="HP" text="nonpenetrance" ontology_id="HP_0003829"/>
+		<entity id="2649714.s0.e2" charOffset="251-264"
+			type="HP" text="malformations of the kidney or collecting system including duplication" ontology_id="HP_0000081"/>
+		<entity id="3799714.s0.e3" charOffset="279-292"
+			type="HP" text="malformations of the kidney" ontology_id="HP_0000792"/>
+	</sentence>
+	<sentence id="3799714.s1" text="This report provides evidence to support the hypothesis that in some families variable expressivity includes duplication of the urinary collecting system in individuals with other manifestations of the BOR syndrome as well as individuals with branchial and ear anomalies who have apparently normal kidneys.">
+		<entity id="3799714.s1.e0" charOffset="78-86"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+		<entity id="3799714.s1.e1" charOffset="109-153"
+			type="HP" text="duplication of the urinary collecting system" ontology_id="HP_0000081"/>
+		<entity id="3799714.s1.e2" charOffset="243-270"
+			type="HP" text="branchial and ear anomalies" ontology_id="HP_0009794"/>
+	</sentence>
+</document>

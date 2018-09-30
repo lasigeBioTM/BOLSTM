@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3281570">
+	<sentence id="3281570.s0" text="We report a type C brachydactyly transmitted through four generations, with incomplete penetrance and feet abnormalities in the proposita.">
+		<entity id="3281570.s0.e0" charOffset="12-32"
+			type="HP" text="type C brachydactyly" ontology_id="HP_0009373"/>
+		<entity id="3281570.s0.e1" charOffset="76-97"
+			type="HP" text="incomplete penetrance" ontology_id="HP_0003829"/>
+		<entity id="3281570.s0.e2" charOffset="102-120"
+			type="HP" text="feet abnormalities" ontology_id="HP_0001760"/>
+	</sentence>
+</document>

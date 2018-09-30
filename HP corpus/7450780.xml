@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7450780">
+	<sentence id="7450780.s0" text="Two siblings with the *happy puppet* syndrome are presented.">
+		<entity id="7450780.s0.e0" charOffset="23-35"
+			type="HP" text="happy puppet" ontology_id="HP_0100024"/>
+	</sentence>
+	<sentence id="7450780.s1" text="Their clinical features are quite similar and closely resemble those of previously reported cases."/>
+	<sentence id="7450780.s2" text="These features include severe mental retardation, epileptic seizures, easily provoked and prolonged paroxysms of laughter, atactic jerky movements, hypotonia, large mandible with prognathia, and 2-3 cps spike and wave activity in the EEG.">
+		<entity id="7450780.s2.e0" charOffset="21-46"
+			type="HP" text="severe mental retardation" ontology_id="HP_0002187"/>
+		<entity id="7448780.s2.e1" charOffset="48-66"
+			type="HP" text="epileptic seizures" ontology_id="HP_0002133"/>
+		<entity id="7450780.s2.e2" charOffset="68-119"
+			type="HP" text="easily provoked and prolonged paroxysms of laughter" ontology_id="HP_0000749"/>
+		<entity id="7450780.s2.e3" charOffset="121-144"
+			type="HP" text="atactic jerky movements" ontology_id="HP_0001251"/>
+		<entity id="7450780.s2.e4" charOffset="146-155"
+			type="HP" text="hypotonia" ontology_id="HP_0001252"/>
+		<entity id="7450780.s2.e5" charOffset="157-171"
+			type="HP" text="large mandible" ontology_id="HP_0000303"/>
+		<entity id="7450780.s2.e7" charOffset="163-187"
+			type="HP" text="2-3 cps spike and wave activity in the EEG" ontology_id="HP_0010848"/>
+		<entity id="7450780.s2.e6" charOffset="193-235"
+			type="HP" text="mandible with prognathia" ontology_id="HP_0000303"/>
+	</sentence>
+	<sentence id="7450780.s3" text="The occurrence of this syndrome in the two siblings suggests a genetic etiology possible as an autosomal recessive trait.">
+		<entity id="7450780.s3.e0" charOffset="93-112"
+			type="HP" text="autosomal recessive" ontology_id="HP_0000007"/>
+	</sentence>
+</document>

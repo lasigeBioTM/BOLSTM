@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7468659">
+	<sentence id="7468659.s0" text="Nineteen of 421 white children in Montreal schools for the deaf had preauricular pits.">
+		<entity id="7468659.s0.e0" charOffset="59-63"
+			type="HP" text="deaf" ontology_id="HP_0000404"/>
+		<entity id="7468659.s0.e1" charOffset="68-85"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+	</sentence>
+	<sentence id="7468659.s1" text="The branchio-oto-renal (BOR syndrome was identified in four of the nine families who agreed to family investigation, including audiograms and intravenous pyelograms (IVPs) and may have been present in several others."/>
+	<sentence id="7468659.s2" text="The penetrance of this autosomal dominant syndrome appears to be high.">
+		<entity id="7468659.s2.e0" charOffset="21-39"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="7468659.s3" text="It is estimated that severe renal dysplasia occurs in about 6% of heterozygotes.">
+		<entity id="7468659.s3.e0" charOffset="26-41"
+			type="HP" text="renal dysplasia" ontology_id="HP_0000110"/>
+	</sentence>
+	<sentence id="7468659.s4" text="The presence of a preauricular pit at birth suggests that the child has at least one chance in 200 of severe hearing loss, and this warrants a careful family history, as well as alertness for any signs of hearing impairment.">
+		<entity id="7468659.s4.e0" charOffset="17-33"
+			type="HP" text="preauricular pit" ontology_id="HP_0004467"/>
+		<entity id="7468659.s4.e1" charOffset="108-120"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+		<entity id="7468659.s4.e2" charOffset="204-222"
+			type="HP" text="hearing impairment" ontology_id="HP_0000365"/>
+	</sentence>
+	<sentence id="7468659.s5" text="Offspring of affected individuals are eligible for parental diagnosis of renal dysplasia.">
+		<entity id="7468659.s5.e0" charOffset="74-89"
+			type="HP" text="renal dysplasia" ontology_id="HP_0000110"/>
+	</sentence>
+</document>

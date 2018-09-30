@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1789288">
+	<sentence id="1789288.s0" text="We report on a family in which individuals at risk for NF 2 were investigated with the use of gadolinium-enhanced MRI."/>
+	<sentence id="1789288.s1" text="This technique has allowed the diagnosis of small (less than 8 mm) acoustic neuromas in two asymptomatic children (age 7 and 11), one of whom had normal audiometric and brainstem-evoked response testing.">
+		<entity id="1789288.s1.e0" charOffset="66-83"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+	</sentence>
+	<sentence id="1789288.s2" text="To our knowledge these are the youngest asymptomatic patients in whom the diagnosis of NF 2 has been demonstrated."/>
+	<sentence id="1789288.s3" text="It is possible that acoustic neuromas develop at an early age more commonly than recognized previously.">
+		<entity id="1789288.s3.e0" charOffset="17-34"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+		<entity id="1789288.s3.e1" charOffset="49-58"
+			type="HP" text="early age" ontology_id="HP_0003593"/>
+	</sentence>
+	<sentence id="1789288.s4" text="The early diagnosis of acoustic neuromas with the use of gadolinium-enhanced MRI may lead to better outcome following surgery.">
+		<entity id="1789288.s4.e0" charOffset="21-38"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+	</sentence>
+	<sentence id="1789288.s5" text="This technique will provide the opportunity to better determine the natural course of this disease."/>
+</document>

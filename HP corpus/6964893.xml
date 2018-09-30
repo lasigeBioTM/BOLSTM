@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6964893">
+	<sentence id="6964893.s0" text="Several pedigrees with 19 new cases of the earpits-deafness syndrome (McK +12510) [28] are presented.">
+		<entity id="6964893.s0.e0" charOffset="43-50"
+			type="HP" text="earpits" ontology_id="HP_0004467"/>
+		<entity id="6964893.s0.e1" charOffset="51-59"
+			type="HP" text="deafness" ontology_id="HP_0000404"/>
+	</sentence>
+	<sentence id="6964893.s1" text="Mention is made of clinical findings obtained in audiometric and vestibular studies, studies of renal function and configuration and polytomographic studies of the labyrinth, and results of exploratory tympanotomies are discussed."/>
+	<sentence id="6964893.s2" text="The literature is reviewed and the features found in 138 cases and in our 19 cases are presented."/>
+	<sentence id="6964893.s3" text="The earpits-deafness syndrome is an autosomal dominant disorder in which affected individuals may have sensorineural, conductive or mixed hearing loss, preauricular pits, structural defects of the outer, middle and inner ear, lacrimal duct stenosis, branchial fistulas or cysts of the second branchial arch, and renal anomalies ranging from mild hypoplasia to complete absence.">
+		<entity id="6961893.s3.e0" charOffset="1-8"
+			type="HP" text="earpits" ontology_id="HP_0004467"/>
+		<entity id="6964893.s3.e1" charOffset="9-17"
+			type="HP" text="deafness" ontology_id="HP_0000404"/>
+		<entity id="6964893.s3.e2" charOffset="33-51"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="6964893.s3.e5" charOffset="33-60"
+			type="HP" text="sensorineural, conductive or mixed hearing loss" ontology_id="HP_0000407"/>
+		<entity id="6964893.s3.e6" charOffset="43-51"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="6964893.s3.e7" charOffset="100-147"
+			type="HP" text="defects of the outer, middle and inner ear" ontology_id="HP_0000359"/>
+		<entity id="6964893.s3.e8" charOffset="149-166"
+			type="HP" text="lacrimal duct stenosis" ontology_id="HP_0007925"/>
+		<entity id="6964893.s3.e9" charOffset="179-221"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="6964893.s3.e11" charOffset="223-245"
+			type="HP" text="fistulas" ontology_id="HP_0009794"/>
+		<entity id="6964893.s3.e12" charOffset="247-256"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="6964893.s3.e13" charOffset="247-274"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+		<entity id="6964893.s3.e3" charOffset="257-265"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+		<entity id="6964893.s3.e4" charOffset="289-298"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+		<entity id="6964893.s3.e10" charOffset="309-324"
+			type="HP" text="branchial fistulas or cysts" ontology_id="HP_0009796"/>
+	</sentence>
+	<sentence id="6964893.s4" text="Not all the features of the syndrome are expressed in all carriers of the gene."/>
+	<sentence id="6964893.s5" text="Pits, branchial clefts and hearing loss are frequently expressed.">
+		<entity id="6964893.s5.e0" charOffset="0-4"
+			type="HP" text="Pits" ontology_id="HP_0004467"/>
+		<entity id="5954893.s5.e1" charOffset="5-21"
+			type="HP" text="branchial clefts" ontology_id="HP_0009794"/>
+		<entity id="6964893.s5.e4" charOffset="5-14"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+		<entity id="6964893.s5.e2" charOffset="15-21"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="6964893.s5.e3" charOffset="26-38"
+			type="HP" text="clefts" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="6964893.s6" text="The incidence of renal malformation is higher, as mentioned earlier in the literature.">
+		<entity id="6964893.s6.e0" charOffset="19-37"
+			type="HP" text="renal malformation" ontology_id="HP_0000792"/>
+	</sentence>
+	<sentence id="6964893.s7" text="The poor results of exploratory tympanotomies are discussed."/>
+	<sentence id="6964893.s8" text="On the basis of personal observations as well as in view of data from the literature it is maintained that the BOR (branchio-oto-renal dysplasia) syndrome [12,30-32] and the BO (branchio-oto dysplasia) syndrome are in fact the same affection.">
+		<entity id="6964893.s8.e0" charOffset="139-154"
+			type="HP" text="renal dysplasia" ontology_id="HP_0000110"/>
+	</sentence>
+	<sentence id="6964893.s9" text="It is also maintained that no separate syndromes can be distinguished on the basis of the type of hearing loss.">
+		<entity id="6964893.s9.e0" charOffset="114-126"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+	</sentence>
+	<sentence id="6964893.s10" text="The present knowledge of the syndrome is summarized in terms of the information available for genetic counselling."/>
+</document>

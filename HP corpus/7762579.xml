@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7762579">
+	<sentence id="7762579.s0" text="The index case was a Maori bushman who presented with severe congenital spinal stenosis and manifestations of distal arthrogryposis.">
+		<entity id="7762579.s0.e0" charOffset="72-87"
+			type="HP" text="spinal stenosis" ontology_id="HP_0003416"/>
+		<entity id="7762579.s0.e1" charOffset="110-131"
+			type="HP" text="distal arthrogryposis" ontology_id="HP_0005684"/>
+	</sentence>
+	<sentence id="7762579.s1" text="His offspring and 8 of his 9 sibs and most of their offspring were interviewed and examined."/>
+	<sentence id="7762579.s2" text="Of those examined 7 individuals with definite and 2 with probable distal arthrogryposis were identified in 4 of the families.">
+		<entity id="7762579.s2.e0" charOffset="64-85"
+			type="HP" text="distal arthrogryposis" ontology_id="HP_0005684"/>
+	</sentence>
+	<sentence id="7762579.s3" text="A tenth relative with distal arthrogryposis and contractural arachnodactyly had died.">
+		<entity id="7762579.s3.e0" charOffset="20-41"
+			type="HP" text="distal arthrogryposis" ontology_id="HP_0005684"/>
+		<entity id="7762579.s3.e1" charOffset="46-73"
+			type="HP" text="contractural arachnodactyly" ontology_id="HP_0001166"/>
+	</sentence>
+	<sentence id="7762579.s4" text="There was marked variability in the severity and nature of manifestations with 2 having severe hand and foot involvement in addition to craniofacial changes compatible with a diagnosis of Freeman-Sheldon syndrome.">
+		<entity id="7762579.s4.e0" charOffset="9-72"
+			type="HP" text="marked variability in the severity and nature of manifestations" ontology_id="HP_0003815"/>
+		<entity id="7762579.s4.e2" charOffset="16-27"
+			type="HP" text="hand and foot involvement" ontology_id="HP_0001155"/>
+		<entity id="7762579.s4.e3" charOffset="94-119"
+			type="HP" text="craniofacial changes" ontology_id="HP_0002260"/>
+		<entity id="7762579.s4.e1" charOffset="135-155"
+			type="HP" text="variability" ontology_id="HP_0003812"/>
+	</sentence>
+	<sentence id="7762579.s5" text="Other apparently unrelated hereditary disorders in the family included ectrodactyly, biliary atresia, and Brachmann-de Lange syndrome.">
+		<entity id="7762579.s5.e0" charOffset="72-84"
+			type="HP" text="ectrodactyly" ontology_id="HP_0100257"/>
+		<entity id="7762579.s5.e1" charOffset="86-101"
+			type="HP" text="biliary atresia" ontology_id="HP_0005912"/>
+	</sentence>
+	<sentence id="7762579.s6" text="This is the first report of arthrogryposis in a Maori family.">
+		<entity id="7762579.s6.e0" charOffset="32-46"
+			type="HP" text="arthrogryposis" ontology_id="HP_0001390"/>
+	</sentence>
+</document>

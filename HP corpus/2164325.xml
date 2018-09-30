@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2164325">
+	<sentence id="2164325.s0" text="This paper reports on a family with popliteal pterygium syndrome (PPS), which was ascertained through a baby with most of the major signs of the syndrome.">
+		<entity id="2164325.s0.e0" charOffset="36-55"
+			type="HP" text="popliteal pterygium" ontology_id="HP_0009756"/>
+	</sentence>
+	<sentence id="2164325.s1" text="The mother, who had a repaired cleft palate and toe syndactyly, had been aware that her syndactyly was familial, but her unpreparedness for the birth of a child with PPS led to interest in, and a subsequent review of, the differnetial diagnosis and the variable expression of the clinical manifestations of this syndrome.">
+		<entity id="2164325.s1.e0" charOffset="31-43"
+			type="HP" text="cleft palate" ontology_id="HP_0000175"/>
+		<entity id="2164325.s1.e1" charOffset="48-62"
+			type="HP" text="toe syndactyly" ontology_id="HP_0001770"/>
+		<entity id="2164325.s1.e2" charOffset="253-261"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+	<sentence id="2164325.s2" text="Upon review, some earlier reported cases were excluded as PPS, and certain ascertainment and reporting biases that could affect such an analysis were considered."/>
+</document>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="391043">
+	<sentence id="391043.s0" text="Short stature may be a component of the brachydactyly C syndrome.">
+		<entity id="391043.s0.e0" charOffset="0-13"
+			type="HP" text="Short stature" ontology_id="HP_0004322"/>
+		<entity id="391043.s0.e1" charOffset="40-55"
+			type="HP" text="brachydactyly C" ontology_id="HP_0009373"/>
+		<entity id="391043.s0.e2" charOffset="40-53"
+			type="HP" text="brachydactyly" ontology_id="HP_0001156"/>
+	</sentence>
+	<sentence id="391043.s1" text="A family is presented in which the propositus has brachydactyly C, short stature, and hip dysplasia.">
+		<entity id="391043.s1.e0" charOffset="50-63"
+			type="HP" text="brachydactyly" ontology_id="HP_0001156"/>
+		<entity id="391043.s1.e1" charOffset="67-80"
+			type="HP" text="short stature" ontology_id="HP_0004322"/>
+		<entity id="391043.s1.e2" charOffset="86-99"
+			type="HP" text="hip dysplasia" ontology_id="HP_0001385"/>
+	</sentence>
+</document>

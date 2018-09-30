@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1003450">
+	<sentence id="1003450.s0" text="A syndrome of brachydactyly (absence of some middle or distal phalanges), aplastic or hypoplastic nails, symphalangism (ankylois of proximal interphalangeal joints), synostosis of some carpal and tarsal bones, craniosynostosis, and dysplastic hip joints is reported in five members of an Italian family.">
+		<entity id="1003450.s0.e0" charOffset="14-27"
+			type="HP" text="brachydactyly" ontology_id="HP_0001156"/>
+		<entity id="1003450.s0.e1" charOffset="29-71"
+			type="HP" text="absence of some middle or distal phalanges" ontology_id="HP_0009881"/>
+		<entity id="1003450.s0.e2" charOffset="74-103"
+			type="HP" text="aplastic or hypoplastic nails" ontology_id="HP_0001798"/>
+		<entity id="1003450.s0.e3" charOffset="105-118"
+			type="HP" text="symphalangism" ontology_id="HP_0100264"/>
+		<entity id="1003450.s0.e4" charOffset="120-163"
+			type="HP" text="ankylois of proximal interphalangeal joints" ontology_id="HP_0008090"/>
+		<entity id="1003450.s0.e5" charOffset="166-208"
+			type="HP" text="synostosis of some carpal and tarsal bones" ontology_id="HP_0009702"/>
+		<entity id="1003450.s0.e6" charOffset="210-226"
+			type="HP" text="craniosynostosis" ontology_id="HP_0001363"/>
+		<entity id="1003450.s0.e7" charOffset="232-253"
+			type="HP" text="dysplastic hip joints" ontology_id="HP_0001385"/>
+	</sentence>
+	<sentence id="1003450.s1" text="It may represent a previously undescribed autosomal dominant trait.">
+		<entity id="1003450.s1.e0" charOffset="42-66"
+			type="HP" text="autosomal dominant trait" ontology_id="HP_0000006"/>
+	</sentence>
+</document>

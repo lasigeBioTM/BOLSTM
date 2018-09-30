@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2705922">
+	<sentence id="2705922.s0" text="This study of 47 patients from 11 families with neurofibromatosis type 2 (NF 2) confirms our previously reported association between posterior capsular cataract and NF 2.">
+		<entity id="2705922.s0.e0" charOffset="48-65"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="2705922.s0.e1" charOffset="133-160"
+			type="HP" text="posterior capsular cataract" ontology_id="HP_0100020"/>
+	</sentence>
+	<sentence id="2705922.s1" text="A highly significant statistical association was found between the presence of posterior capsular lens opacities and the presence of NF 2 as determined by magnetic resonance imaging or pathologic diagnosis.">
+		<entity id="2705922.s1.e0" charOffset="79-112"
+			type="HP" text="posterior capsular lens opacities" ontology_id="HP_0007787"/>
+	</sentence>
+	<sentence id="2705922.s2" text="This association was not present for other types of lens opacities that could be the result of age-related or nonspecific changes.">
+		<entity id="2705922.s2.e0" charOffset="51-65"
+			type="HP" text="lens opacities" ontology_id="HP_0000518"/>
+	</sentence>
+	<sentence id="2705922.s3" text="When considering the diagnosis of NF 2, this finding now makes it essential to use a careful dilated biomicroscopic examination of the lens to evaluate known, suspected, or at-risk individuals for this potentially early associated manifestation.">
+		<entity id="2705922.s3.e0" charOffset="213-243"
+			type="HP" text="early associated manifestation" ontology_id="HP_0003593"/>
+	</sentence>
+</document>

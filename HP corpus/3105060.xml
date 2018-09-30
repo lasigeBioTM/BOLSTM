@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3105060">
+	<sentence id="3105060.s0" text="Bilateral acoustic neurofibromatosis (BANF) is a genetic defect associated with multiple tumors of neural crest origin.">
+		<entity id="3105060.s0.e0" charOffset="0-36"
+			type="HP" text="Bilateral acoustic neurofibromatosis" ontology_id="HP_0009589"/>
+		<entity id="3105060.s0.e1" charOffset="38-42"
+			type="HP" text="BANF" ontology_id="HP_0009589"/>
+		<entity id="3105060.s0.e2" charOffset="80-111"
+			type="HP" text="multiple tumors of neural crest" ontology_id="HP_0004375"/>
+		<entity id="3105060.s0.e3" charOffset="89-95"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3105060.s1" text="Specific loss of alleles from chromosome 22 was detected with polymorphic DNA markers in two acoustic neuromas, two neurofibromas, and one meningioma from BANF patients.">
+		<entity id="3105060.s1.e0" charOffset="93-110"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+		<entity id="3105060.s1.e1" charOffset="116-129"
+			type="HP" text="neurofibromas" ontology_id="HP_0001067"/>
+		<entity id="3105060.s1.e2" charOffset="139-149"
+			type="HP" text="meningioma" ontology_id="HP_0002858"/>
+	</sentence>
+	<sentence id="3105060.s2" text="This indicates a common pathogenetic mechanism for all three tumor types.">
+		<entity id="3105060.s2.e0" charOffset="60-65"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3105060.s3" text="The two neurofibromas were among three taken from the same patient, and both showed loss of identical alleles demonstrating that the same chromosome suffered deletion in both tumors.">
+		<entity id="3105060.s3.e0" charOffset="7-20"
+			type="HP" text="neurofibromas" ontology_id="HP_0001067"/>
+		<entity id="3105060.s3.e1" charOffset="174-180"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3105060.s4" text="The third neurofibroma from this patient showed no detectable loss of heterozygosity, which suggests the possibility of a more subtle mutational event that affects chromosome 22.">
+		<entity id="3105060.s4.e0" charOffset="10-22"
+			type="HP" text="neurofibroma" ontology_id="HP_0001067"/>
+	</sentence>
+	<sentence id="3105060.s5" text="In the two acoustic neuromas, only a portion of chromosome 22 was deleted, narrowing the possible chromosomal location of the gene that causes BANF to the region distal to the D22S9 locus in band 22q11.">
+		<entity id="3105060.s5.e0" charOffset="13-30"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+	</sentence>
+	<sentence id="3105060.s6" text="The identification of progressively smaller deletions on chromosome 22 in these tumor types may well provide a means to clone and characterize the defect.">
+		<entity id="3105060.s6.e0" charOffset="90-90"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+	</sentence>
+</document>

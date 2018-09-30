@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7319144">
+	<sentence id="7319144.s0" text="Nine children with the *happy puppet* syndrome are presented here and 19 previously reported cases are reviewed.">
+		<entity id="7319144.s0.e0" charOffset="24-36"
+			type="HP" text="happy puppet" ontology_id="HP_0100024"/>
+	</sentence>
+	<sentence id="7319144.s1" text="A characteristic psychological profile is suggested by the children's *unfocused* activities and inconsistent responsiveness to their surroundings.">
+		<entity id="7319144.s1.e0" charOffset="70-92"
+			type="HP" text="*unfocused* activities" ontology_id="HP_0000708"/>
+	</sentence>
+	<sentence id="7319144.s2" text="Behavioral characteristics are atypical for mental age and do not appear to represent unusual seizure equivalents.">
+		<entity id="7319144.s2.e0" charOffset="0-26"
+			type="HP" text="Behavioral characteristics" ontology_id="HP_0000708"/>
+		<entity id="7319144.s2.e1" charOffset="93-100"
+			type="HP" text="seizure" ontology_id="HP_0001250"/>
+	</sentence>
+	<sentence id="7319144.s3" text="Recognition of such non-adaptive behavior may be of importance in selecting specific treatment and management techniques to modify the characteristics of this syndrome at an early age.">
+		<entity id="7319144.s3.e0" charOffset="19-40"
+			type="HP" text="non-adaptive behavior" ontology_id="HP_0000708"/>
+		<entity id="7319144.s3.e1" charOffset="173-182"
+			type="HP" text="early age" ontology_id="HP_0003593"/>
+	</sentence>
+</document>

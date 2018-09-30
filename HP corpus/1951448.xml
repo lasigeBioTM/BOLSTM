@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1951448">
+	<sentence id="1951448.s0" text="We report on 2 children with Townes-Brocks syndrome (TBS) and mental retardation.">
+		<entity id="1951448.s0.e0" charOffset="62-80"
+			type="HP" text="mental retardation" ontology_id="HP_0001249"/>
+	</sentence>
+	<sentence id="1951448.s1" text="One child had mild hearing loss, but the other only had hearing loss at 8000 Hz.">
+		<entity id="1951448.s1.e0" charOffset="19-31"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+		<entity id="1951448.s1.e1" charOffset="56-68"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+	</sentence>
+	<sentence id="1951448.s2" text="These cases suggest that there may be an increased incidence of mental retardation in individuals with TBS.">
+		<entity id="1951448.s2.e0" charOffset="63-81"
+			type="HP" text="mental retardation" ontology_id="HP_0001249"/>
+	</sentence>
+</document>

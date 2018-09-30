@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2012134">
+	<sentence id="2012134.s0" text="The diagnosis of Angelman syndrome (AS) has seldom been made in infants because the previously described characteristic manifestations usually are not apparent until after age 2 years."/>
+	<sentence id="2012134.s1" text="We describe 4 AS patients, one of whom has oculocutaneous albinism, who were less than 2 years old when first evaluated.">
+		<entity id="2012134.s1.e0" charOffset="42-65"
+			type="HP" text="oculocutaneous albinism" ontology_id="HP_0001107"/>
+	</sentence>
+	<sentence id="2012134.s2" text="All 4 have deletions of the region q11.2-q13 of chromosome 15."/>
+	<sentence id="2012134.s3" text="In the 3 cases in which parents were available for study the deleted chromosome 15 was maternally derived, as determined by cytological markers."/>
+	<sentence id="2012134.s4" text="All of the patients presented with severe to profound global developmental delay and postnatal-onset microcephaly; they had seizures, hypotonia, hyperreflexia, and hyperkinesis.">
+		<entity id="2012134.s4.e0" charOffset="32-77"
+			type="HP" text="severe to profound global developmental delay" ontology_id="HP_0007106"/>
+		<entity id="2012134.s4.e1" charOffset="82-110"
+			type="HP" text="postnatal-onset microcephaly" ontology_id="HP_0005484"/>
+		<entity id="2012134.s4.e2" charOffset="121-129"
+			type="HP" text="seizures" ontology_id="HP_0001250"/>
+		<entity id="2012131.s4.e3" charOffset="131-140"
+			type="HP" text="hypotonia" ontology_id="HP_0001252"/>
+		<entity id="2012134.s4.e4" charOffset="142-155"
+			type="HP" text="hyperreflexia" ontology_id="HP_0001347"/>
+		<entity id="2012134.s4.e5" charOffset="161-173"
+			type="HP" text="hyperkinesis" ontology_id="HP_0002487"/>
+	</sentence>
+	<sentence id="2012134.s5" text="All were hypopigmented as compared to their relatives.">
+		<entity id="2012134.s5.e0" charOffset="8-21"
+			type="HP" text="hypopigmented" ontology_id="HP_0001010"/>
+	</sentence>
+	<sentence id="2012134.s6" text="Each had eye abnormalities; all had choroidal pigment hypoplasia.">
+		<entity id="2012134.s6.e0" charOffset="11-28"
+			type="HP" text="eye abnormalities" ontology_id="HP_0000478"/>
+		<entity id="2012134.s6.e1" charOffset="38-66"
+			type="HP" text="choroidal pigment hypoplasia" ontology_id="HP_0007757"/>
+	</sentence>
+	<sentence id="2012134.s7" text="None were initially described as having an abnormal appearance."/>
+	<sentence id="2012134.s8" text="We believe that AS is far more common than previously thought and present these 4 children to emphasize the manifestations that may be helpful in making the diagnosis in the young patient.">
+		<entity id="2012134.s8.e0" charOffset="184-189"
+			type="HP" text="young" ontology_id="HP_0003593"/>
+	</sentence>
+	<sentence id="2012134.s9" text="We also emphasize the hypopigmentation that patients with AS frequently have, including what we think is the first reported case of albinism and AS.">
+		<entity id="2012134.s9.e0" charOffset="54-54"
+			type="HP" text="hypopigmentation" ontology_id="HP_0007513"/>
+		<entity id="2012134.s9.e1" charOffset="148-156"
+			type="HP" text="albinism" ontology_id="HP_0001022"/>
+	</sentence>
+</document>

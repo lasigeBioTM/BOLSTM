@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7246489">
+	<sentence id="7246489.s0" text="Five new cases are presented of a syndrome characterized mainly by severe mental retardation, epilepsy, puppet-like ataxic movements, microbrachycephaly, prognathism, tongue protrusion, and inappropriate paroxysms of laughter.">
+		<entity id="7246489.s0.e0" charOffset="67-92"
+			type="HP" text="severe mental retardation" ontology_id="HP_0002187"/>
+		<entity id="7246489.s0.e1" charOffset="94-102"
+			type="HP" text="epilepsy" ontology_id="HP_0001250"/>
+		<entity id="7246489.s0.e2" charOffset="104-132"
+			type="HP" text="puppet-like ataxic movements" ontology_id="HP_0001251"/>
+		<entity id="7246489.s0.e4" charOffset="116-122"
+			type="HP" text="microbrachycephaly" ontology_id="HP_0002258"/>
+		<entity id="7246489.s0.e5" charOffset="134-152"
+			type="HP" text="prognathism" ontology_id="HP_0000303"/>
+		<entity id="7246489.s0.e6" charOffset="154-165"
+			type="HP" text="tongue protrusion" ontology_id="HP_0010808"/>
+		<entity id="7246489.s0.e7" charOffset="167-184"
+			type="HP" text="inappropriate paroxysms of laughter" ontology_id="HP_0000748"/>
+		<entity id="7246489.s0.e3" charOffset="190-225"
+			type="HP" text="ataxic" ontology_id="HP_0001251"/>
+	</sentence>
+	<sentence id="7246489.s1" text="The cases are analyzed with reference to personal and family histories, clinical findings, and results of special investigations (biochemical, chromosomal, dermatoglyphic, EEG, and radiologic)."/>
+	<sentence id="7246489.s2" text="The findings are compared with those in the 22 patients described previously."/>
+	<sentence id="7246489.s3" text="Though clinically distinctive, there is as yet no clear-cut evidence as to cause."/>
+</document>

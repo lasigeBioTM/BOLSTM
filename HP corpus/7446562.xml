@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7446562">
+	<sentence id="7446562.s0" text="We report on a 32-year-old Italian man, his 5-year-old daughter, and his 3 1/2-year-old son, all of whom had congenital joint contractures.">
+		<entity id="7446562.s0.e0" charOffset="109-138"
+			type="HP" text="congenital joint contractures" ontology_id="HP_0002803"/>
+	</sentence>
+	<sentence id="7446562.s1" text="Each has severe ulnar deviation of fingers and soft-tissue contractures of both hands; and each had bilateral clubfeet at birth.">
+		<entity id="7446562.s1.e0" charOffset="16-42"
+			type="HP" text="ulnar deviation of fingers" ontology_id="HP_0009465"/>
+		<entity id="7446562.s1.e2" charOffset="16-31"
+			type="HP" text="contractures of both hands" ontology_id="HP_0006096"/>
+		<entity id="7446562.s1.e4" charOffset="59-85"
+			type="HP" text="bilateral clubfeet" ontology_id="HP_0001776"/>
+		<entity id="7446562.s1.e1" charOffset="59-71"
+			type="HP" text="ulnar deviation" ontology_id="HP_0001193"/>
+		<entity id="7446562.s1.e3" charOffset="100-118"
+			type="HP" text="contractures" ontology_id="HP_0001371"/>
+	</sentence>
+	<sentence id="7446562.s2" text="The father is short in stature, as are the children, who also have delayed carpal ossification.">
+		<entity id="7446562.s2.e0" charOffset="13-29"
+			type="HP" text="short in stature" ontology_id="HP_0001509"/>
+		<entity id="7446562.s2.e1" charOffset="66-93"
+			type="HP" text="delayed carpal ossification" ontology_id="HP_0001216"/>
+	</sentence>
+	<sentence id="7446562.s3" text="The findings in this family suggest autosomal-dominant inheritance of the condition.">
+		<entity id="7446562.s3.e0" charOffset="35-65"
+			type="HP" text="autosomal-dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="7446562.s3.e1" charOffset="45-53"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="7446562.s4" text="The clinical features are consistent with the condition currently referred to as *distal* arthrogryposis.">
+		<entity id="7446562.s4.e0" charOffset="81-104"
+			type="HP" text="*distal* arthrogryposis" ontology_id="HP_0005684"/>
+	</sentence>
+</document>

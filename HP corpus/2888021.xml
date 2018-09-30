@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2888021">
+	<sentence id="2888021.s0" text="Bilateral acoustic neurofibromatosis (BANF) is a severe autosomal dominant disorder involving development of multiple tumours of the nervous system including meningiomas, gliomas, neurofibromas and particularly bilateral acoustic neuromas.">
+		<entity id="2888021.s0.e0" charOffset="0-36"
+			type="HP" text="Bilateral acoustic neurofibromatosis" ontology_id="HP_0009589"/>
+		<entity id="2888021.s0.e1" charOffset="38-42"
+			type="HP" text="BANF" ontology_id="HP_0009589"/>
+		<entity id="2888021.s0.e2" charOffset="56-83"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+		<entity id="2888021.s0.e4" charOffset="56-74"
+			type="HP" text="tumours" ontology_id="HP_0002664"/>
+		<entity id="2888021.s0.e5" charOffset="118-125"
+			type="HP" text="meningiomas" ontology_id="HP_0002858"/>
+		<entity id="2888021.s0.e6" charOffset="158-169"
+			type="HP" text="gliomas" ontology_id="HP_0009733"/>
+		<entity id="2888021.s0.e7" charOffset="171-178"
+			type="HP" text="neurofibromas" ontology_id="HP_0001067"/>
+		<entity id="2888021.s0.e8" charOffset="180-193"
+			type="HP" text="bilateral acoustic neuromas" ontology_id="HP_0009589"/>
+		<entity id="2888021.s0.e3" charOffset="211-238"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="2888021.s1" text="We have used genetic linkage analysis with DNA markers to establish that the defective gene causing BANF is on chromosome 22, and is therefore distinct from the gene for the von Recklinghausen form of neurofibromatosis, which maps to chromosome 17.">
+		<entity id="2888021.s1.e0" charOffset="201-218"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="2888021.s2" text="Linked DNA markers will be particularly valuable in BANF, facilitating early detection of tumours and thereby permitting more effective surgical intervention.">
+		<entity id="2888021.s2.e0" charOffset="89-96"
+			type="HP" text="tumours" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="2888021.s3" text="In view of the reported loss of genes on chromosome 22 in meningiomas and acoustic neuromas, the genetic localization of the primary BANF defect strongly supports the concept that the disease locus encodes a 'tumour suppressor' gene.">
+		<entity id="2888021.s3.e0" charOffset="57-68"
+			type="HP" text="meningiomas" ontology_id="HP_0002858"/>
+		<entity id="2888021.s3.e1" charOffset="73-90"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+		<entity id="2888021.s3.e2" charOffset="208-214"
+			type="HP" text="tumour" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="2888021.s4" text="Isolation of this gene should provide insights into the pathogenesis of acoustic neuromas and other nervous system tumours, as well as into the control of proliferation and differentiation of neural crest cells.">
+		<entity id="2888021.s4.e0" charOffset="72-89"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+		<entity id="2888021.s4.e1" charOffset="100-122"
+			type="HP" text="nervous system tumours" ontology_id="HP_0004375"/>
+	</sentence>
+</document>

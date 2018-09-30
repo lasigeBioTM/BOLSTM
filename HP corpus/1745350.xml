@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1745350">
+	<sentence id="1745350.s0" text="We studied two families with an unusual variant of neurofibromatosis (NF).">
+		<entity id="1745350.s0.e0" charOffset="51-68"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="1745350.s1" text="The first family had spinal neurofibromas and cafe au lait spots (CLS), the second spinal neurofibromas without CLS.">
+		<entity id="1745350.s1.e0" charOffset="21-41"
+			type="HP" text="spinal neurofibromas" ontology_id="HP_0009735"/>
+		<entity id="1745350.s1.e3" charOffset="46-70"
+			type="HP" text="spinal neurofibromas" ontology_id="HP_0009735"/>
+		<entity id="1745350.s1.e1" charOffset="46-64"
+			type="HP" text="cafe au lait spots (CLS)" ontology_id="HP_0000957"/>
+		<entity id="1745350.s1.e2" charOffset="83-103"
+			type="HP" text="cafe au lait spots" ontology_id="HP_0000957"/>
+	</sentence>
+	<sentence id="1745350.s2" text="Other signs of positive regulation of GTPase activity or negative regulation of cell proliferation, such as cutaneous tumors, Lisch nodules, or acoustic tumors, were absent.">
+		<entity id="1745350.s2.e0" charOffset="15-53"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+		<entity id="1745350.s2.e1" charOffset="57-98"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="174123070.s2.e2" charOffset="108-124"
+			type="HP" text="cutaneous tumors" ontology_id="HP_0008069"/>
+		<entity id="17412550.s2.e3" charOffset="126-139"
+			type="HP" text="Lisch nodules" ontology_id="HP_0009737"/>
+		<entity id="1745350.s2.e4" charOffset="144-159"
+			type="HP" text="acoustic tumors" ontology_id="HP_0009588"/>
+		<pair id="1745350.s2.p0" e1="1745350.s2.e0"
+		    e2="1745350.s2.e2" ddi="false"/>
+		<pair id="1745350.s2.p1" e1="1745350.s2.e0"
+		    e2="1745350.s2.e3" ddi="true" type="effect"/>
+		<pair id="1745350.s2.p2" e1="1745350.s2.e0"
+		    e2="1745350.s2.e4" ddi="false"/>
+		<pair id="1745350.s2.p3" e1="1745350.s2.e1"
+		    e2="1745350.s2.e2" ddi="false"/>
+		<pair id="1745350.s2.p4" e1="1745350.s2.e1"
+		    e2="1745350.s2.e3" ddi="false"/>
+		<pair id="1745350.s2.p5" e1="1745350.s2.e1"
+		    e2="1745350.s2.e4" ddi="false"/>
+	</sentence>
+	<sentence id="1745350.s3" text="The inheritance pattern in both pedigrees was consistent with autosomal dominant inheritance.">
+		<entity id="1745350.s3.e0" charOffset="61-91"
+			type="HP" text="autosomal dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="1745350.s3.e1" charOffset="61-79"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="1745350.s4" text="Using genetic linkage analysis with DNA markers tightly linked to the positive regulation of GTPase activity and negative regulation of cell proliferation loci, we determined that the likely location for the mutation in the first family was in the positive regulation of GTPase activity gene with odds of 97:1, whereas the mutation in the second family was excluded from the positive regulation of GTPase activity locus with odds greater than 100,000:1.">
+		<entity id="1745350.s4.e0" charOffset="70-108"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+		<entity id="1745350.s4.e1" charOffset="113-154"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1745350.s4.e2" charOffset="248-286"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+		<entity id="1745350.s4.e3" charOffset="375-413"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+	</sentence>
+	<sentence id="1745350.s5" text="Families such as these, in which a defined subset of the NF phenotype is passed on, are important for understanding the functional consequences of particular mutations in the NF genes."/>
+</document>

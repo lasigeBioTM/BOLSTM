@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6846397">
+	<sentence id="6846397.s0" text="We report a man who had the branchio-oto-renal (BOR) syndrome with crossed renal ectopia.">
+		<entity id="6846397.s0.e0" charOffset="75-88"
+			type="HP" text="renal ectopia" ontology_id="HP_0000086"/>
+	</sentence>
+	<sentence id="6846397.s1" text="His three children were born with bilateral renal agenesis and the so-called Potter syndrome.">
+		<entity id="6846397.s1.e0" charOffset="34-58"
+			type="HP" text="bilateral renal agenesis" ontology_id="HP_0010958"/>
+		<entity id="6846397.s1.e1" charOffset="77-92"
+			type="HP" text="Potter syndrome" ontology_id="HP_0002009"/>
+	</sentence>
+	<sentence id="6846397.s2" text="This case illustrates the potential severity of the renal anomalies in the BOR syndrome and the inadequacy of oligohydramnios and maternal serum alpha-fetoprotein as screening methods for renal agenesis.">
+		<entity id="6846397.s2.e0" charOffset="51-66"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+		<entity id="6846397.s2.e1" charOffset="109-124"
+			type="HP" text="oligohydramnios" ontology_id="HP_0001562"/>
+		<entity id="6846397.s2.e2" charOffset="187-201"
+			type="HP" text="renal agenesis" ontology_id="HP_0000104"/>
+	</sentence>
+	<sentence id="6846397.s3" text="This case also implies strongly the necessity for meticulous search for renal anomalies in individuals with the BOR syndrome and proper counseling regarding the possibility of lethal bilateral renal agenesis.">
+		<entity id="6846397.s3.e0" charOffset="71-86"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+		<entity id="6846397.s3.e1" charOffset="182-206"
+			type="HP" text="bilateral renal agenesis" ontology_id="HP_0010958"/>
+	</sentence>
+</document>

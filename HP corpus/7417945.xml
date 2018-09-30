@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7417945">
+	<sentence id="7417945.s0" text="Four patients representing four generations of one family suffered from the multiple nevoid basal cell carcinoma syndrome.">
+		<entity id="7417945.s0.e0" charOffset="76-91"
+			type="HP" text="multiple nevoid" ontology_id="HP_0001054"/>
+		<entity id="7417945.s0.e1" charOffset="92-112"
+			type="HP" text="basal cell carcinoma" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="7417945.s1" text="These cases are described and the importance of examination and careful supervision of the progeny of such patients is discussed."/>
+	<sentence id="7417945.s2" text="A unique finding in this series was a large congenital lung cyst occupying the left thoracic cavity of 1 patient.">
+		<entity id="7417945.s2.e0" charOffset="42-62"
+			type="HP" text="congenital lung cyst" ontology_id="HP_0006540"/>
+	</sentence>
+</document>

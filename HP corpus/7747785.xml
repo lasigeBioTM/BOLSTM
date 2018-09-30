@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7747785">
+	<sentence id="7747785.s0" text="We review 43 patients (15 new, 28 literature) with the branchio-oculo-facial (BOF) syndrome, which has a distinctive phenotype ranging from mild to severe forms, consisting of eye, ear, oral, and craniofacial anomalies.">
+		<entity id="7747785.s0.e0" charOffset="176-218"
+			type="HP" text="eye, ear, oral, and craniofacial anomalies" ontology_id="HP_0000478"/>
+	</sentence>
+	<sentence id="7747785.s1" text="Virtually ubiquitous and possibly pathognomonic are the cervical/infra-auricular skin defects.">
+		<entity id="7747785.s1.e0" charOffset="56-93"
+			type="HP" text="cervical/infra-auricular skin defects" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="7747785.s2" text="Much less common are supra-auricular defects occurring as isolated anomalies or with cervical defects.">
+		<entity id="7747785.s2.e0" charOffset="20-43"
+			type="HP" text="supra-auricular defects" ontology_id="HP_0000383"/>
+	</sentence>
+	<sentence id="7747785.s3" text="Regardless of location, these lesions may have aplastic, *hemangiomatous,* or otherwise abnormal overlying skin, and draining sinus fistulae.">
+		<entity id="7747785.s3.e0" charOffset="87-110"
+			type="HP" text="abnormal overlying skin" ontology_id="HP_0000951"/>
+		<entity id="7747785.s3.e1" charOffset="116-139"
+			type="HP" text="draining sinus fistulae" ontology_id="HP_0004467"/>
+	</sentence>
+	<sentence id="7747785.s4" text="Renal malformations are frequent, but congenital heart and central nervous system defects are rare.">
+		<entity id="7747785.s4.e0" charOffset="0-19"
+			type="HP" text="Renal malformations" ontology_id="HP_0000792"/>
+		<entity id="7747785.s4.e1" charOffset="38-89"
+			type="HP" text="congenital heart and central nervous system defects" ontology_id="HP_0002564"/>
+	</sentence>
+	<sentence id="7747785.s5" text="Psychomotor performance is usually normal, but development delays, hypotonia, and visual, hearing, and speech problems are common.">
+		<entity id="7749785.s5.e0" charOffset="49-67"
+			type="HP" text="development delays" ontology_id="HP_0001263"/>
+		<entity id="7747785.s5.e1" charOffset="69-78"
+			type="HP" text="hypotonia" ontology_id="HP_0001252"/>
+		<entity id="7747785.s5.e2" charOffset="84-120"
+			type="HP" text="visual, hearing, and speech problems" ontology_id="HP_0000478"/>
+	</sentence>
+	<sentence id="7747785.s6" text="Autosomal dominant inheritance seems likely.">
+		<entity id="7747785.s6.e5" charOffset="5-35"
+			type="HP" text="Autosomal dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="7747785.s6.e1" charOffset="15-23"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="7747785.s7" text="Overlap between the BOF and branchio-otorenal syndromes has been observed, but elucidation of its molecular basis is not yet available."/>
+	<sentence id="7747785.s8" text="This article also discusses 5 patients with atypical manifestations considered to be possibly affected or probably unaffected, who are sufficiently unusual to be excluded from the final data analysis."/>
+</document>

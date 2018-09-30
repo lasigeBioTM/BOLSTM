@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6882181">
+	<sentence id="6882181.s0" text="We report 9 subjects from 2 families with the syndrome of cerebral gigantism, seven of the patients also had jaw cyst basal cell naevoid syndrome.">
+		<entity id="6882181.s0.e0" charOffset="58-76"
+			type="HP" text="cerebral gigantism" ontology_id="HP_0002060"/>
+		<entity id="6882181.s0.e1" charOffset="109-117"
+			type="HP" text="jaw cyst" ontology_id="HP_0010603"/>
+		<entity id="6882181.s0.e2" charOffset="118-136"
+			type="HP" text="basal cell naevoid" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="6882181.s1" text="Neurological, radiological, somatic and biochemical features of this hitherto unreported association are described."/>
+	<sentence id="6882181.s2" text="Neurological symptoms included mild hydrocephalus, ventricular malformation, cerebellar syndrome, intracranial calcification, oculomotor disturbances, EEG abnormalities and rarely, mild peripheral nervous disorders.">
+		<entity id="6882181.s2.e0" charOffset="34-47"
+			type="HP" text="hydrocephalus" ontology_id="HP_0000238"/>
+		<entity id="6882181.s2.e1" charOffset="49-73"
+			type="HP" text="ventricular malformation" ontology_id="HP_0002118"/>
+		<entity id="6882181.s2.e2" charOffset="75-94"
+			type="HP" text="cerebellar syndrome" ontology_id="HP_0001317"/>
+		<entity id="6882181.s2.e3" charOffset="96-122"
+			type="HP" text="intracranial calcification" ontology_id="HP_0002514"/>
+		<entity id="6882181.s2.e4" charOffset="124-147"
+			type="HP" text="oculomotor disturbances" ontology_id="HP_0006860"/>
+		<entity id="6882181.s2.e5" charOffset="149-166"
+			type="HP" text="EEG abnormalities" ontology_id="HP_0002353"/>
+		<entity id="6882181.s2.e6" charOffset="184-212"
+			type="HP" text="peripheral nervous disorders" ontology_id="HP_0000759"/>
+	</sentence>
+	<sentence id="6882181.s3" text="A disturbance of calcium metabolism appears to be a prominent feature of the genetically determined nonprogressive syndrome.">
+		<entity id="6882181.s3.e0" charOffset="15-33"
+			type="HP" text="calcium metabolism" ontology_id="HP_0004363"/>
+		<entity id="6882181.s3.e1" charOffset="98-112"
+			type="HP" text="nonprogressive" ontology_id="HP_0003680"/>
+	</sentence>
+</document>

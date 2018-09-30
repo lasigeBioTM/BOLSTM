@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7485365">
+	<sentence id="7485365.s0" text="To evaluate the ocular abnormalities in patients with clinically diagnosed neurofibromatosis 2 and asymptomatic gene carriers.">
+		<entity id="7485365.s0.e0" charOffset="16-36"
+			type="HP" text="ocular abnormalities" ontology_id="HP_0000284"/>
+		<entity id="7485365.s0.e1" charOffset="75-92"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="7485365.s1" text="Probands were ascertained through a surgical otolaryngology practice."/>
+	<sentence id="7485365.s2" text="In a cross-sectional study, we examined 49 patients with neurofibromatosis 2, 30 offspring of patients, and, as a comparison group, 18 parents and siblings of patients with sporadic neurofibromatosis 2.">
+		<entity id="18085365.s2.e1" charOffset="172-180"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="7485365.s2.e0" charOffset="198-198"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="7485365.s3" text="The examination included a complete neuro-ophthalmic assessment, physical examination, and, for patients and first-degree relatives at risk, cranial and spinal magnetic resonance imaging with gadolinium enhancement, if not previously performed."/>
+	<sentence id="7485365.s4" text="The most common ocular abnormalities were posterior subcapsular or capsular, cortical, or mixed lens opacities in 33 (67%) of 49 patients with neurofibromatosis 2 and retinal hamartomas in 11 (22%).">
+		<entity id="7485365.s4.e0" charOffset="16-36"
+			type="HP" text="ocular abnormalities" ontology_id="HP_0000284"/>
+		<entity id="7485365.s4.e1" charOffset="42-110"
+			type="HP" text="posterior subcapsular or capsular, cortical, or mixed lens opacities" ontology_id="HP_0007787"/>
+		<entity id="7485365.s4.e2" charOffset="143-160"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="7485365.s4.e3" charOffset="167-185"
+			type="HP" text="retinal hamartomas" ontology_id="HP_0009594"/>
+	</sentence>
+	<sentence id="7485365.s5" text="We used segregation analysis to determine the mutation carrier status of six at-risk offspring who were 30 years old or younger in two multigeneration families."/>
+	<sentence id="7485365.s6" text="Three asymptomatic mutation carriers had cataracts, whereas those who were predicted not to carry the mutation did not have cataracts.">
+		<entity id="7485365.s6.e0" charOffset="45-54"
+			type="HP" text="cataracts" ontology_id="HP_0000518"/>
+	</sentence>
+	<sentence id="7485365.s7" text="Asymptomatic mutation carriers may have developmental abnormalities of the eye that are detectable in childhood or adolescence, a finding that may assist in early diagnosis of the disease.">
+		<entity id="7485365.s7.e0" charOffset="48-75"
+			type="HP" text="developmental abnormalities" ontology_id="HP_0001263"/>
+		<entity id="7485365.s7.e2" charOffset="62-86"
+			type="HP" text="childhood" ontology_id="HP_0011463"/>
+		<entity id="7485365.s7.e3" charOffset="110-119"
+			type="HP" text="adolescence" ontology_id="HP_0011462"/>
+		<entity id="7485365.s7.e1" charOffset="123-134"
+			type="HP" text="abnormalities of the eye" ontology_id="HP_0000478"/>
+	</sentence>
+	<sentence id="7485365.s8" text="A variety of ocular abnormalities are present in neurofibromatosis 2, including cataracts, retinal hamartomas, and ocular motor deficits.">
+		<entity id="7485365.s8.e0" charOffset="27-47"
+			type="HP" text="ocular abnormalities" ontology_id="HP_0000284"/>
+		<entity id="7485365.s8.e1" charOffset="63-80"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="7485365.s8.e2" charOffset="94-103"
+			type="HP" text="cataracts" ontology_id="HP_0000518"/>
+		<entity id="7485365.s8.e3" charOffset="105-123"
+			type="HP" text="retinal hamartomas" ontology_id="HP_0009594"/>
+	</sentence>
+	<sentence id="7485365.s9" text="Many of these are developmental or acquired early in life and may assist in presymptomatic diagnosis."/>
+	<sentence id="7485365.s10" text="For screening at-risk relatives of patients with neurofibromatosis 2, the types of cataract that are most suggestive of neurofibromatosis 2 are plaque-like posterior subcapsular or capsular cataract and cortical cataract with onset under the age of 30 years.">
+		<entity id="7485365.s10.e0" charOffset="0-21"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="7485365.s10.e1" charOffset="75-92"
+			type="HP" text="cataract" ontology_id="HP_0000518"/>
+		<entity id="7485365.s10.e2" charOffset="109-117"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="7485365.s10.e3" charOffset="146-163"
+			type="HP" text="posterior subcapsular or capsular cataract" ontology_id="HP_0007787"/>
+		<entity id="7485365.s10.e4" charOffset="182-224"
+			type="HP" text="cortical cataract" ontology_id="HP_0100019"/>
+	</sentence>
+</document>

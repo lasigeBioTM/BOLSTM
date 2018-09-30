@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3321995">
+	<sentence id="3321995.s0" text="We observed an autosomal dominant disorder of abnormal upper lip, which resembles a poorly repaired cleft lip, malformed nose with broad bridge and flattened tip, lacrimal duct obstruction, malformed ears, and branchial cleft sinuses and/or linear skin lesions behind the ears in several persons in 3 families.">
+		<entity id="3321995.s0.e0" charOffset="15-33"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="3321995.s0.e3" charOffset="15-42"
+			type="HP" text="abnormal upper lip" ontology_id="HP_0000177"/>
+		<entity id="3321995.s0.e4" charOffset="25-33"
+			type="HP" text="cleft lip" ontology_id="HP_0100333"/>
+		<entity id="3321995.s0.e5" charOffset="46-64"
+			type="HP" text="malformed nose" ontology_id="HP_0000366"/>
+		<entity id="3321995.s0.e6" charOffset="100-109"
+			type="HP" text="broad bridge" ontology_id="HP_0000431"/>
+		<entity id="3321995.s0.e7" charOffset="111-125"
+			type="HP" text="flattened tip" ontology_id="HP_0000437"/>
+		<entity id="3321995.s0.e8" charOffset="131-143"
+			type="HP" text="lacrimal duct obstruction" ontology_id="HP_0000579"/>
+		<entity id="3321995.s0.e9" charOffset="148-161"
+			type="HP" text="malformed ears" ontology_id="HP_0000377"/>
+		<entity id="3318895.s0.e10" charOffset="163-188"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="3321995.s0.e12" charOffset="190-204"
+			type="HP" text="linear skin lesions behind the ears" ontology_id="HP_0004464"/>
+		<entity id="3321995.s0.e1" charOffset="210-219"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+		<entity id="3321995.s0.e2" charOffset="210-225"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+		<entity id="3321995.s0.e11" charOffset="241-276"
+			type="HP" text="branchial cleft" ontology_id="HP_0009794"/>
+		<entity id="3321995.s0.e13" charOffset="248-260"
+			type="HP" text="skin lesions" ontology_id="HP_0011355"/>
+	</sentence>
+	<sentence id="3321995.s1" text="In each of the 3 families, an affected parent had at least one affected child."/>
+	<sentence id="3321995.s2" text="Father-to-son transmission in one of these families ruled out X-linked inheritance.">
+		<entity id="3321995.s2.e0" charOffset="60-80"
+			type="HP" text="X-linked inheritance" ontology_id="HP_0001417"/>
+	</sentence>
+	<sentence id="3321995.s3" text="Other anomalies include coloboma, microphthalmia, auricular pits, lip pits, highly arched plate, dental anomalies, and subcutaneous cysts of the scalp.">
+		<entity id="3301995.s3.e0" charOffset="22-30"
+			type="HP" text="coloboma" ontology_id="HP_0000589"/>
+		<entity id="3321995.s3.e1" charOffset="32-46"
+			type="HP" text="microphthalmia" ontology_id="HP_0000568"/>
+		<entity id="3321995.s3.e2" charOffset="48-62"
+			type="HP" text="auricular pits" ontology_id="HP_0004467"/>
+		<entity id="3321995.s3.e3" charOffset="64-72"
+			type="HP" text="lip pits" ontology_id="HP_0000196"/>
+		<entity id="3321993.s3.e4" charOffset="74-93"
+			type="HP" text="highly arched plate" ontology_id="HP_0000156"/>
+		<entity id="3321995.s3.e5" charOffset="95-111"
+			type="HP" text="dental anomalies" ontology_id="HP_0000164"/>
+		<entity id="3321995.s3.e6" charOffset="117-135"
+			type="HP" text="subcutaneous cysts" ontology_id="HP_0200040"/>
+		<entity id="3321995.s3.e7" charOffset="130-148"
+			type="HP" text="cysts of the scalp" ontology_id="HP_0001965"/>
+	</sentence>
+	<sentence id="3321995.s4" text="Premature graying of hair occurred in the affected adults.">
+		<entity id="3321995.s4.e0" charOffset="0-25"
+			type="HP" text="Premature graying of hair" ontology_id="HP_0002216"/>
+	</sentence>
+	<sentence id="3321995.s5" text="Growth retardation, developmental delay, and hand anomalies are variable components of the syndrome.">
+		<entity id="3321995.s5.e1" charOffset="1-19"
+			type="HP" text="Growth retardation" ontology_id="HP_0001510"/>
+		<entity id="3321995.s5.e1" charOffset="21-40"
+			type="HP" text="developmental delay" ontology_id="HP_0001263"/>
+		<entity id="3321995.s5.e2" charOffset="46-60"
+			type="HP" text="hand anomalies" ontology_id="HP_0001155"/>
+		<entity id="3321995.s5.e3" charOffset="65-73"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+</document>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7625442">
+	<sentence id="7625442.s0" text="We describe 47 patients with Angelman syndrome (AS) from Belgium and the Netherlands, including the anamnestic data, the clinical and the behavioral attributes at different ages."/>
+	<sentence id="7625442.s1" text="The clinical picture of AS is most distinct between the ages of 2-16 years."/>
+	<sentence id="7625442.s2" text="Most patients of this age group show at least 8 of the major characteristics (bursts of laughter, happy disposition, hyperactive behaviour, microcephaly, brachycephaly, macrostomia, tongue protrusion, mandibular prognathism, widely spaced teeth, stiff and puppetlike movements, typical stature, wide based gait) beside the mental retardation and (almost) absence of speech, which is a universal trait.">
+		<entity id="7625442.s2.e0" charOffset="75-93"
+			type="HP" text="bursts of laughter" ontology_id="HP_0000749"/>
+		<entity id="7625442.s2.e1" charOffset="95-112"
+			type="HP" text="happy disposition" ontology_id="HP_0100024"/>
+		<entity id="7625442.s2.e2" charOffset="114-135"
+			type="HP" text="hyperactive behaviour" ontology_id="HP_0000752"/>
+		<entity id="7625442.s2.e3" charOffset="137-149"
+			type="HP" text="microcephaly" ontology_id="HP_0000252"/>
+		<entity id="7625442.s2.e4" charOffset="151-164"
+			type="HP" text="brachycephaly" ontology_id="HP_0000248"/>
+		<entity id="7625442.s2.e5" charOffset="166-177"
+			type="HP" text="macrostomia" ontology_id="HP_0000181"/>
+		<entity id="7625442.s2.e6" charOffset="179-196"
+			type="HP" text="tongue protrusion" ontology_id="HP_0010808"/>
+		<entity id="7625442.s2.e7" charOffset="198-220"
+			type="HP" text="mandibular prognathism" ontology_id="HP_0000303"/>
+		<entity id="7625442.s2.e8" charOffset="222-241"
+			type="HP" text="widely spaced teeth" ontology_id="HP_0000687"/>
+		<entity id="7625442.s2.e9" charOffset="253-273"
+			type="HP" text="puppetlike movements" ontology_id="HP_0100022"/>
+		<entity id="7625442.s2.e10" charOffset="292-307"
+			type="HP" text="wide based gait" ontology_id="HP_0002136"/>
+		<entity id="7625442.s2.e11" charOffset="320-338"
+			type="HP" text="mental retardation" ontology_id="HP_0001249"/>
+		<entity id="7625442.s2.e12" charOffset="352-369"
+			type="HP" text="absence of speech" ontology_id="HP_0001617"/>
+	</sentence>
+	<sentence id="7625442.s3" text="The diagnosis in infants is based on only a limited number of clinical characteristics or on anamnestic data.">
+		<entity id="7625112.s3.e0" charOffset="1-21"
+			type="HP" text="diagnosis in infants" ontology_id="HP_0003576"/>
+	</sentence>
+	<sentence id="7625442.s4" text="However, if these occur in combination, they are indicative of AS."/>
+	<sentence id="7625442.s5" text="In older patients, the diagnosis may be hampered in part because of the changing behavioral characteristics and the decreasing frequency of fits.">
+		<entity id="7625442.s5.e0" charOffset="80-106"
+			type="HP" text="behavioral characteristics" ontology_id="HP_0000708"/>
+	</sentence>
+	<sentence id="7625442.s6" text="Other manifestations, such as scoliosis, may become more pronounced with age.">
+		<entity id="7625442.s6.e0" charOffset="32-41"
+			type="HP" text="scoliosis" ontology_id="HP_0002650"/>
+	</sentence>
+</document>

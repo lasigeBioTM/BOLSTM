@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1348213">
+	<sentence id="1348213.s0" text="Gorlin syndrome is an autosomal dominant disorder that predisposes to basal cell carcinomas of the skin, ovarian fibromas, and medulloblastomas.">
+		<entity id="1348213.s0.e0" charOffset="22-49"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+		<entity id="1348213.s0.e2" charOffset="22-40"
+			type="HP" text="basal cell carcinomas" ontology_id="HP_0002671"/>
+		<entity id="1348213.s0.e4" charOffset="70-91"
+			type="HP" text="ovarian fibromas" ontology_id="HP_0010618"/>
+		<entity id="1348213.s0.e5" charOffset="70-103"
+			type="HP" text="medulloblastomas" ontology_id="HP_0002885"/>
+		<entity id="1348213.s0.e1" charOffset="105-121"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="1348213.s0.e3" charOffset="127-143"
+			type="HP" text="basal cell carcinomas of the skin" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="1348213.s1" text="Unlike other hereditary disorders associated with cancer, it features widespread developmental defects.">
+		<entity id="1348213.s1.e0" charOffset="50-56"
+			type="HP" text="cancer" ontology_id="HP_0002664"/>
+		<entity id="1348213.s1.e1" charOffset="81-102"
+			type="HP" text="developmental defects" ontology_id="HP_0001263"/>
+	</sentence>
+	<sentence id="1348213.s2" text="To investigate the possibility that the syndrome is caused by mutation in a tumor suppressor gene, we searched for loss of heterozygosity in 16 sporadic basal cell carcinomas, 2 hereditary basal cell carcinomas, and 1 hereditary ovarian fibroma and performed genetic linkage studies in five Gorlin syndrome kindreds.">
+		<entity id="1348213.s2.e0" charOffset="75-80"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+		<entity id="1348213.s2.e1" charOffset="143-151"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="1348213.s2.e2" charOffset="152-173"
+			type="HP" text="basal cell carcinomas" ontology_id="HP_0002671"/>
+		<entity id="1348213.s2.e3" charOffset="188-209"
+			type="HP" text="basal cell carcinomas" ontology_id="HP_0002671"/>
+		<entity id="1348213.s2.e4" charOffset="228-243"
+			type="HP" text="ovarian fibroma" ontology_id="HP_0010618"/>
+	</sentence>
+	<sentence id="1348213.s3" text="Eleven sporadic basal cell carcinomas and all 3 hereditary tumors had allelic loss of chromosome 9q31, and all informative kindreds showed tight linkage between the Gorlin syndrome gene and a genetic marker in this region.">
+		<entity id="1348213.s3.e0" charOffset="6-14"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="1348213.s3.e1" charOffset="15-36"
+			type="HP" text="basal cell carcinomas" ontology_id="HP_0002671"/>
+		<entity id="1348213.s3.e2" charOffset="58-64"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="1348213.s4" text="Loss of heterozygosity at this chromosomal location, particularly in hereditary tumors, implies that the gene is homozygously inactivated and normally functions as a tumor suppressor.">
+		<entity id="1348213.s4.e0" charOffset="166-171"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="1348213.s5" text="In contrast, hemizygous germline mutations lead to multiple congenital anomalies."/>
+</document>

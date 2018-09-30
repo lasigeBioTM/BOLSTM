@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1496982">
+	<sentence id="1496982.s0" text="Neurofibromatosis type 2 (negative regulation of cell proliferation) is an autosomal dominant syndrome characterized by the development of vestibular schwannomas and other tumors of the nervous system, including cranial and spinal meningiomas, schwannomas, and ependymomas.">
+		<entity id="1496982.s0.e0" charOffset="0-17"
+			type="HP" text="Neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="1496982.s0.e1" charOffset="26-67"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496982.s0.e2" charOffset="75-93"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="1496982.s0.e3" charOffset="139-161"
+			type="HP" text="vestibular schwannomas" ontology_id="HP_0009588"/>
+		<entity id="1496982.s0.e4" charOffset="166-178"
+			type="HP" text="other tumors" ontology_id="HP_0003008"/>
+		<entity id="1496982.s0.e5" charOffset="212-242"
+			type="HP" text="cranial and spinal meningiomas" ontology_id="HP_0100009"/>
+		<entity id="1496982.s0.e6" charOffset="244-255"
+			type="HP" text="schwannomas" ontology_id="HP_0100008"/>
+		<entity id="1496982.s0.e7" charOffset="261-272"
+			type="HP" text="ependymomas" ontology_id="HP_0002888"/>
+		<pair id="1496982.s0.p0" e1="1496982.s0.e1"
+		    e2="1496982.s0.e0" ddi="false"/>
+		<pair id="1496982.s0.p1" e1="1496982.s0.e1"
+		    e2="1496982.s0.e2" ddi="false"/>
+		<pair id="1496982.s0.p2" e1="1496982.s0.e1"
+		    e2="1496982.s0.e3" ddi="false"/>
+		<pair id="1496982.s0.p3" e1="1496982.s0.e1"
+		    e2="1496982.s0.e4" ddi="false"/>
+		<pair id="1496982.s0.p4" e1="1496982.s0.e1"
+		    e2="1496982.s0.e5" ddi="false"/>
+		<pair id="1496982.s0.p5" e1="1496982.s0.e1"
+		    e2="1496982.s0.e6" ddi="false"/>
+		<pair id="1496982.s0.p6" e1="1496982.s0.e1"
+		    e2="1496982.s0.e7" ddi="false"/>
+	</sentence>
+	<sentence id="1496982.s1" text="The presence of bilateral vestibular schwannomas is sufficient for the diagnosis.">
+		<entity id="1496982.s1.e0" charOffset="16-48"
+			type="HP" text="bilateral vestibular schwannomas" ontology_id="HP_0009589"/>
+	</sentence>
+	<sentence id="1496982.s2" text="Skin manifestations are less common than in neurofibromatosis type 1 (positive regulation of GTPase activity; von Recklinghausen disease).">
+		<entity id="1496982.s2.e0" charOffset="0-19"
+			type="HP" text="Skin manifestations" ontology_id="HP_0000951"/>
+		<entity id="1496982.s2.e1" charOffset="44-61"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="1496982.s2.e2" charOffset="70-109"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+		<pair id="1496982.s2.p0" e1="1496982.s2.e2"
+		    e2="1496982.s2.e0" ddi="false"/>
+		<pair id="1496982.s2.p1" e1="1496982.s2.e2"
+		    e2="1496982.s2.e1" ddi="false"/>
+	</sentence>
+	<sentence id="1496982.s3" text="The apparent clinical distinction between positive regulation of GTPase activity and negative regulation of cell proliferation has been confirmed at the level of the gene locus by linkage studies; the gene for positive regulation of GTPase activity maps to chromosome 17, whereas the gene for negative regulation of cell proliferation has been assigned (in a single family) to chromosome 22.">
+		<entity id="1496982.s3.e0" charOffset="41-79"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+		<entity id="1496982.s3.e1" charOffset="84-125"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496982.s3.e2" charOffset="209-247"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+		<entity id="1496982.s3.e3" charOffset="292-333"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="1496982.s4" text="To increase the precision of the genetic mapping of negative regulation of cell proliferation and to determine whether additional susceptibility loci exist, we have performed linkage analysis on 12 families with negative regulation of cell proliferation by using four polymorphic markers from chromosome 22 and a marker at the positive regulation of GTPase activity locus on chromosome 17.">
+		<entity id="1496982.s4.e0" charOffset="52-93"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496982.s4.e1" charOffset="212-253"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496982.s4.e2" charOffset="327-365"
+			type="GO" text="positive regulation of GTPase activity" ontology_id="GO_0043547"/>
+	</sentence>
+	<sentence id="1496982.s5" text="Our results confirm the assignment of the gene for negative regulation of cell proliferation to chromosome 22 and do not support the hypothesis of genetic heterogeneity.">
+		<entity id="1496982.s5.e0" charOffset="51-92"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496982.s5.e1" charOffset="147-168"
+			type="HP" text="genetic heterogeneity" ontology_id="HP_0001425"/>
+		<pair id="1496982.s5.p0" e1="1496982.s5.e0"
+		    e2="1496982.s5.e1" ddi="false"/>
+	</sentence>
+	<sentence id="1496982.s6" text="We believe that chromosome 22 markers can now be used for presymptomatic diagnosis in selected families."/>
+	<sentence id="1496982.s7" text="The negative regulation of cell proliferation gene is tightly linked to the D22S32 locus (maximum lod score 4.12; recombination fraction 0).">
+		<entity id="11296982.s53.e0" charOffset="12-53"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="1496982.s8" text="A CA-repeat polymorphism at the CRYB2 locus was the most informative marker in our families (lod score 5.99), but because the observed recombination fraction between negative regulation of cell proliferation and CRYB2 was 10 cM, predictions using this marker will need to be interpreted with caution.">
+		<entity id="1496982.s8.e0" charOffset="179-220"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+</document>

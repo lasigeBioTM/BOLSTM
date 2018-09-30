@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1415348">
+	<sentence id="1415348.s0" text="We report on a woman who was diagnosed with branchio-oto-renal (BOR) syndrome after 2 pregnancies complicated by oligohydramnios due to renal hypoplasia and agenesis.">
+		<entity id="1415348.s0.e0" charOffset="113-128"
+			type="HP" text="oligohydramnios" ontology_id="HP_0001562"/>
+		<entity id="1415348.s0.e1" charOffset="136-152"
+			type="HP" text="renal hypoplasia" ontology_id="HP_0000089"/>
+		<entity id="1415348.s0.e2" charOffset="136-165"
+			type="HP" text="renal hypoplasia and agenesis" ontology_id="HP_0008680"/>
+	</sentence>
+	<sentence id="1415348.s1" text="Both babies died neonatally of pulmonary hypoplasia.">
+		<entity id="1415348.s1.e0" charOffset="12-27"
+			type="HP" text="died neonatally" ontology_id="HP_0003811"/>
+		<entity id="1415348.s1.e1" charOffset="31-51"
+			type="HP" text="pulmonary hypoplasia" ontology_id="HP_0002089"/>
+	</sentence>
+	<sentence id="1415348.s2" text="Histopathology of the temporal bones of the second child showed marked immaturity of the middle ear cleft, ossicles, facial nerve and canal, and cochlear nerve.">
+		<entity id="1415348.s2.e0" charOffset="70-128"
+			type="HP" text="immaturity of the middle ear cleft, ossicles, facial nerve" ontology_id="HP_0010827"/>
+		<entity id="1415348.s2.e1" charOffset="70-114"
+			type="HP" text="immaturity of the middle ear cleft, ossicles" ontology_id="HP_0004452"/>
+		<entity id="1415348.s2.e2" charOffset="70-158"
+			type="HP" text="immaturity of the middle ear cleft, ossicles, facial nerve and canal, and cochlear nerve" ontology_id="HP_0000375"/>
+		<entity id="1415348.s2.e3" charOffset="70-104"
+			type="HP" text="immaturity of the middle ear cleft" ontology_id="HP_0000370"/>
+	</sentence>
+	<sentence id="1415348.s3" text="Maternal renal ultrasound study was normal although intravenous pyelography indicated renal hypoplasia.">
+		<entity id="1415348.s3.e0" charOffset="85-101"
+			type="HP" text="renal hypoplasia" ontology_id="HP_0000089"/>
+	</sentence>
+	<sentence id="1415348.s4" text="The frequency of BOR syndrome among cases of recurrent fetal renal hypoplasia/dysplasia or agenesis is unknown, and parental renal ultrasonography may not identify a heritable renal defect.">
+		<entity id="1415348.s4.e0" charOffset="61-87"
+			type="HP" text="renal hypoplasia/dysplasia" ontology_id="HP_0000110"/>
+		<entity id="1415348.s4.e3" charOffset="61-77"
+			type="HP" text="renal defect" ontology_id="HP_0000077"/>
+		<entity id="1415348.s4.e1" charOffset="61-99"
+			type="HP" text="renal hypoplasia" ontology_id="HP_0000089"/>
+		<entity id="1415348.s4.e2" charOffset="176-188"
+			type="HP" text="renal hypoplasia/dysplasia or agenesis" ontology_id="HP_0000104"/>
+	</sentence>
+	<sentence id="1415348.s5" text="Investigations should include a family history, and examination of relatives to look for preauricular pits, lacrimal duct stenosis, and branchial fistulae and/or cysts.">
+		<entity id="1415348.s5.e0" charOffset="91-108"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="1415348.s5.e1" charOffset="110-132"
+			type="HP" text="lacrimal duct stenosis" ontology_id="HP_0007925"/>
+		<entity id="1415348.s5.e2" charOffset="138-156"
+			type="HP" text="branchial fistulae" ontology_id="HP_0009795"/>
+		<entity id="1415348.s5.e3" charOffset="138-169"
+			type="HP" text="branchial fistulae and/or cysts" ontology_id="HP_0009796"/>
+		<entity id="1415348.s5.e4" charOffset="138-147"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="1415348.s6" text="Hearing studies and IVP may be indicated.">
+		<entity id="1420348.s6.e5" charOffset="5-20"
+			type="HP" text="Hearing studies" ontology_id="HP_0000365"/>
+	</sentence>
+</document>

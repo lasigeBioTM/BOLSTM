@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1360768">
+	<sentence id="1360768.s0" text="Eleven patients with Angelman syndrome (AS) and their parents from 5 families have been studied with high resolution chromosome analysis and molecular probes from region 15q11-13 in an attempt to elucidate the mode of inheritance in familial AS.">
+		<entity id="1360768.s0.e0" charOffset="210-229"
+			type="HP" text="mode of inheritance" ontology_id="HP_0000005"/>
+		<entity id="1360768.s0.e1" charOffset="233-244"
+			type="HP" text="familial AS" ontology_id="HP_0000005"/>
+	</sentence>
+	<sentence id="1360768.s1" text="No deletions were detected."/>
+	<sentence id="1360768.s2" text="All families were informative with a combination of different short arm cytogenetic markers."/>
+	<sentence id="1360768.s3" text="All sets of sibs inherited the same maternal chromosome 15, but in 3 families sibs inherited different paternal 15s."/>
+	<sentence id="1360768.s4" text="Analysis of 6 polymorphic DNA markers supported the conclusion that AS sibs inherit the same maternal 15, but often different paternal 15s."/>
+	<sentence id="1360768.s5" text="These data make autosomal recessive inheritance at a 15q11-13 locus very unlikely and support the hypothesis that familial AS is due to maternal transmission of a mutation within 15q11-13.">
+		<entity id="1360768.s5.e0" charOffset="14-33"
+			type="HP" text="autosomal recessive" ontology_id="HP_0000007"/>
+		<entity id="1360768.s5.e1" charOffset="14-45"
+			type="HP" text="autosomal recessive inheritance" ontology_id="HP_0000007"/>
+	</sentence>
+</document>

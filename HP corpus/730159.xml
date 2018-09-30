@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="730159">
+	<sentence id="730159.s0" text="The basal cell nevus syndrome is characterized by multiple basal cell nevi and basal cell carcinoma, cysts of the jaw, anomalies of ribs and spine, abnormal calcifications, and additional anomalies of the facial skull.">
+		<entity id="730159.s0.e0" charOffset="4-29"
+			type="HP" text="basal cell nevus syndrome" ontology_id="HP_0002671"/>
+		<entity id="730159.s0.e2" charOffset="4-20"
+			type="HP" text="multiple basal cell nevi" ontology_id="HP_0001054"/>
+		<entity id="730159.s0.e3" charOffset="50-74"
+			type="HP" text="basal cell carcinoma" ontology_id="HP_0002671"/>
+		<entity id="730159.s0.e4" charOffset="79-99"
+			type="HP" text="cysts of the jaw" ontology_id="HP_0010603"/>
+		<entity id="730159.s0.e5" charOffset="101-117"
+			type="HP" text="anomalies of ribs" ontology_id="HP_0000772"/>
+		<entity id="730159.s0.e7" charOffset="119-136"
+			type="HP" text="abnormal calcifications" ontology_id="HP_0004348"/>
+		<entity id="730159.s0.e8" charOffset="119-146"
+			type="HP" text="anomalies of the facial" ontology_id="HP_0000271"/>
+		<entity id="730159.s0.e1" charOffset="148-171"
+			type="HP" text="basal cell nevus" ontology_id="HP_0002671"/>
+		<entity id="730159.s0.e6" charOffset="188-211"
+			type="HP" text="anomalies of ribs and spine" ontology_id="HP_0000925"/>
+	</sentence>
+	<sentence id="730159.s1" text="A German family is described with manifestations of the syndrome in the mother and her three daughters."/>
+	<sentence id="730159.s2" text="Expressivity was variable, in part due to age effects.">
+		<entity id="730159.s2.e0" charOffset="15-23"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+	<sentence id="730159.s3" text="The observation conforms to the assumed autosomal dominant mode of inheritance with high penetrance.">
+		<entity id="730159.s3.e0" charOffset="38-76"
+			type="HP" text="autosomal dominant mode of inheritance" ontology_id="HP_0000006"/>
+		<entity id="730159.s3.e1" charOffset="38-56"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="730159.s3.e2" charOffset="57-76"
+			type="HP" text="mode of inheritance" ontology_id="HP_0000005"/>
+	</sentence>
+</document>

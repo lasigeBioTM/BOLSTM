@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1479599">
+	<sentence id="1479599.s0" text="The major defining features, age at onset of symptoms, and survival in 150 patients with type 2 neurofibromatosis (negative regulation of cell proliferation) have been studied.">
+		<entity id="1479599.s0.e0" charOffset="96-113"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="1479599.s0.e1" charOffset="115-156"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<pair id="1479599.s0.p0" e1="1479599.s0.e1"
+		    e2="1479599.s0.e0" ddi="false"/>
+	</sentence>
+	<sentence id="1479599.s1" text="The mean age at onset was 21.57 years (n = 110) and no cases presented after 55 years of age."/>
+	<sentence id="1479599.s2" text="Patients presented with symptoms attributable to vestibular schwannomas (acoustic neuroma), cranial meningiomas, and spinal tumours.">
+		<entity id="1479599.s2.e0" charOffset="47-69"
+			type="HP" text="vestibular schwannomas" ontology_id="HP_0009588"/>
+		<entity id="1479599.s2.e1" charOffset="71-87"
+			type="HP" text="acoustic neuroma" ontology_id="HP_0009588"/>
+		<entity id="1479599.s2.e2" charOffset="90-109"
+			type="HP" text="cranial meningiomas" ontology_id="HP_0100009"/>
+		<entity id="1479599.s2.e3" charOffset="115-129"
+			type="HP" text="spinal tumours" ontology_id="HP_0010302"/>
+	</sentence>
+	<sentence id="1479599.s3" text="In 97 cases studied personally by the authors, skin and eye examination were found to be useful to detect early signs of the condition."/>
+	<sentence id="1479599.s4" text="Examination of the skin is likely to assist in early diagnosis in at least 10% of cases and examination of the eye for a lens opacity or cataract in at least as many again.">
+		<entity id="1479599.s4.e0" charOffset="119-131"
+			type="HP" text="lens opacity" ontology_id="HP_0000518"/>
+		<entity id="1479599.s4.e1" charOffset="135-143"
+			type="HP" text="cataract" ontology_id="HP_0000518"/>
+	</sentence>
+	<sentence id="1479599.s5" text="There are marked interfamilial differences in disease severity and tumour susceptibility.">
+		<entity id="1479599.s5.e0" charOffset="17-42"
+			type="HP" text="interfamilial differences" ontology_id="HP_0003822"/>
+		<entity id="1479599.s5.e1" charOffset="67-73"
+			type="HP" text="tumour" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="1479599.s6" text="Vestibular schwannomas are not fully penetrant, but the condition is usually expressed in another way.">
+		<entity id="1479599.s6.e3" charOffset="3-25"
+			type="HP" text="Vestibular schwannomas" ontology_id="HP_0009588"/>
+	</sentence>
+	<sentence id="1479599.s7" text="Alteration to the current diagnostic criteria is advocated to cover the lack of provision for new mutations."/>
+	<sentence id="1479599.s8" text="A screening protocol is proposed and the effect of disease heterogeneity on management is discussed.">
+		<entity id="1479709.s8.e0" charOffset="70-83"
+			type="HP" text="heterogeneity" ontology_id="HP_0001425"/>
+	</sentence>
+</document>

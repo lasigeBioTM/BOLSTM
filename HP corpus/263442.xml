@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="263442">
+	<sentence id="263442.s0" text="A pedigree of branchio-oto-renal dysplasia (the BOR syndrome) is reported, including the documentation by serial audiometric studies of the onset and rapid progression of hearing loss in the twin sister of an affected child.">
+		<entity id="263442.s0.e0" charOffset="27-42"
+			type="HP" text="renal dysplasia" ontology_id="HP_0000110"/>
+		<entity id="263442.s0.e1" charOffset="150-167"
+			type="HP" text="rapid progression" ontology_id="HP_0003678"/>
+		<entity id="263442.s0.e2" charOffset="171-183"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+	</sentence>
+	<sentence id="263442.s1" text="The literature on this syndrome is analyzed to derive some figures for use in genetic counseling of such families."/>
+	<sentence id="263442.s2" text="Branchio-oto-renal dysplasia is an autosomal dominant disorder in which affected individuals may have preauricular pits, lachrymal duct stenosis, hearing loss, branchial fistulas or cysts, structural defects of the outer, middle, and inner ear, and renal anomalies, which may range from mild hypoplasia to complete absence.">
+		<entity id="263442.s2.e0" charOffset="11-26"
+			type="HP" text="renal dysplasia" ontology_id="HP_0000110"/>
+		<entity id="263442.s2.e1" charOffset="33-51"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="263442.s2.e3" charOffset="33-60"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="263442.s2.e4" charOffset="100-117"
+			type="HP" text="lachrymal duct stenosis" ontology_id="HP_0007925"/>
+		<entity id="263442.s2.e5" charOffset="119-142"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+		<entity id="263442.s2.e6" charOffset="144-156"
+			type="HP" text="branchial fistulas or cysts" ontology_id="HP_0009796"/>
+		<entity id="263442.s2.e8" charOffset="158-185"
+			type="HP" text="structural defects of the outer, middle, and inner ear" ontology_id="HP_0000598"/>
+		<entity id="263442.s2.e9" charOffset="158-167"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+		<entity id="263442.s2.e2" charOffset="187-241"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+		<entity id="263442.s2.e7" charOffset="247-262"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="263442.s3" text="Not all features of the syndrome are expressed in all carriers of the gene, but few carriers lack all the features, and the pits, branchial clefts, and hearing loss, are frequently expressed.">
+		<entity id="263442.s3.e0" charOffset="122-126"
+			type="HP" text="pits" ontology_id="HP_0004467"/>
+		<entity id="263442.s3.e1" charOffset="128-137"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="263442.s3.e2" charOffset="150-162"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+	</sentence>
+	<sentence id="263442.s4" text="Those offspring of affected persons who have pits or fistulas are likely (about 80%) to have hearing loss of varying degrees of severity.">
+		<entity id="263442.s4.e0" charOffset="44-48"
+			type="HP" text="pits" ontology_id="HP_0004467"/>
+		<entity id="263442.s4.e1" charOffset="52-60"
+			type="HP" text="fistulas" ontology_id="HP_0009794"/>
+		<entity id="263442.s4.e2" charOffset="92-104"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+	</sentence>
+	<sentence id="263442.s5" text="A minority of heterozygotes (about 7%) may have hearing loss without pits or fistulas.">
+		<entity id="263442.s5.e0" charOffset="49-61"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+		<entity id="263442.s5.e1" charOffset="70-74"
+			type="HP" text="pits" ontology_id="HP_0004467"/>
+	</sentence>
+	<sentence id="263442.s6" text="The risk of severe renal malformation is probably fairly low.">
+		<entity id="263442.s6.e0" charOffset="23-41"
+			type="HP" text="renal malformation" ontology_id="HP_0000792"/>
+	</sentence>
+	<sentence id="263442.s7" text="Whether families that show dominant inheritance of pits, clefts, and deafness without renal anomalies represent variants of the BOR syndrome or a separate entity (the BO syndrome), is still not clear.">
+		<entity id="263442.s7.e0" charOffset="35-55"
+			type="HP" text="dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="263442.s7.e1" charOffset="59-63"
+			type="HP" text="pits" ontology_id="HP_0004467"/>
+		<entity id="271442.s7.e2" charOffset="65-71"
+			type="HP" text="clefts" ontology_id="HP_0009794"/>
+		<entity id="263442.s7.e3" charOffset="85-85"
+			type="HP" text="deafness" ontology_id="HP_0000404"/>
+		<entity id="263442.s7.e4" charOffset="94-109"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+	</sentence>
+	<sentence id="263442.s8" text="At present, any individual with preauricular pits and branchial clefts deserves both otologic and renal investigation.">
+		<entity id="263442.s8.e0" charOffset="45-62"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="263442.s8.e1" charOffset="67-83"
+			type="HP" text="branchial clefts" ontology_id="HP_0009794"/>
+		<entity id="263442.s8.e3" charOffset="67-76"
+			type="HP" text="otologic" ontology_id="HP_0000598"/>
+		<entity id="263442.s8.e4" charOffset="98-106"
+			type="HP" text="renal investigation" ontology_id="HP_0000077"/>
+		<entity id="263442.s8.e2" charOffset="111-130"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+	</sentence>
+</document>

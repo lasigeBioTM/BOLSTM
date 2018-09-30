@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1496981">
+	<sentence id="1496981.s0" text="The neurofibromatosis type 2 (negative regulation of cell proliferation) gene has been hypothesized to be a recessive tumor suppressor, with mutations at the same locus on chromosome 22 that lead to negative regulation of cell proliferation also leading to sporadic tumors of the types seen in negative regulation of cell proliferation.">
+		<entity id="1496981.s0.e0" charOffset="4-21"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="1496981.s0.e1" charOffset="30-71"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496981.s0.e2" charOffset="118-123"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+		<entity id="1496981.s0.e3" charOffset="199-240"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496981.s0.e4" charOffset="257-265"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="1496981.s0.e5" charOffset="266-272"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+		<entity id="1496981.s0.e6" charOffset="294-335"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<pair id="1496981.s0.p0" e1="1496981.s0.e1"
+		    e2="1496981.s0.e0" ddi="false"/>
+		<pair id="1496981.s0.p1" e1="1496981.s0.e1"
+		    e2="1496981.s0.e2" ddi="false"/>
+		<pair id="1496981.s0.p2" e1="1496981.s0.e1"
+		    e2="1496981.s0.e4" ddi="false"/>
+		<pair id="1496981.s0.p3" e1="1496981.s0.e1"
+		    e2="1496981.s0.e5" ddi="false"/>
+		<pair id="1496981.s0.p4" e1="1496981.s0.e3"
+		    e2="1496981.s0.e0" ddi="false"/>
+		<pair id="1496981.s0.p5" e1="1496981.s0.e3"
+		    e2="1496981.s0.e2" ddi="false"/>
+		<pair id="1496981.s0.p6" e1="1496981.s0.e3"
+		    e2="1496981.s0.e4" ddi="false"/>
+		<pair id="1496981.s0.p7" e1="1496981.s0.e3"
+		    e2="1496981.s0.e5" ddi="false"/>
+		<pair id="1496981.s0.p8" e1="1496981.s0.e6"
+		    e2="1496981.s0.e0" ddi="false"/>
+		<pair id="1496981.s0.p9" e1="1496981.s0.e6"
+		    e2="1496981.s0.e2" ddi="false"/>
+		<pair id="1496981.s0.p10" e1="1496981.s0.e6"
+		    e2="1496981.s0.e4" ddi="false"/>
+		<pair id="1496981.s0.p11" e1="1496981.s0.e6"
+		    e2="1496981.s0.e5" ddi="false"/>
+	</sentence>
+	<sentence id="1496981.s1" text="Flanking markers for this gene have previously been defined as D22S1 centromeric and D22S28 telomeric."/>
+	<sentence id="1496981.s2" text="Identification of subregions of this interval that are consistently rearranged in the negative regulation of cell proliferation-related tumors would aid in better defining the disease locus.">
+		<entity id="1496981.s2.e0" charOffset="84-125"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="1496981.s3" text="To this end, we have compared tumor and constitutional DNAs, isolated from 39 unrelated patients with sporadic and negative regulation of cell proliferation-associated acoustic neuromas, meningiomas, schwannomas, and ependymomas, at eight polymorphic loci on chromosome 22.">
+		<entity id="1496981.s3.e0" charOffset="30-35"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+		<entity id="1496981.s3.e1" charOffset="102-110"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="1496981.s3.e2" charOffset="115-156"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496981.s3.e3" charOffset="168-185"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+		<entity id="1856981.s3.e4" charOffset="187-198"
+			type="HP" text="meningiomas" ontology_id="HP_0002858"/>
+		<entity id="1496981.s3.e5" charOffset="200-211"
+			type="HP" text="schwannomas" ontology_id="HP_0100008"/>
+		<entity id="1496981.s3.e6" charOffset="217-228"
+			type="HP" text="ependymomas" ontology_id="HP_0002888"/>
+		<pair id="1496981.s3.p0" e1="1496981.s3.e2"
+		    e2="1496981.s3.e0" ddi="false"/>
+		<pair id="1496981.s3.p1" e1="1496981.s3.e2"
+		    e2="1496981.s3.e1" ddi="false"/>
+		<pair id="1496981.s3.p2" e1="1496981.s3.e2"
+		    e2="1496981.s3.e3" ddi="false"/>
+		<pair id="1496981.s3.p3" e1="1496981.s3.e2"
+		    e2="1496981.s3.e4" ddi="false"/>
+		<pair id="1496981.s3.p4" e1="1496981.s3.e2"
+		    e2="1496981.s3.e5" ddi="false"/>
+		<pair id="1496981.s3.p5" e1="1496981.s3.e2"
+		    e2="1496981.s3.e6" ddi="false"/>
+	</sentence>
+	<sentence id="1496981.s4" text="Two of the tumors studied revealed loss-of-heterozygosity patterns, which is consistent with the presence of chromosome 22 terminal deletions.">
+		<entity id="1496981.s4.e0" charOffset="10-16"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="1496981.s5" text="By using additional polymorphic markers, the terminal deletion breakpoint found in one of the tumors, an acoustic neuroma from an negative regulation of cell proliferation patient, was mapped within the previously defined negative regulation of cell proliferation region.">
+		<entity id="1496981.s5.e0" charOffset="105-121"
+			type="HP" text="acoustic neuroma" ontology_id="HP_0009588"/>
+		<entity id="1496981.s5.e1" charOffset="130-171"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1496981.s5.e2" charOffset="222-263"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<pair id="1496981.s5.p0" e1="1496981.s5.e1"
+		    e2="1496981.s5.e0" ddi="false"/>
+		<pair id="1496981.s5.p1" e1="1496981.s5.e2"
+		    e2="1496981.s5.e0" ddi="false"/>
+	</sentence>
+	<sentence id="1496981.s6" text="The breakpoint occurred between the haplotyped markers D22S41/D22S46 and D22S56."/>
+	<sentence id="1496981.s7" text="This finding redefines the proximal flanking marker and localizes the negative regulation of cell proliferation gene between markers D22S41/D22S46 and D22S28.">
+		<entity id="1496981.s7.e0" charOffset="77-118"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="1496981.s8" text="In addition, we identified a sporadic acoustic neuroma that reveals a loss-of-heterozygosity pattern consistent with mitotic recombination or deletion and reduplication, which are mechanisms not previously seen in studies of these tumors.">
+		<entity id="1496981.s8.e0" charOffset="41-49"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="1496981.s8.e1" charOffset="50-66"
+			type="HP" text="acoustic neuroma" ontology_id="HP_0009588"/>
+		<entity id="1496981.s8.e2" charOffset="243-249"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="1496981.s9" text="This finding, while inconsistent with models of tumorigenesis that invoke single deletions and their gene-dosage effects, lends further support to the recessive tumor-suppressor model.">
+		<entity id="1496981.s9.e0" charOffset="179-184"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+	</sentence>
+</document>

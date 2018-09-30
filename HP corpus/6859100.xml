@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6859100">
+	<sentence id="6859100.s0" text="We report two families in which propositi had severe bilateral sensorineural hearing loss, a preauricular pit or tag, and duplication of the ureters or bifid renal pelvices.">
+		<entity id="6859100.s0.e0" charOffset="53-89"
+			type="HP" text="bilateral sensorineural hearing loss" ontology_id="HP_0008619"/>
+		<entity id="6859100.s0.e1" charOffset="93-116"
+			type="HP" text="preauricular pit or tag" ontology_id="HP_0000384"/>
+		<entity id="6859100.s0.e3" charOffset="93-109"
+			type="HP" text="duplication of the ureters" ontology_id="HP_0000073"/>
+		<entity id="6859100.s0.e4" charOffset="122-148"
+			type="HP" text="bifid renal pelvices" ontology_id="HP_0005580"/>
+		<entity id="6859100.s0.e2" charOffset="152-172"
+			type="HP" text="preauricular pit" ontology_id="HP_0004467"/>
+	</sentence>
+	<sentence id="6859100.s1" text="Other relatives had one or more of these anomalies in a pattern suggesting autosomal dominant inheritance with reduced penetrance and variable expressivity.">
+		<entity id="6859100.s1.e0" charOffset="75-105"
+			type="HP" text="autosomal dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="6859100.s1.e2" charOffset="75-93"
+			type="HP" text="reduced penetrance" ontology_id="HP_0003829"/>
+		<entity id="6859100.s1.e3" charOffset="111-129"
+			type="HP" text="variable expressivity" ontology_id="HP_0003828"/>
+		<entity id="6859100.s1.e1" charOffset="134-155"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="6859100.s1.e4" charOffset="134-142"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+	<sentence id="6859100.s2" text="We suggest the term *branchio-oto-ureteral syndrome* to designate this condition."/>
+</document>

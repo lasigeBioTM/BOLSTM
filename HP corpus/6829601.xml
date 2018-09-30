@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6829601">
+	<sentence id="6829601.s0" text="Two unrelated children (one male, the other female) had unusual craniofacial anomalies consisting of hemangiomatous branchial clefts, lip pseudoclefts, and identical unusual facial appearance.">
+		<entity id="6829601.s0.e0" charOffset="56-86"
+			type="HP" text="unusual craniofacial anomalies" ontology_id="HP_0002004"/>
+		<entity id="6829601.s0.e1" charOffset="101-132"
+			type="HP" text="hemangiomatous branchial clefts" ontology_id="HP_0009794"/>
+		<entity id="6829601.s0.e3" charOffset="116-125"
+			type="HP" text="lip pseudoclefts" ontology_id="HP_0000159"/>
+		<entity id="6829601.s0.e4" charOffset="134-150"
+			type="HP" text="unusual facial appearance" ontology_id="HP_0002004"/>
+		<entity id="6829601.s0.e2" charOffset="166-191"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="6829601.s1" text="One also had unilateral microphthalmia and both had congenital nasolacrimal duct obstruction.">
+		<entity id="6829601.s1.e0" charOffset="24-38"
+			type="HP" text="microphthalmia" ontology_id="HP_0000568"/>
+		<entity id="6829601.s1.e1" charOffset="63-92"
+			type="HP" text="nasolacrimal duct obstruction" ontology_id="HP_0000579"/>
+	</sentence>
+	<sentence id="6829601.s2" text="Two similar, sporadic cases from the literature were also identified.">
+		<entity id="6829601.s2.e0" charOffset="12-20"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="6829601.s3" text="These four cases form the basis of a new, distinctly recognizable pattern of malformation."/>
+</document>

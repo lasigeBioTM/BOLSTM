@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1456287">
+	<sentence id="1456287.s0" text="We report on the 12-year development of a child with branchio-oculo-facial syndrome who was initially referred at age 5 months."/>
+	<sentence id="1456287.s1" text="Of note is his normal intelligence, regular class placement, hypernasal speech, and continued growth along the third centile.">
+		<entity id="1456287.s1.e0" charOffset="60-77"
+			type="HP" text="hypernasal speech" ontology_id="HP_0001611"/>
+		<entity id="1456287.s1.e1" charOffset="83-123"
+			type="HP" text="continued growth along the third centile" ontology_id="HP_0004322"/>
+	</sentence>
+	<sentence id="1456287.s2" text="The importance of serial observations of patients with rare genetic disorders is emphasized."/>
+</document>

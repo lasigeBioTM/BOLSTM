@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="998578">
+	<sentence id="998578.s0" text="A woman with the autosomal dominant syndrome of preauricular pits, cervical fistulae, and partial deafness gave birth to two children with preauricular pits and severe renal dysgenesis.">
+		<entity id="998578.s0.e0" charOffset="17-35"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="998578.s0.e1" charOffset="48-65"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="998578.s0.e2" charOffset="67-84"
+			type="HP" text="cervical fistulae" ontology_id="HP_0009795"/>
+		<entity id="998578.s0.e3" charOffset="90-106"
+			type="HP" text="partial deafness" ontology_id="HP_0000365"/>
+		<entity id="998578.s0.e4" charOffset="139-156"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="998578.s0.e5" charOffset="161-184"
+			type="HP" text="severe renal dysgenesis" ontology_id="HP_0008680"/>
+	</sentence>
+	<sentence id="998578.s1" text="The facies had some features of the Potter facies of renal agenesis.">
+		<entity id="998578.s1.e0" charOffset="36-49"
+			type="HP" text="Potter facies" ontology_id="HP_0002009"/>
+		<entity id="998578.s1.e1" charOffset="53-67"
+			type="HP" text="renal agenesis" ontology_id="HP_0000104"/>
+	</sentence>
+	<sentence id="998578.s2" text="One child died soon after birth because of pneumothorax and immature development of the lungs.">
+		<entity id="998578.s2.e0" charOffset="10-31"
+			type="HP" text="died soon after birth" ontology_id="HP_0001432"/>
+		<entity id="998578.s2.e1" charOffset="43-55"
+			type="HP" text="pneumothorax" ontology_id="HP_0002107"/>
+		<entity id="998578.s2.e2" charOffset="60-93"
+			type="HP" text="immature development of the lungs" ontology_id="HP_0002088"/>
+	</sentence>
+	<sentence id="998578.s3" text="We suggest that all infants with renal agenesis or dysgenesis be examined for preauricular pits because of the high recurrence risk of renal anomalies in families with this syndrome.">
+		<entity id="998578.s3.e0" charOffset="33-61"
+			type="HP" text="renal agenesis or dysgenesis" ontology_id="HP_0008680"/>
+		<entity id="998532.s3.e1" charOffset="78-95"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="998578.s3.e2" charOffset="135-150"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+	</sentence>
+</document>

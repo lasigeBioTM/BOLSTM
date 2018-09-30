@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6928117">
+	<sentence id="6928117.s0" text="A family with the Popliteal Pterygium Syndrome is presented.">
+		<entity id="6928117.s0.e0" charOffset="18-37"
+			type="HP" text="Popliteal Pterygium" ontology_id="HP_0009756"/>
+	</sentence>
+	<sentence id="6928117.s1" text="The father was born with a cleft of the palate and lower lip pits.">
+		<entity id="6928117.s1.e0" charOffset="27-46"
+			type="HP" text="cleft of the palate" ontology_id="HP_0000175"/>
+		<entity id="6928117.s1.e1" charOffset="51-65"
+			type="HP" text="lower lip pits" ontology_id="HP_0000196"/>
+	</sentence>
+	<sentence id="6928117.s2" text="Two of the three offspring showed extensive involvement of the palate, gums, and lips with minimal involvement of the lower limbs, genitalia, and nails.">
+		<entity id="6928117.s2.e0" charOffset="43-84"
+			type="HP" text="involvement of the palate, gums, and lips" ontology_id="HP_0000159"/>
+		<entity id="6928117.s2.e2" charOffset="43-68"
+			type="HP" text="involvement of the lower limbs" ontology_id="HP_0002814"/>
+		<entity id="6928117.s2.e1" charOffset="98-128"
+			type="HP" text="involvement of the palate" ontology_id="HP_0000174"/>
+		<entity id="6928117.s2.e3" charOffset="98-150"
+			type="HP" text="involvement of the lower limbs, genitalia, and nails" ontology_id="HP_0001597"/>
+		<entity id="6928117.s2.e4" charOffset="98-139"
+			type="HP" text="involvement of the lower limbs, genitalia" ontology_id="HP_0000078"/>
+	</sentence>
+</document>

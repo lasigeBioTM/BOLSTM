@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3287922">
+	<sentence id="3287922.s0" text="We report the prenatal diagnosis of distal arthrogryposis type I by ultrasound at 18 wk gestation in a family with two other affected members (mother and sister of the fetus).">
+		<entity id="3287922.s0.e0" charOffset="36-57"
+			type="HP" text="distal arthrogryposis" ontology_id="HP_0005684"/>
+	</sentence>
+	<sentence id="3287922.s1" text="The pregnancy was followed with serial ultrasounds, and the diagnosis was confirmed after birth."/>
+	<sentence id="3287922.s2" text="The clinical findings in all affected family members are described."/>
+	<sentence id="3287922.s3" text="A literature survey of prenatally diagnosed cases of multiple joint contractures is presented.">
+		<entity id="3287922.s3.e0" charOffset="20-46"
+			type="HP" text="prenatally diagnosed cases" ontology_id="HP_0003660"/>
+		<entity id="3287922.s3.e1" charOffset="50-77"
+			type="HP" text="multiple joint contractures" ontology_id="HP_0002828"/>
+	</sentence>
+	<sentence id="3287922.s4" text="These include cases with many different diagnoses."/>
+	<sentence id="3287922.s5" text="This is the first report of the prenatal diagnosis of distal arthrogryposis type I.">
+		<entity id="3287922.s5.e0" charOffset="53-74"
+			type="HP" text="distal arthrogryposis" ontology_id="HP_0005684"/>
+	</sentence>
+	<sentence id="3287922.s6" text="It helps to illustrate the variability and prenatal natural history of the condition and the subtlety of the prenatal ultrasound findings.">
+		<entity id="3287922.s6.e0" charOffset="29-40"
+			type="HP" text="variability" ontology_id="HP_0003812"/>
+	</sentence>
+</document>

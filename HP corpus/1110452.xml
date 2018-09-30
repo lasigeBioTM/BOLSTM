@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1110452">
+	<sentence id="1110452.s0" text="Older paternal age has previously been documented as a factor in sporadic fresh mutational cases of several autosomal dominant disorders.">
+		<entity id="1110452.s0.e0" charOffset="108-126"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="1110452.s1" text="In this collaborative study, an older mean paternal age has been documented in sporadic cases of at least five additional dominantly inheritable disorders; the basal cell nevus syndrome, the Waardenburg syndrome, the Crouzon syndrome, the oculo-dental-digital sysdrome, and the Treacher-Collins syndrome.">
+		<entity id="1110452.s1.e0" charOffset="79-93"
+			type="HP" text="sporadic cases" ontology_id="HP_0003745"/>
+		<entity id="1110452.s1.e2" charOffset="79-87"
+			type="HP" text="dominantly inheritable disorders" ontology_id="HP_0000006"/>
+		<entity id="1110452.s1.e3" charOffset="122-154"
+			type="HP" text="basal cell nevus syndrome" ontology_id="HP_0002671"/>
+		<entity id="1110452.s1.e1" charOffset="160-185"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="1110452.s1.e4" charOffset="160-176"
+			type="HP" text="basal cell nevus" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="1110452.s2" text="It was also found to be a factor in acrodysostosis and progeria, suggesting a fresh mutant gene etiology for these two conditions in which virtually all cases have been sporadic and the mode of genetic etiology has been unknown.">
+		<entity id="1110452.s2.e0" charOffset="168-176"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+</document>

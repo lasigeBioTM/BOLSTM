@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7802001">
+	<sentence id="7802001.s0" text="We analyzed 61 Angelman syndrome (AS) patients by cytogenetic and molecular techniques."/>
+	<sentence id="7802001.s1" text="On the basis of molecular findings, the patients were classified into the following 4 groups: familial cases without deletion, familial cases with submicroscopic deletion, sporadic cases with deletion, and sporadic cases without deletion.">
+		<entity id="7802001.s1.e0" charOffset="93-107"
+			type="HP" text="familial cases" ontology_id="HP_0000005"/>
+		<entity id="7802001.s1.e1" charOffset="171-179"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="7802001.s1.e2" charOffset="205-213"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="7802001.s2" text="Among 53 sporadic cases, 37 (70%) had molecular deletion, which commonly extended from D15S9 to D15S12, although not all deletions were identical.">
+		<entity id="7802001.s2.e0" charOffset="7-21"
+			type="HP" text="sporadic cases" ontology_id="HP_0003745"/>
+		<entity id="7802001.s2.e1" charOffset="7-15"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="7802001.s3" text="Of 8 familial cases, 3 sibs from one family had a molecular deletion involving only 2 loci, D15S10 and cellular response to histamine, which define the critical region for AS phenotypes.">
+		<entity id="7802001.s3.e0" charOffset="101-131"
+			type="GO" text="cellular response to histamine" ontology_id="GO_0071420"/>
+	</sentence>
+	<sentence id="7802001.s4" text="The parental origin of deletion, both in sporadic and familial cases, was exclusively maternal and consistent with a genomic imprinting hypothesis."/>
+	<sentence id="7802001.s5" text="Among sporadic and familial cases without deletion, no uniparental disomy was found and most of them were shown to inherit chromosomes 15 from both parents (biparental inheritance)."/>
+	<sentence id="7802001.s6" text="A discrepancy between cytogenetic and molecular deletion was observed in 14 (26%) of 53 patients in whom cytogenetic analysis could be performed."/>
+	<sentence id="7802001.s7" text="Ten (43%) of 23 patients with a normal karyotype showed a molecular deletion, and 4 (13%) of 30 patients with cytogenetic deletion, del(15) (q11q13), showed no molecular deletion."/>
+	<sentence id="7802001.s8" text="Most clinical manifestations, including neurological signs and facial characteristics, were not distinct in each group except for hypopigmentation of skin or hair.">
+		<entity id="7802001.s8.e0" charOffset="49-67"
+			type="HP" text="neurological signs" ontology_id="HP_0000707"/>
+		<entity id="7802001.s8.e1" charOffset="72-94"
+			type="HP" text="facial characteristics" ontology_id="HP_0001999"/>
+		<entity id="7802001.s8.e2" charOffset="139-163"
+			type="HP" text="hypopigmentation of skin" ontology_id="HP_0001010"/>
+		<entity id="7802001.s8.e3" charOffset="139-155"
+			type="HP" text="hypopigmentation" ontology_id="HP_0007513"/>
+	</sentence>
+	<sentence id="7802001.s9" text="Familial cases with submicroscopic deletion were not associated with hypopigmentation.">
+		<entity id="7802001.s9.e0" charOffset="84-100"
+			type="HP" text="hypopigmentation" ontology_id="HP_0007513"/>
+	</sentence>
+	<sentence id="7802001.s10" text="These findings suggested that a gene for hypopigmentation is located outside the critical region of AS and is not imprinted."/>
+</document>

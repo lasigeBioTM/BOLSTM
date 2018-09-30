@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1484939">
+	<sentence id="1484939.s0" text="The clinical features, age at onset of symptoms and survival of 150 patients with type 2 neurofibromatosis were studied.">
+		<entity id="1484939.s0.e0" charOffset="89-106"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="1484939.s1" text="The mean age at onset was 21.57 years (n = 110) and no patients presented after 55 years of age."/>
+	<sentence id="1484939.s2" text="Patients presented with symptoms attributable to vestibular schwannomas (acoustic neuroma), cranial meningiomas and spinal tumours.">
+		<entity id="1484739.s2.e0" charOffset="47-69"
+			type="HP" text="vestibular schwannomas" ontology_id="HP_0009588"/>
+		<entity id="1484939.s2.e1" charOffset="71-87"
+			type="HP" text="acoustic neuroma" ontology_id="HP_0009588"/>
+		<entity id="1484939.s2.e2" charOffset="90-109"
+			type="HP" text="cranial meningiomas" ontology_id="HP_0100009"/>
+		<entity id="1484939.s2.e3" charOffset="114-128"
+			type="HP" text="spinal tumours" ontology_id="HP_0010302"/>
+	</sentence>
+	<sentence id="1484939.s3" text="In 100 patients studied personally by the authors 44 per cent presented with deafness and this was unilateral in the majority (35/44).">
+		<entity id="1484939.s3.e0" charOffset="75-83"
+			type="HP" text="deafness" ontology_id="HP_0000404"/>
+	</sentence>
+	<sentence id="1484939.s4" text="Deafness was accompanied by tinnitus in a further 10 per cent and muscle weakness or wasting was the first symptom in 12 per cent.">
+		<entity id="1484939.s4.e0" charOffset="0-8"
+			type="HP" text="Deafness" ontology_id="HP_0000404"/>
+		<entity id="1484939.s4.e1" charOffset="27-35"
+			type="HP" text="tinnitus" ontology_id="HP_0000360"/>
+		<entity id="1484939.s4.e2" charOffset="65-80"
+			type="HP" text="muscle weakness" ontology_id="HP_0001324"/>
+		<entity id="1484939.s4.e3" charOffset="65-91"
+			type="HP" text="muscle weakness or wasting" ontology_id="HP_0003202"/>
+		<entity id="1484939.s4.e4" charOffset="72-80"
+			type="HP" text="weakness" ontology_id="HP_0001324"/>
+	</sentence>
+	<sentence id="1484939.s5" text="Less common presenting symptoms were seizures (8 per cent), vertigo (8 per cent) numbness and tingling (2 per cent) and blindness (1 per cent).">
+		<entity id="1484939.s5.e0" charOffset="38-46"
+			type="HP" text="seizures" ontology_id="HP_0001250"/>
+		<entity id="1484939.s5.e1" charOffset="61-68"
+			type="HP" text="vertigo" ontology_id="HP_0002321"/>
+		<entity id="1484939.s5.e2" charOffset="121-130"
+			type="HP" text="blindness" ontology_id="HP_0000618"/>
+	</sentence>
+	<sentence id="1484939.s6" text="Eleven patients were diagnosed asymptomatically through screening."/>
+	<sentence id="1484939.s7" text="Cafe au lait spots occurred in 43 per cent (n = 43) but only one case had six.">
+		<entity id="1484939.s7.e0" charOffset="7-25"
+			type="HP" text="Cafe au lait spots" ontology_id="HP_0000957"/>
+	</sentence>
+	<sentence id="1484939.s8" text="Skin tumours were detected in 68 per cent (68/100) and 38 per cent (34/90) had an identifiable lens opacity or cataract.">
+		<entity id="1484939.s8.e24" charOffset="24-24"
+			type="HP" text="Skin tumours" ontology_id="HP_0008069"/>
+		<entity id="1484939.s8.e1" charOffset="119-119"
+			type="HP" text="lens opacity" ontology_id="HP_0000518"/>
+		<entity id="1484939.s8.e2" charOffset="123-131"
+			type="HP" text="cataract" ontology_id="HP_0000518"/>
+	</sentence>
+	<sentence id="1484939.s9" text="The mean age at death in 40 cases was 36.25 years and all but one death was a result of a complication of neurofibromatosis.">
+		<entity id="1484939.s9.e0" charOffset="124-141"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="1484939.s10" text="There are marked inter-family differences in disease severity and tumour susceptibility.">
+		<entity id="1484939.s10.e0" charOffset="42-66"
+			type="HP" text="inter-family differences" ontology_id="HP_0003813"/>
+		<entity id="1484939.s10.e1" charOffset="91-97"
+			type="HP" text="tumour" ontology_id="HP_0002664"/>
+	</sentence>
+</document>

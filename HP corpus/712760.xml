@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="712760">
+	<sentence id="712760.s0" text="A family is described in which 16 individuals in 3 generations have Charcot-Marie-Tooth disease."/>
+	<sentence id="712760.s1" text="At least 6 family members also have the naevoid basal cell carcinoma syndrome.">
+		<entity id="712760.s1.e0" charOffset="47-67"
+			type="HP" text="basal cell carcinoma" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="712760.s2" text="In addition, 1 subject with both disorders has 2 young daughters with the naevoid basal cell carcinoma syndrome.">
+		<entity id="712760.s2.e0" charOffset="80-100"
+			type="HP" text="basal cell carcinoma" ontology_id="HP_0002671"/>
+	</sentence>
+</document>
