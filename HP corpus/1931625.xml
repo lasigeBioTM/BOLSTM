@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1931625">
+	<sentence id="1931625.s0" text="We have investigated the incidence of Gorlin syndrome (GS) in patients with the childhood brain tumour, medulloblastoma.">
+		<entity id="1931625.s0.e0" charOffset="80-89"
+			type="HP" text="childhood" ontology_id="HP_0011463"/>
+		<entity id="1931625.s0.e1" charOffset="90-102"
+			type="HP" text="brain tumour" ontology_id="HP_0100006"/>
+		<entity id="1931625.s0.e2" charOffset="104-119"
+			type="HP" text="medulloblastoma" ontology_id="HP_0002885"/>
+	</sentence>
+	<sentence id="1931625.s1" text="One hundred and seventy-three consecutive cases of medulloblastoma in the North-West Regional Health Authority between 1954 and 1989 (Manchester Regional Health Board before 1974) were studied."/>
+	<sentence id="1931625.s2" text="After review of case notes, X-rays and health surveys only 2/173 cases had evidence supporting a diagnosis of GS."/>
+	<sentence id="1931625.s3" text="A further case at 50% risk of GS died of a brain tumour aged 4 years.">
+		<entity id="1931625.s3.e0" charOffset="40-52"
+			type="HP" text="brain tumour" ontology_id="HP_0100006"/>
+	</sentence>
+	<sentence id="1931625.s4" text="The incidence of GS in medulloblastoma is, therefore, probably between 1-2%.">
+		<entity id="1931625.s4.e0" charOffset="21-36"
+			type="HP" text="medulloblastoma" ontology_id="HP_0002885"/>
+	</sentence>
+	<sentence id="1931625.s5" text="A population based study of GS in the region started in 1983 was used to assess the incidence of medulloblastoma in GS, which was found to be between 3-5%."/>
+	<sentence id="1931625.s6" text="This figure is lower than previous estimates, but this is the first population based study undertaken."/>
+	<sentence id="1931625.s7" text="In view of the early age of onset in GS (mean 2 years) children presenting with medulloblastoma, especially under 5 years, should be examined for signs of the syndrome.">
+		<entity id="1931625.s7.e0" charOffset="20-29"
+			type="HP" text="early age" ontology_id="HP_0003593"/>
+		<entity id="1931625.s7.e2" charOffset="20-38"
+			type="HP" text="medulloblastoma" ontology_id="HP_0002885"/>
+		<entity id="1931625.s7.e1" charOffset="85-100"
+			type="HP" text="early age of onset" ontology_id="HP_0003593"/>
+	</sentence>
+	<sentence id="1931625.s8" text="Those at high risk of developing multiple invasive basal cell carcinomata will then be identified.">
+		<entity id="1931625.s8.e0" charOffset="61-83"
+			type="HP" text="basal cell carcinomata" ontology_id="HP_0002671"/>
+	</sentence>
+</document>

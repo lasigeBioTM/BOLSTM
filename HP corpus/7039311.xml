@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7039311">
+	<sentence id="7039311.s0" text="We report on 44 patients (18 with additional affected family members), with congenital distal limb contractures identified from a large study of over 350 patients with congenital joint contractures.">
+		<entity id="7039311.s0.e0" charOffset="76-111"
+			type="HP" text="congenital distal limb contractures" ontology_id="HP_0002803"/>
+		<entity id="7039311.s0.e1" charOffset="168-197"
+			type="HP" text="congenital joint contractures" ontology_id="HP_0002803"/>
+	</sentence>
+	<sentence id="7039311.s1" text="Fourteen propositi (seven familial cases, seven isolated cases) had a newly recognized form of arthrogryposis, which we have designated distal arthrogryposis type 1, with the predominant manifestations of autosomal dominant inheritance; tightly clenched fists at birth, with medially overlapping fingers, ulnar deviation, and camptodactyly in adults; and positional foot deformities.">
+		<entity id="7039311.s1.e0" charOffset="26-40"
+			type="HP" text="familial cases" ontology_id="HP_0000005"/>
+		<entity id="7039311.s1.e1" charOffset="48-62"
+			type="HP" text="isolated cases" ontology_id="HP_0001420"/>
+		<entity id="7039311.s1.e2" charOffset="95-109"
+			type="HP" text="arthrogryposis" ontology_id="HP_0001390"/>
+		<entity id="7039311.s1.e3" charOffset="136-157"
+			type="HP" text="distal arthrogryposis" ontology_id="HP_0005684"/>
+		<entity id="7039311.s1.e6" charOffset="205-223"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+		<entity id="7039311.s1.e4" charOffset="205-235"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="7039311.s1.e7" charOffset="215-223"
+			type="HP" text="tightly clenched fists" ontology_id="HP_0001188"/>
+		<entity id="7039311.s1.e8" charOffset="237-259"
+			type="HP" text="medially overlapping fingers" ontology_id="HP_0010557"/>
+		<entity id="7039311.s1.e9" charOffset="275-303"
+			type="HP" text="ulnar deviation" ontology_id="HP_0001193"/>
+		<entity id="7039311.s1.e10" charOffset="305-320"
+			type="HP" text="camptodactyly" ontology_id="HP_0012385"/>
+		<entity id="7039311.s1.e11" charOffset="326-339"
+			type="HP" text="positional foot deformities" ontology_id="HP_0005656"/>
+		<entity id="7039311.s1.e5" charOffset="355-382"
+			type="HP" text="autosomal dominant inheritance" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="7039311.s2" text="Contractures at other major joints are variable.">
+		<entity id="7039311.s2.e0" charOffset="0-12"
+			type="HP" text="Contractures" ontology_id="HP_0001371"/>
+		<entity id="7038311.s2.e1" charOffset="38-46"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+	<sentence id="7039311.s3" text="There are no associated visceral anomalies; intelligence is normal.">
+		<entity id="7039311.s3.e0" charOffset="23-41"
+			type="HP" text="visceral anomalies" ontology_id="HP_0002012"/>
+	</sentence>
+	<sentence id="7039311.s4" text="There can be marked intrafamilial and interfamilial variability.">
+		<entity id="7039311.s4.e0" charOffset="20-63"
+			type="HP" text="intrafamilial and interfamilial variability" ontology_id="HP_0003822"/>
+	</sentence>
+	<sentence id="7039311.s5" text="Twenty-two propositi with similar distal contractures had additional findings and were classified into five subcategories of distal arthrogryposis (type IIA-E).">
+		<entity id="7039311.s5.e0" charOffset="36-55"
+			type="HP" text="distal contractures" ontology_id="HP_0005684"/>
+		<entity id="7039311.s5.e1" charOffset="127-148"
+			type="HP" text="distal arthrogryposis" ontology_id="HP_0005684"/>
+	</sentence>
+	<sentence id="7039311.s6" text="Among type II patients cleft palate, cleft lip, small tongue, trismus, ptosis, epicanthal folds, keratoconus, short stature, scoliosis, a unique hand position, and dull normal intelligence were seen.">
+		<entity id="7039311.s6.e0" charOffset="28-40"
+			type="HP" text="cleft palate" ontology_id="HP_0000175"/>
+		<entity id="7039311.s6.e1" charOffset="42-51"
+			type="HP" text="cleft lip" ontology_id="HP_0100333"/>
+		<entity id="7039311.s6.e2" charOffset="53-65"
+			type="HP" text="small tongue" ontology_id="HP_0000171"/>
+		<entity id="7039311.s6.e3" charOffset="67-74"
+			type="HP" text="trismus" ontology_id="HP_0000211"/>
+		<entity id="7039311.s6.e4" charOffset="76-82"
+			type="HP" text="ptosis" ontology_id="HP_0000508"/>
+		<entity id="7039311.s6.e5" charOffset="84-100"
+			type="HP" text="epicanthal folds" ontology_id="HP_0000286"/>
+		<entity id="7039311.s6.e6" charOffset="102-113"
+			type="HP" text="keratoconus" ontology_id="HP_0000563"/>
+		<entity id="7039311.s6.e7" charOffset="115-128"
+			type="HP" text="short stature" ontology_id="HP_0004322"/>
+		<entity id="7039311.s6.e8" charOffset="130-139"
+			type="HP" text="scoliosis" ontology_id="HP_0002650"/>
+		<entity id="7039311.s6.e9" charOffset="143-163"
+			type="HP" text="unique hand position" ontology_id="HP_0001155"/>
+	</sentence>
+	<sentence id="7039311.s7" text="These characteristics were seen in various combinations and patterns and allowed sorting into groups that were the basis for the categorization."/>
+	<sentence id="7039311.s8" text="The remaining eight propositi were recognized to have previously described conditions with distal contractures and autosomal dominant inheritance, ie, the Freeman-Sheldon syndrome, trismus-pseudo-camptodactyly syndrome, congenital contractural arachnodactyly, and familial camptodactyly.">
+		<entity id="7039311.s8.e0" charOffset="104-123"
+			type="HP" text="distal contractures" ontology_id="HP_0005684"/>
+		<entity id="7039311.s8.e1" charOffset="128-158"
+			type="HP" text="autosomal dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="7039311.s8.e5" charOffset="128-146"
+			type="HP" text="trismus" ontology_id="HP_0000211"/>
+		<entity id="7039311.s8.e6" charOffset="138-158"
+			type="HP" text="camptodactyly" ontology_id="HP_0012385"/>
+		<entity id="7039311.s8.e7" charOffset="138-146"
+			type="HP" text="contractural arachnodactyly" ontology_id="HP_0001166"/>
+		<entity id="7039311.s8.e8" charOffset="194-201"
+			type="HP" text="camptodactyly" ontology_id="HP_0012385"/>
+		<entity id="7039311.s8.e2" charOffset="209-222"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="7039311.s8.e3" charOffset="244-271"
+			type="HP" text="dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="7039311.s8.e4" charOffset="286-299"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="7039311.s9" text="Pathogenetically we postulate similar underlying defects of abnormal tendon attachments, attenuation, and absence; careful nosologic comparisons are important for prognostic counseling and habilitative management."/>
+</document>

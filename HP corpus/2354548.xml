@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2354548">
+	<sentence id="2354548.s0" text="A father and son are described with an autosomal dominant branchial cleft syndrome resembling both the branchio-oto-renal and the branchio-oculo-facial syndrome.">
+		<entity id="2354548.s0.e0" charOffset="39-57"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="2354548.s0.e1" charOffset="58-67"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="2354548.s1" text="Both syndromes may represent variant expressions of the same autosomal dominant gene.">
+		<entity id="2354548.s1.e0" charOffset="61-79"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+</document>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1363801">
+	<sentence id="1363801.s0" text="Prader-Willi syndrome (PWS) and Angelman syndrome (AS) are distinct mental retardation disorders associated with deletions of proximal 15q (q11-q13) of different parental origin.">
+		<entity id="1363801.s0.e0" charOffset="68-86"
+			type="HP" text="mental retardation" ontology_id="HP_0001249"/>
+	</sentence>
+	<sentence id="1363801.s1" text="Yeast artificial chromosome (YAC) clones were isolated for 9 previously mapped DNA probes from this region, and for one newly derived marker, LS6-1 (D15S113)."/>
+	<sentence id="1363801.s2" text="A YAC contig of 1-1.5 Mb encompassing four markers (ML34, IR4-3R, PW71, and TD189-1) was constructed."/>
+	<sentence id="1363801.s3" text="Multi-color fluorescence in situ hybridization (FISH) analysis of interphase nuclei was combined with YAC contig information to provide the following order of markers: cen-IR39-ML34-IR4-3R-PW71-TD189-1-LS6++ +-1-TD3-21-cellular response to histamine-IR10-1-CMW1-tel.">
+		<entity id="1363801.s3.e0" charOffset="216-246"
+			type="GO" text="cellular response to histamine" ontology_id="GO_0071420"/>
+	</sentence>
+	<sentence id="1363801.s4" text="FISH analysis was performed on 8 cases of PWS and 3 cases of AS, including 5 patients with normal karyotypes."/>
+	<sentence id="1363801.s5" text="All eleven patients were deleted for YACs in the interval from IR4-3R to cellular response to histamine.">
+		<entity id="1363801.s5.e0" charOffset="72-102"
+			type="GO" text="cellular response to histamine" ontology_id="GO_0071420"/>
+	</sentence>
+	<sentence id="1363801.s6" text="On the proximal side of the deletion interval, 10/10 breakpoints fell within a single ML34 YAC of 370 kb."/>
+	<sentence id="1363801.s7" text="On the distal side, 8/9 breakpoints fell within a single IR10-1 YAC of 200 kb."/>
+	<sentence id="1363801.s8" text="These results indicate a striking consistency in the location of the proximal and distal breakpoints in PWS and AS patients."/>
+	<sentence id="1363801.s9" text="FISH analysis on a previously reported case of familial AS confirmed a submicroscopic deletion including YACs corresponding to LS6-1, TD3-21 and cellular response to histamine and supports the separation of the PWS and AS critical regions.">
+		<entity id="1363801.s9.e0" charOffset="47-58"
+			type="HP" text="familial AS" ontology_id="HP_0000005"/>
+		<entity id="1363801.s9.e1" charOffset="145-175"
+			type="GO" text="cellular response to histamine" ontology_id="GO_0071420"/>
+		<pair id="1363801.s9.p0" e1="1363801.s9.e1"
+		    e2="1363801.s9.e0" ddi="false"/>
+	</sentence>
+	<sentence id="1363801.s10" text="Since these three YACs do not overlap each other, the minimum size of the AS critical region is > or = 650 kb."/>
+</document>

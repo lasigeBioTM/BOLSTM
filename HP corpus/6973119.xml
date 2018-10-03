@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6973119">
+	<sentence id="6973119.s0" text="The results of a systematic study of the otological aspects in 13 cases of earpit-deafness syndrome are reported.">
+		<entity id="6973119.s0.e0" charOffset="75-81"
+			type="HP" text="earpit" ontology_id="HP_0004467"/>
+		<entity id="6973119.s0.e1" charOffset="82-90"
+			type="HP" text="deafness" ontology_id="HP_0000404"/>
+	</sentence>
+	<sentence id="6973119.s1" text="The audiometric, radiological and vestibular findings as well as the results of exploratory tympanotomies with and without stapedectomies are discussed together with the results reported in the literature."/>
+	<sentence id="6973119.s2" text="A convincing explanation of the poor results of exploratory tympanotomies in cases with mixed hearing loss is not furnished.">
+		<entity id="6973119.s2.e0" charOffset="86-104"
+			type="HP" text="mixed hearing loss" ontology_id="HP_0000410"/>
+	</sentence>
+	<sentence id="6973119.s3" text="If the hearing loss is confined to conduction and ankylosis of the stapes or a disconnection of the ossicular chain is suspected, exploratory tympanotomy can be expected to be successful.">
+		<entity id="6953117.s3.e0" charOffset="5-17"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+		<entity id="6973119.s3.e1" charOffset="33-43"
+			type="HP" text="conduction" ontology_id="HP_0000405"/>
+		<entity id="6971119.s3.e2" charOffset="48-71"
+			type="HP" text="ankylosis of the stapes" ontology_id="HP_0000381"/>
+		<entity id="6973119.s3.e3" charOffset="77-113"
+			type="HP" text="disconnection of the ossicular chain" ontology_id="HP_0004452"/>
+	</sentence>
+</document>

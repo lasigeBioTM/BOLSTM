@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6631421">
+	<sentence id="6631421.s0" text="A young girl 12 old, sent to us for obesity, and coxa-epiphysiolysis showed signs of mental retardation and bilateral thumb ankylosis.">
+		<entity id="6631421.s0.e0" charOffset="2-7"
+			type="HP" text="young" ontology_id="HP_0003593"/>
+		<entity id="6631421.s0.e1" charOffset="36-43"
+			type="HP" text="obesity" ontology_id="HP_0001513"/>
+		<entity id="6631421.s0.e2" charOffset="49-68"
+			type="HP" text="coxa-epiphysiolysis" ontology_id="HP_0006461"/>
+		<entity id="6631421.s0.e3" charOffset="85-103"
+			type="HP" text="mental retardation" ontology_id="HP_0001249"/>
+		<entity id="6631421.s0.e4" charOffset="118-133"
+			type="HP" text="thumb ankylosis" ontology_id="HP_0001172"/>
+	</sentence>
+	<sentence id="6631421.s1" text="The fact that the mother was also affected by both of these signs, led to a more detailed genetic research."/>
+	<sentence id="6631421.s2" text="The latter revealed that not only the daughter, the mother, but also their own mother and may be, the sister, the grand-mother and the great-aunt of the patient had a retardation, a slight dysmorphia, a type A brachydactylia, signs of obesity and an identical ankylosis of both thumbs.">
+		<entity id="6631421.s2.e0" charOffset="165-176"
+			type="HP" text="retardation" ontology_id="HP_0001249"/>
+		<entity id="6631421.s2.e1" charOffset="180-197"
+			type="HP" text="slight dysmorphia" ontology_id="HP_0004675"/>
+		<entity id="6631421.s2.e2" charOffset="201-223"
+			type="HP" text="type A brachydactylia," ontology_id="HP_0009370"/>
+		<entity id="6631421.s2.e3" charOffset="233-240"
+			type="HP" text="obesity" ontology_id="HP_0001513"/>
+		<entity id="6631421.s2.e4" charOffset="258-282"
+			type="HP" text="ankylosis of both thumbs" ontology_id="HP_0001172"/>
+	</sentence>
+	<sentence id="6631421.s3" text="This vertical inheritance, affecting apparently females only, but not associated with a high rate of miscarriage, has, it seems, never been reported."/>
+	<sentence id="6631421.s4" text="The characteristics of this family are being considered and discussed."/>
+</document>

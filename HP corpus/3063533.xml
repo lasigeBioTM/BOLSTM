@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3063533">
+	<sentence id="3063533.s0" text="We report on seven children with Angelman syndrome presenting with psychomotor retardation during the 1st year of life.">
+		<entity id="3063533.s0.e0" charOffset="67-90"
+			type="HP" text="psychomotor retardation" ontology_id="HP_0001255"/>
+		<entity id="3063533.s0.e1" charOffset="91-118"
+			type="HP" text="during the 1st year of life" ontology_id="HP_0003576"/>
+	</sentence>
+	<sentence id="3063533.s1" text="Seizures developed in six patients, and computed tomography (CT) scanning showed diffuse atrophy of the brain in five patients.">
+		<entity id="3063533.s1.e0" charOffset="0-8"
+			type="HP" text="Seizures" ontology_id="HP_0001250"/>
+		<entity id="3063533.s1.e1" charOffset="81-109"
+			type="HP" text="diffuse atrophy of the brain" ontology_id="HP_0002283"/>
+	</sentence>
+	<sentence id="3063533.s2" text="We conclude that diagnosis is difficult in the first years of life."/>
+	<sentence id="3063533.s3" text="A review of the literature is given."/>
+</document>

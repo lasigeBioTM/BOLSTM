@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1478663">
+	<sentence id="1478663.s0" text="Branchiootorenal syndrome is an autosomal dominant disorder that affects an estimated 2% of profoundly deaf children.">
+		<entity id="1478663.s0.e0" charOffset="32-59"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+		<entity id="1478663.s0.e2" charOffset="32-50"
+			type="HP" text="profoundly deaf" ontology_id="HP_0000404"/>
+		<entity id="1478663.s0.e1" charOffset="92-107"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="1478663.s1" text="In addition to hearing impairment, it is characterized by a lop-ear deformity, preauricular pits, branchial cleft sinus tracts, and renal anomalies.">
+		<entity id="1478663.s1.e0" charOffset="15-33"
+			type="HP" text="hearing impairment" ontology_id="HP_0000365"/>
+		<entity id="1478663.s1.e1" charOffset="60-77"
+			type="HP" text="lop-ear deformity" ontology_id="HP_0000394"/>
+		<entity id="1478663.s1.e2" charOffset="79-96"
+			type="HP" text="preauricular pits" ontology_id="HP_0004467"/>
+		<entity id="1478663.s1.e3" charOffset="98-113"
+			type="HP" text="branchial cleft" ontology_id="HP_0009794"/>
+		<entity id="1268663.s1.e5" charOffset="98-126"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+		<entity id="1478663.s1.e4" charOffset="132-147"
+			type="HP" text="branchial cleft sinus tracts" ontology_id="HP_0100272"/>
+	</sentence>
+	<sentence id="1478663.s2" text="The pathogenesis of the disease remains unknown; however, the defective gene has been localized to chromosome 8q by family linkage studies."/>
+</document>

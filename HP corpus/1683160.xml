@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1683160">
+	<sentence id="1683160.s0" text="DNA deletion studies using 5 DNA markers localized at 15q11-q12 were performed in 14 Angelman syndrome (AS) patients (9 sporadic and 5 familial cases).">
+		<entity id="1683160.s0.e0" charOffset="135-149"
+			type="HP" text="familial cases" ontology_id="HP_0000005"/>
+	</sentence>
+	<sentence id="1683160.s1" text="A one-copy density for one or more of the 5 loci was detected in 8 (57.1%) of the 14 patients."/>
+	<sentence id="1683160.s2" text="A deletion of only the D15S11 locus was detected in one sporadic patient, that involving only the D15S10 in 3 familial patients (sibs in a family), that spanning 3 loci (D15S11, D15S10, D15S12) in one sporadic patient, and that spanning 4 loci (D15S9, D15S11, D15S10, D15S12) in the other 3 sporadic patients.">
+		<entity id="1683160.s2.e0" charOffset="54-62"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="1683160.s3" text="The deletion common to our patients as well as to the reported patients may be confined to a segment between D15S11 and D15S10, if the 5 loci are ordered as cen-D15S18-(D15S9-D15S11-D15S10)-D15S12-qt er."/>
+	<sentence id="1683160.s4" text="This site overlaps but is more distal to the common deletion site in Prader-Willi syndrome (PWS) patients."/>
+	<sentence id="1683160.s5" text="In the family of the 3 sibs, both of the phenotypically normal mother and maternal grandfather also have deletions of the D15S10 locus."/>
+	<sentence id="1683160.s6" text="These results were consistent with the genomic imprinting hypothesis for the occurrence of AS, i.e., the lack of a maternally derived locus leads to AS, but may not support a model that AS is the alternative phenotype of PWS at the identical locus."/>
+</document>

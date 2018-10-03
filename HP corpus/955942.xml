@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="955942">
+	<sentence id="955942.s0" text="Six cases of this syndrome previously reported in Great Britain and in Canada are reviewed in relation to a personal case, a 17-month-old boy."/>
+	<sentence id="955942.s1" text="The syndrome's main features are microbrachycephaly and peculiar face, mental deficiency with euphoria and laughter, ataxia and epilepsy consisting in infantile spasms and grand-mal attacks.">
+		<entity id="955942.s1.e0" charOffset="33-51"
+			type="HP" text="microbrachycephaly" ontology_id="HP_0002258"/>
+		<entity id="955942.s1.e1" charOffset="56-69"
+			type="HP" text="peculiar face" ontology_id="HP_0002004"/>
+		<entity id="955942.s1.e2" charOffset="71-88"
+			type="HP" text="mental deficiency" ontology_id="HP_0001249"/>
+		<entity id="955932.s1.e3" charOffset="94-102"
+			type="HP" text="euphoria" ontology_id="HP_0000708"/>
+		<entity id="955942.s1.e4" charOffset="106-114"
+			type="HP" text="laughter" ontology_id="HP_0000748"/>
+		<entity id="955942.s1.e5" charOffset="117-123"
+			type="HP" text="ataxia" ontology_id="HP_0001251"/>
+		<entity id="955942.s1.e6" charOffset="128-136"
+			type="HP" text="epilepsy" ontology_id="HP_0001250"/>
+		<entity id="955942.s1.e7" charOffset="151-167"
+			type="HP" text="infantile spasms" ontology_id="HP_0002391"/>
+		<entity id="955942.s1.e8" charOffset="172-189"
+			type="HP" text="grand-mal attacks" ontology_id="HP_0002069"/>
+	</sentence>
+	<sentence id="955942.s2" text="Though its precise nature and cause still remain unknown, the syndrome seems neither familial nor progressive."/>
+</document>

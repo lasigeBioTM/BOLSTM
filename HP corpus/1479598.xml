@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1479598">
+	<sentence id="1479598.s0" text="A clinical and genetic study of type 2 neurofibromatosis (negative regulation of cell proliferation) has been carried out in the United Kingdom.">
+		<entity id="1479598.s0.e0" charOffset="39-56"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="1479598.s0.e1" charOffset="58-99"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<pair id="1479598.s0.p0" e1="1479598.s0.e1"
+		    e2="1479598.s0.e0" ddi="false"/>
+	</sentence>
+	<sentence id="1479598.s1" text="Virtually complete ascertainment of cases in the north-west of England was achieved and suggests a population incidence of 1 in 33,000 to 40,000."/>
+	<sentence id="1479598.s2" text="In the UK as a whole, 150 cases have been identified and been used to study the clinical and genetic features of negative regulation of cell proliferation.">
+		<entity id="1479598.s2.e0" charOffset="111-152"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="1479598.s3" text="The autosomal dominant inheritance of negative regulation of cell proliferation was confirmed, 49% of cases were assessed as representing new mutations, and the mutation rate was estimated to be 6.5 x 10(-6).">
+		<entity id="1279598.s3.e0" charOffset="4-34"
+			type="HP" text="autosomal dominant inheritance" ontology_id="HP_0000006"/>
+		<entity id="1479598.s3.e1" charOffset="38-79"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<pair id="1479598.s3.p0" e1="1479598.s3.e1"
+		    e2="1479598.s3.e0" ddi="true" type="effect"/>
+	</sentence>
+	<sentence id="1479598.s4" text="Evidence to support a maternal gene effect was found in that age at onset was 18.17 years in 36 maternally inherited cases and 24.5 in 20 paternally inherited cases (p = 0.027)."/>
+	<sentence id="1479598.s5" text="The preponderance of maternally inherited cases was also significant (p = 0.03)."/>
+	<sentence id="1479598.s6" text="Data are presented which suggest that there are two types of negative regulation of cell proliferation, one with later onset and bilateral vestibular schwannomas as the only usual feature, and the other with earlier onset and multiple other tumours.">
+		<entity id="1479598.s6.e0" charOffset="61-102"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="1479598.s6.e1" charOffset="129-161"
+			type="HP" text="bilateral vestibular schwannomas" ontology_id="HP_0009589"/>
+		<entity id="1479598.s6.e2" charOffset="241-248"
+			type="HP" text="tumours" ontology_id="HP_0002664"/>
+		<pair id="1479598.s6.p0" e1="1479598.s6.e0"
+		    e2="1479598.s6.e1" ddi="false"/>
+		<pair id="1479598.s6.p1" e1="1479598.s6.e0"
+		    e2="1479598.s6.e2" ddi="false"/>
+	</sentence>
+	<sentence id="1479598.s7" text="A considerable number of cases did not fall easily into one or other group and other factors such as maternal effect on severity and anticipation need to be considered."/>
+</document>

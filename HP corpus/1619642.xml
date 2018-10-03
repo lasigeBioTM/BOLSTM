@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1619642">
+	<sentence id="1619642.s0" text="Two sibs with the branchio-oculo-facial syndrome are reported."/>
+	<sentence id="1619642.s1" text="They both have orbital haemangiomatous cysts, which is a previously unreported feature.">
+		<entity id="1619642.s1.e0" charOffset="14-43"
+			type="HP" text="orbital haemangiomatous cysts" ontology_id="HP_0001144"/>
+	</sentence>
+	<sentence id="1619642.s2" text="Both parents are clinically normal and unrelated."/>
+	<sentence id="1619642.s3" text="This disorder has been reported showing autosomal dominant transmission so this family could represent either an autosomal recessive form or germline mosaicism for the dominant gene.">
+		<entity id="1619642.s3.e0" charOffset="37-55"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="1619642.s3.e3" charOffset="47-68"
+			type="HP" text="autosomal recessive form" ontology_id="HP_0000007"/>
+		<entity id="1619642.s3.e5" charOffset="47-55"
+			type="HP" text="germline mosaicism" ontology_id="HP_0001442"/>
+		<entity id="1619642.s3.e2" charOffset="110-134"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+		<entity id="1619642.s3.e1" charOffset="110-129"
+			type="HP" text="dominant transmission" ontology_id="HP_0000006"/>
+		<entity id="1619642.s3.e4" charOffset="138-156"
+			type="HP" text="autosomal recessive" ontology_id="HP_0000007"/>
+		<entity id="1619642.s3.e6" charOffset="165-173"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+	</sentence>
+</document>

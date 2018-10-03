@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7091188">
+	<sentence id="7091188.s0" text="We report studies of six patients with the Angelman *Happy Puppet* syndrome and compare the data with those from previous reports.">
+		<entity id="7091188.s0.e0" charOffset="53-65"
+			type="HP" text="Happy Puppet" ontology_id="HP_0100024"/>
+	</sentence>
+	<sentence id="7091188.s1" text="The results confirm the classic findings of severe mental retardation, *puppet-like* gait, characteristic craniofacial abnormalities, and frequent episodes of laughter and suggest that this syndrome is more common than previously thought.">
+		<entity id="7091188.s1.e0" charOffset="44-69"
+			type="HP" text="severe mental retardation" ontology_id="HP_0002187"/>
+		<entity id="7091188.s1.e2" charOffset="71-89"
+			type="HP" text="craniofacial abnormalities" ontology_id="HP_0001999"/>
+		<entity id="7091188.s1.e3" charOffset="106-132"
+			type="HP" text="frequent episodes of laughter" ontology_id="HP_0000749"/>
+		<entity id="7091188.s1.e1" charOffset="138-167"
+			type="HP" text="*puppet-like* gait" ontology_id="HP_0001288"/>
+	</sentence>
+	<sentence id="7091188.s2" text="Computerized axial tomographs of the brain demonstrating unilateral cerebellar atrophy in one patient constitute the first direct evidence of cerebellar abnormalities in this syndrome.">
+		<entity id="7091188.s2.e0" charOffset="56-85"
+			type="HP" text="unilateral cerebellar atrophy" ontology_id="HP_0001272"/>
+		<entity id="7091188.s2.e1" charOffset="141-165"
+			type="HP" text="cerebellar abnormalities" ontology_id="HP_0001317"/>
+	</sentence>
+</document>

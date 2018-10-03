@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2282716">
+	<sentence id="2282716.s0" text="Clinical and genetic data of 10 patients with neurofibromatosis 2 (NF-2) are presented.">
+		<entity id="2282716.s0.e0" charOffset="46-63"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="2282716.s1" text="Interestingly, no family history of neurofibromatosis was detectable in any of them, which indicates that these are sporadic cases of NF-2, most likely due to a new mutational event.">
+		<entity id="2282716.s1.e0" charOffset="116-124"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="2282716.s2" text="According to our own results and the data in the literature, sporadic cases of NF-2 are clinically characterized by a high incidence of multiple meningiomas and spinal tumors in addition to the bilateral occurrence of acoustic neurinomas.">
+		<entity id="2282716.s2.e0" charOffset="60-74"
+			type="HP" text="sporadic cases" ontology_id="HP_0003745"/>
+		<entity id="2282716.s2.e2" charOffset="60-68"
+			type="HP" text="meningiomas" ontology_id="HP_0002858"/>
+		<entity id="2282716.s2.e3" charOffset="144-155"
+			type="HP" text="spinal tumors" ontology_id="HP_0010302"/>
+		<entity id="2282716.s2.e4" charOffset="160-173"
+			type="HP" text="bilateral occurrence of acoustic neurinomas" ontology_id="HP_0009589"/>
+		<entity id="2282716.s2.e1" charOffset="193-236"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="2282716.s3" text="The clinical heterogeneity of NF-2 is pointed out and the possible existence of different forms of this disease is discussed.">
+		<entity id="2282716.s3.e0" charOffset="3-25"
+			type="HP" text="clinical heterogeneity" ontology_id="HP_0003812"/>
+	</sentence>
+</document>

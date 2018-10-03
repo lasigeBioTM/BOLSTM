@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6261046">
+	<sentence id="6261046.s0" text="A 17-year-old girl presented with an enlarged cardiac silhouette on routine chest roentgenogram.">
+		<entity id="6261046.s0.e0" charOffset="37-64"
+			type="HP" text="enlarged cardiac silhouette" ontology_id="HP_0001627"/>
+	</sentence>
+	<sentence id="6261046.s1" text="After clinical evaluation, echocardiography, and pericardiocentesis failed to provide a diagnosis, exploratory thoracotomy and biopsy revealed an unresectable left ventricular fibroma.">
+		<entity id="6261046.s1.e0" charOffset="159-183"
+			type="HP" text="left ventricular fibroma" ontology_id="HP_0010617"/>
+	</sentence>
+	<sentence id="6261046.s2" text="The tumor continued to enlarge and began causing ventricular arrhythmia.">
+		<entity id="6261036.s2.e0" charOffset="3-8"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+		<entity id="6261046.s2.e1" charOffset="48-70"
+			type="HP" text="ventricular arrhythmia" ontology_id="HP_0004308"/>
+	</sentence>
+	<sentence id="6261046.s3" text="Therefore, she underwent cardiac transplantation 2 years after the initial diagnosis was made."/>
+	<sentence id="6261046.s4" text="She is now alive nd well 18 months following transplantation."/>
+</document>

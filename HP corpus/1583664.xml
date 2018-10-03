@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1583664">
+	<sentence id="1583664.s0" text="A four generation autosomal dominant pedigree of brachydactyly type C is presented with its radiological features.">
+		<entity id="1583664.s0.e0" charOffset="18-36"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="1583664.s0.e1" charOffset="49-62"
+			type="HP" text="brachydactyly" ontology_id="HP_0001156"/>
+	</sentence>
+	<sentence id="1583664.s1" text="The hands and feet were similarly affected."/>
+	<sentence id="1583664.s2" text="All the subjects showing these changes had shortening of the big toes and, in addition, had cupped ears.">
+		<entity id="1583664.s2.e0" charOffset="41-67"
+			type="HP" text="shortening of the big toes" ontology_id="HP_0010109"/>
+		<entity id="1583664.s2.e1" charOffset="90-101"
+			type="HP" text="cupped ears" ontology_id="HP_0000378"/>
+	</sentence>
+</document>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3688021">
+	<sentence id="3688021.s0" text="Two unrelated females, age 15 and 5 years respectively, were studied cytogenetically because of severe mental retardation, seizures and ataxia-like incoordination.">
+		<entity id="3688021.s0.e0" charOffset="96-121"
+			type="HP" text="severe mental retardation" ontology_id="HP_0002187"/>
+		<entity id="3688021.s0.e1" charOffset="123-131"
+			type="HP" text="seizures" ontology_id="HP_0001250"/>
+		<entity id="3688021.s0.e2" charOffset="136-142"
+			type="HP" text="ataxia" ontology_id="HP_0001251"/>
+		<entity id="3688021.s0.e3" charOffset="148-162"
+			type="HP" text="incoordination" ontology_id="HP_0002311"/>
+	</sentence>
+	<sentence id="3688021.s1" text="A similar deletion of the proximal long arm of chromosome 15 was found in both patients."/>
+	<sentence id="3688021.s2" text="Re-evaluation showed no voracious appetite or obesity; normal size of hands and feet, minimal to no hypotonia by history or examination and facial features not typical of the Prader-Willi syndrome.">
+		<entity id="3688021.s2.e0" charOffset="22-40"
+			type="HP" text="voracious appetite" ontology_id="HP_0002591"/>
+		<entity id="3688021.s2.e1" charOffset="44-51"
+			type="HP" text="obesity" ontology_id="HP_0001513"/>
+		<entity id="3688021.s2.e2" charOffset="98-107"
+			type="HP" text="hypotonia" ontology_id="HP_0001252"/>
+	</sentence>
+	<sentence id="3688021.s3" text="However, the facial appearance of the girls was similar to each other with mild hypertelorism.">
+		<entity id="3688021.s3.e0" charOffset="11-28"
+			type="HP" text="facial appearance" ontology_id="HP_0001999"/>
+		<entity id="3687821.s3.e1" charOffset="78-91"
+			type="HP" text="hypertelorism" ontology_id="HP_0000316"/>
+	</sentence>
+	<sentence id="3688021.s4" text="The similarity of these girls and dissimilarity to Prader-Willi syndrome suggest a different syndrome, perhaps the result of deletion of a different segment of 15q."/>
+	<sentence id="3688021.s5" text="The findings of ataxic-like movements, frequent, unprovoked and prolonged bouts of laughter and facial appearance are more compatible with the diagnosis of Angelman syndrome.">
+		<entity id="3688021.s5.e0" charOffset="16-22"
+			type="HP" text="ataxic" ontology_id="HP_0001251"/>
+		<entity id="3688021.s5.e2" charOffset="16-37"
+			type="HP" text="frequent, unprovoked and prolonged bouts of laughter" ontology_id="HP_0000749"/>
+		<entity id="3688021.s5.e3" charOffset="39-91"
+			type="HP" text="facial appearance" ontology_id="HP_0001999"/>
+		<entity id="3688021.s5.e1" charOffset="96-113"
+			type="HP" text="ataxic-like movements" ontology_id="HP_0001251"/>
+	</sentence>
+</document>

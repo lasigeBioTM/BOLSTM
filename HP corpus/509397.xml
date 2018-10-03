@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="509397">
+	<sentence id="509397.s0" text="We have reviewed a series of 36 patients with the basal cell nevus syndrome seen at Roswell Park Memorial Institute from 1950 to 1978.">
+		<entity id="509397.s0.e0" charOffset="50-66"
+			type="HP" text="basal cell nevus" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="509397.s1" text="Among these patients a number of disastrous complications occurred."/>
+	<sentence id="509397.s2" text="These include extensive uncontrolled basal cell epithelioma of the face resulting in one death from direct cerebral invasion via the orbit, one facial nerve palsy, two bilateral and two unilateral eye enucleations, and several severe facial mutilations in young patients.">
+		<entity id="509397.s2.e0" charOffset="35-57"
+			type="HP" text="basal cell epithelioma" ontology_id="HP_0002671"/>
+		<entity id="509397.s2.e2" charOffset="35-69"
+			type="HP" text="facial nerve palsy" ontology_id="HP_0002008"/>
+		<entity id="509397.s2.e3" charOffset="142-160"
+			type="HP" text="eye enucleations" ontology_id="HP_0000478"/>
+		<entity id="509397.s2.e4" charOffset="195-211"
+			type="HP" text="facial mutilations" ontology_id="HP_0000271"/>
+		<entity id="509397.s2.e5" charOffset="232-250"
+			type="HP" text="young" ontology_id="HP_0003593"/>
+		<entity id="509397.s2.e1" charOffset="254-259"
+			type="HP" text="basal cell epithelioma of the face" ontology_id="HP_0000271"/>
+	</sentence>
+	<sentence id="509397.s3" text="There were three patients who developed severe bradycardia and hypotension during induction of general anesthesia required postponement of the intended operation, and one patient with congenital hemiparesis who on investigation was found to have an absent internal carotid artery.">
+		<entity id="509397.s3.e0" charOffset="45-56"
+			type="HP" text="bradycardia" ontology_id="HP_0001662"/>
+		<entity id="509397.s3.e1" charOffset="61-72"
+			type="HP" text="hypotension" ontology_id="HP_0002615"/>
+		<entity id="509397.s3.e2" charOffset="182-204"
+			type="HP" text="congenital hemiparesis" ontology_id="HP_0001269"/>
+		<entity id="509397.s3.e3" charOffset="247-277"
+			type="HP" text="absent internal carotid artery" ontology_id="HP_0005290"/>
+	</sentence>
+	<sentence id="509397.s4" text="A review of the syndrome complex is presented with a plan for recognition and management."/>
+</document>

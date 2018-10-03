@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7628117">
+	<sentence id="7628117.s0" text="Three successive generations in two families affected with the popliteal pterygium syndrome are reported.">
+		<entity id="7628117.s0.e0" charOffset="63-82"
+			type="HP" text="popliteal pterygium" ontology_id="HP_0009756"/>
+	</sentence>
+	<sentence id="7628117.s1" text="While expression of the syndrome was relatively mild in the first and second generation, the patients in the third generation showed the full-blown syndrome."/>
+	<sentence id="7628117.s2" text="Differential diagnosis between mildly affected patients with the popliteal pterygium syndrome and those with Van der Woude syndrome is difficult and may even be impossible.">
+		<entity id="7628117.s2.e0" charOffset="63-82"
+			type="HP" text="popliteal pterygium" ontology_id="HP_0009756"/>
+	</sentence>
+	<sentence id="7628117.s3" text="The present observations further support the hypothesis that both syndromes may in fact represent variants of the same condition."/>
+</document>

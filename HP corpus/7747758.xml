@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7747758">
+	<sentence id="7747758.s0" text="To determine the spectrum of manifestations in neurofibromatosis 2 (negative regulation of cell proliferation) and to assess possible heterogeneity, we evaluated 63 affected individuals from 32 families.">
+		<entity id="7747758.s0.e0" charOffset="47-64"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="7747758.s0.e1" charOffset="68-109"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="7747758.s0.e2" charOffset="134-147"
+			type="HP" text="heterogeneity" ontology_id="HP_0001425"/>
+		<pair id="7747758.s0.p0" e1="7747758.s0.e1"
+		    e2="7747758.s0.e0" ddi="false"/>
+		<pair id="7747758.s0.p1" e1="7747758.s0.e1"
+		    e2="7747758.s0.e2" ddi="false"/>
+	</sentence>
+	<sentence id="7747758.s1" text="Work-up included skin and neurologic examinations, audiometry, a complete ophthalmology examination with slit-lamp biomicroscopy of the lens and fundus, and gadolinium-enhanced MRI of the brain and, in some, of the spine."/>
+	<sentence id="7747758.s2" text="Mean age-at-onset in 58 individuals was 20.3 years; initial symptoms resulted from vestibular schwannomas (44.4%), other CNS tumors (22.2%), skin tumors (12.7%), and ocular manifestations including cataracts and retinal hamartomas (12.7%).">
+		<entity id="7747758.s2.e0" charOffset="81-103"
+			type="HP" text="vestibular schwannomas" ontology_id="HP_0009588"/>
+		<entity id="7747758.s2.e1" charOffset="119-129"
+			type="HP" text="CNS tumors" ontology_id="HP_0004375"/>
+		<entity id="7747758.s2.e2" charOffset="139-150"
+			type="HP" text="skin tumors" ontology_id="HP_0008069"/>
+		<entity id="7747758.s2.e3" charOffset="164-185"
+			type="HP" text="ocular manifestations" ontology_id="HP_0000478"/>
+		<entity id="7747758.s2.e4" charOffset="196-205"
+			type="HP" text="cataracts" ontology_id="HP_0000518"/>
+		<entity id="7747758.s2.e5" charOffset="210-228"
+			type="HP" text="retinal hamartomas" ontology_id="HP_0009594"/>
+	</sentence>
+	<sentence id="7747758.s3" text="Five asymptomatic individuals were diagnosed through screening."/>
+	<sentence id="7747758.s4" text="Vestibular schwannomas were documented in 62 individuals (98.4%); other findings included cataracts (81.0%), skin tumors (67.7%), spinal tumors (67.4%), and meningiomas (49.2%).">
+		<entity id="7747758.s4.e0" charOffset="0-22"
+			type="HP" text="Vestibular schwannomas" ontology_id="HP_0009588"/>
+		<entity id="7747758.s4.e1" charOffset="88-97"
+			type="HP" text="cataracts" ontology_id="HP_0000518"/>
+		<entity id="7747758.s4.e2" charOffset="107-118"
+			type="HP" text="skin tumors" ontology_id="HP_0008069"/>
+		<entity id="7747758.s4.e3" charOffset="128-141"
+			type="HP" text="spinal tumors" ontology_id="HP_0010302"/>
+		<entity id="7747758.s4.e4" charOffset="155-166"
+			type="HP" text="meningiomas" ontology_id="HP_0002858"/>
+	</sentence>
+	<sentence id="7747758.s5" text="Usually, clinical manifestations and course were similar within families but differed among families."/>
+	<sentence id="7747758.s6" text="To assess possible heterogeneity, we assigned affected individuals to three proposed subtypes (representing mild, intermediate, and severe negative regulation of cell proliferation) based on age-at-onset, presence or absence of CNS tumors other than vestibular schwannomas, and presence or absence of retinal hamartomas."/>
+	<sentence id="7747758.s7" text="Comparisons among the three subtypes for many clinical parameters demonstrated that patients in the mild subtype differed from those in the other two subtypes for most parameters, but that none of the parameters distinguished patients in the intermediate subtype from those in the severe subtype."/>
+	<sentence id="7747758.s8" text="Thus, there are likely two rather than three subtypes of negative regulation of cell proliferation.">
+		<entity id="7747758.s8.e0" charOffset="67-108"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="7747758.s9" text="Classification of patients to subtype may aid in counseling about long-term prognosis and in formulating individualized guidelines for medical surveillance."/>
+</document>

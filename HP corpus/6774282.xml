@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="6774282">
+	<sentence id="6774282.s0" text="Neurofibromatosis includes the common *peripheral* form and a recently documented *central* form.">
+		<entity id="6774282.s0.e0" charOffset="0-17"
+			type="HP" text="Neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="6774282.s1" text="We describe the central form in 130 cases from 9 kindreds personally studied and 15 reported kindreds."/>
+	<sentence id="6774282.s2" text="Central neurofibromatosis with bilateral acoustic neuroma is an autosomal dominant disorder beginning about 20 years of age, accompanied by mild skin changes.">
+		<entity id="6774262.s2.e0" charOffset="6-23"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="6774282.s2.e1" charOffset="29-55"
+			type="HP" text="bilateral acoustic neuroma" ontology_id="HP_0009589"/>
+		<entity id="6774282.s2.e2" charOffset="62-89"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+		<entity id="6774282.s2.e4" charOffset="62-80"
+			type="HP" text="skin changes" ontology_id="HP_0000951"/>
+		<entity id="6774282.s2.e3" charOffset="143-155"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="6774282.s3" text="In three kindreds with central neurofibromatosis, we measured nerve growth factor in serum by radioimmunoassay and radioreceptor assay.">
+		<entity id="6774282.s3.e0" charOffset="29-46"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="6774282.s4" text="Only the antigenic activity of nerve growth factor was increased."/>
+	<sentence id="6774282.s5" text="In contrast, in peripheral neurofibromatosis, only the functional activity of nerve growth factor has been reported increased."/>
+	<sentence id="6774282.s6" text="Central and peripheral forms of neurofibromatosis are closely related but discrete diseases which appear to have separate alterations in nerve growth factor activity."/>
+</document>

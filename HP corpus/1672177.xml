@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1672177">
+	<sentence id="1672177.s0" text="Angelman's syndrome and Prader-Willi syndrome are both causes of mental retardation with recognisable, but quite different, clinical phenotypes.">
+		<entity id="1672177.s0.e0" charOffset="65-83"
+			type="HP" text="mental retardation" ontology_id="HP_0001249"/>
+	</sentence>
+	<sentence id="1672177.s1" text="Both are associated with deletions of chromosome 15q11-13, of maternal origin in Angelman's and paternal in Prader-Willi."/>
+	<sentence id="1672177.s2" text="Prader-Willi can arise by inheritance of two chromosomes 15 from the mother and none from the father (uniparental maternal disomy)."/>
+	<sentence id="1672177.s3" text="In 2 patients with Angelman's syndrome we found evidence of uniparental paternal disomy."/>
+	<sentence id="1672177.s4" text="The phenotypic effects of maternal and paternal disomy of chromosome 15 are very different and inheritance of two normal 15s from one parent does not lead to normal development--strong evidence in man for genomic imprinting, in which the same gene has different effects dependent upon its parental origin."/>
+</document>

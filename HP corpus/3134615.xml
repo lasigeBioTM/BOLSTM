@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3134615">
+	<sentence id="3134615.s0" text="At least eight provisional categories of neurofibromatosis have been proposed.">
+		<entity id="3134615.s0.e0" charOffset="41-58"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="3134615.s1" text="Among these, neurofibromatosis 1 (von Recklinghausen's disease or peripheral neurofibromatosis) and neurofibromatosis 2 (central or bilateral acoustic neurofibromatosis) have been established as distinct disorders.">
+		<entity id="3134615.s1.e0" charOffset="132-168"
+			type="HP" text="bilateral acoustic neurofibromatosis" ontology_id="HP_0009589"/>
+	</sentence>
+	<sentence id="3134615.s2" text="We studied 15 affected male and 8 affected female members of one large kindred with neurofibromatosis 2."/>
+	<sentence id="3134615.s3" text="None of the patients met the diagnostic criteria for neurofibromatosis 1."/>
+	<sentence id="3134615.s4" text="Between the ages of 15 and 53 years, the patients had multiple central nervous system tumors of various types--mainly, bilateral acoustic neuromas.">
+		<entity id="3134615.s4.e0" charOffset="61-90"
+			type="HP" text="central nervous system tumors" ontology_id="HP_0100006"/>
+		<entity id="3134615.s4.e1" charOffset="117-144"
+			type="HP" text="bilateral acoustic neuromas" ontology_id="HP_0009589"/>
+	</sentence>
+	<sentence id="3134615.s5" text="Two or more tumors eventually developed in 20 of the patients; 9 had evidence of only bilateral acoustic neuromas.">
+		<entity id="3134615.s5.e0" charOffset="10-18"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+		<entity id="3134615.s5.e1" charOffset="86-113"
+			type="HP" text="bilateral acoustic neuromas" ontology_id="HP_0009589"/>
+	</sentence>
+	<sentence id="3134615.s6" text="Meningiomas and ependymomas were more common among the young patients; those who initially presented with acoustic neuromas were nearly a decade older.">
+		<entity id="3134615.s6.e3" charOffset="3-14"
+			type="HP" text="Meningiomas" ontology_id="HP_0002858"/>
+		<entity id="3134615.s6.e1" charOffset="19-30"
+			type="HP" text="ependymomas" ontology_id="HP_0002888"/>
+		<entity id="3134615.s6.e2" charOffset="58-72"
+			type="HP" text="young patients" ontology_id="HP_0003593"/>
+		<entity id="3134615.s6.e4" charOffset="58-63"
+			type="HP" text="acoustic neuromas" ontology_id="HP_0009588"/>
+		<entity id="3134615.s6.e3" charOffset="109-126"
+			type="HP" text="young" ontology_id="HP_0003593"/>
+	</sentence>
+	<sentence id="3134615.s7" text="Intracranial nontumoral calcifications were present in most patients and were also found in symptom-free children.">
+		<entity id="3134615.s7.e7" charOffset="7-45"
+			type="HP" text="Intracranial nontumoral calcifications" ontology_id="HP_0002514"/>
+	</sentence>
+	<sentence id="3134615.s8" text="The presence of such lesions is probably a prodromic feature of neurofibromatosis 2.">
+		<entity id="3134615.s8.e0" charOffset="76-93"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="3134615.s9" text="Simultaneous analysis of D22S1 and IGLV DNA markers for coinheritance with neurofibromatosis 2 indicates that the locus for the disease is near the center of the long arm of chromosome 22 (22q11.1----22q13.1)."/>
+	<sentence id="3134615.s10" text="The eventual isolation of this disease gene may reveal a cause of the most common intracranial tumors in humans.">
+		<entity id="3134615.s10.e0" charOffset="106-125"
+			type="HP" text="intracranial tumors" ontology_id="HP_0100006"/>
+	</sentence>
+</document>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3098672">
+	<sentence id="3098672.s0" text="Cell cultures grown from peripheral neurofibromas of three patients suffering from sporadic peripheral neurofibromatosis (NF) were analysed cytogenetically at early in vitro passages.">
+		<entity id="3098672.s0.e0" charOffset="83-91"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+		<entity id="3098672.s0.e1" charOffset="103-120"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="3098672.s1" text="The NF-cultures exhibited a 6.7-fold higher frequency of aneuploid mitoses, including pseudodiploids, than the control cultures derived from the skin of three healthy donors."/>
+	<sentence id="3098672.s2" text="The predominant numerical anomaly was monosomy 22."/>
+	<sentence id="3098672.s3" text="Several, as yet unidentified marker chromosomes occurred in the NF-cultures, which also showed a much higher level of unstable chromosomal anomalies."/>
+	<sentence id="3098672.s4" text="The role of monosomy 22 in tumorigenesis of meningiomas and neurofibromas is discussed.">
+		<entity id="3098672.s4.e0" charOffset="41-52"
+			type="HP" text="meningiomas" ontology_id="HP_0002858"/>
+		<entity id="3098672.s4.e1" charOffset="57-70"
+			type="HP" text="neurofibromas" ontology_id="HP_0001067"/>
+	</sentence>
+</document>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3547011">
+	<sentence id="3547011.s0" text="The nevoid basal-cell carcinoma syndrome is characterized by major manifestations, such as multiple basal-cell carcinomata, cysts of the jaws, and skeletal--specifically, rib--abnormalities.">
+		<entity id="3547011.s0.e0" charOffset="11-31"
+			type="HP" text="basal-cell carcinoma" ontology_id="HP_0002671"/>
+		<entity id="3547011.s0.e1" charOffset="100-122"
+			type="HP" text="basal-cell carcinomata" ontology_id="HP_0002671"/>
+		<entity id="3547011.s0.e2" charOffset="124-141"
+			type="HP" text="cysts of the jaws" ontology_id="HP_0010603"/>
+		<entity id="3547011.s0.e3" charOffset="147-169"
+			type="HP" text="skeletal--specifically" ontology_id="HP_0000924"/>
+		<entity id="3547011.s0.e4" charOffset="171-189"
+			type="HP" text="rib--abnormalities" ontology_id="HP_0000772"/>
+	</sentence>
+	<sentence id="3547011.s1" text="Findings in 53 patients and a review of the literature document both major and lesser-known manifestations of the disorder."/>
+	<sentence id="3547011.s2" text="The odontogenic keratocyst, which usually appears during adolescence, has a marked tendency to recur.">
+		<entity id="3527011.s2.e0" charOffset="2-24"
+			type="HP" text="odontogenic keratocyst" ontology_id="HP_0010603"/>
+		<entity id="3547011.s2.e1" charOffset="40-66"
+			type="HP" text="appears during adolescence" ontology_id="HP_0003590"/>
+	</sentence>
+	<sentence id="3547011.s3" text="In addition to the skin tumors, milia, epidermoid cysts, chalazia, comedones, and palmar and plantar pits are frequent.">
+		<entity id="3547011.s3.e0" charOffset="17-28"
+			type="HP" text="skin tumors" ontology_id="HP_0008069"/>
+		<entity id="3547011.s3.e1" charOffset="30-35"
+			type="HP" text="milia" ontology_id="HP_0001056"/>
+		<entity id="3547011.s3.e2" charOffset="37-53"
+			type="HP" text="epidermoid cysts" ontology_id="HP_0200040"/>
+		<entity id="3547011.s3.e3" charOffset="55-63"
+			type="HP" text="chalazia" ontology_id="HP_0010605"/>
+		<entity id="3547011.s3.e4" charOffset="65-74"
+			type="HP" text="comedones" ontology_id="HP_0000951"/>
+		<entity id="3547011.s3.e5" charOffset="80-103"
+			type="HP" text="palmar and plantar pits" ontology_id="HP_0010610"/>
+	</sentence>
+	<sentence id="3547011.s4" text="The skin tumors, originally thought to be independent of sun exposure, are more common in sun-exposed areas and are far less frequent and occur at a much later age in blacks than in whites.">
+		<entity id="3537011.s3.e0" charOffset="3-14"
+			type="HP" text="skin tumors" ontology_id="HP_0008069"/>
+	</sentence>
+	<sentence id="3547011.s5" text="There is some evidence that radiation of the skin promotes the appearance of skin cancers in this disorder.">
+		<entity id="3547011.s5.e0" charOffset="78-90"
+			type="HP" text="skin cancers" ontology_id="HP_0008069"/>
+	</sentence>
+	<sentence id="3547011.s6" text="Unilateral linear nevoid basal-cell carcinomas with comedones may represent postzygotic somatic mutation.">
+		<entity id="3547011.s6.e0" charOffset="29-50"
+			type="HP" text="basal-cell carcinomas" ontology_id="HP_0002671"/>
+		<entity id="3547011.s6.e1" charOffset="56-65"
+			type="HP" text="comedones" ontology_id="HP_0000951"/>
+		<entity id="3547011.s6.e2" charOffset="92-108"
+			type="HP" text="somatic mutation" ontology_id="HP_0001428"/>
+	</sentence>
+	<sentence id="3547011.s7" text="A proclivity to other forms of neoplasia exists.">
+		<entity id="3547011.s7.e0" charOffset="39-48"
+			type="HP" text="neoplasia" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3547011.s8" text="Patients with this syndrome have had medulloblastoma, meningioma, ovarian fibroma, ovarian fibrosarcoma, fibrosarcoma of the jaws, cardiac fibroma, fetal rhabdomyoma, and lymphatic or chylous cysts of the mesentery.">
+		<entity id="3547011.s8.e0" charOffset="50-65"
+			type="HP" text="medulloblastoma" ontology_id="HP_0002885"/>
+		<entity id="3677011.s8.e1" charOffset="67-77"
+			type="HP" text="meningioma" ontology_id="HP_0002858"/>
+		<entity id="3547011.s8.e2" charOffset="79-94"
+			type="HP" text="ovarian fibroma" ontology_id="HP_0010618"/>
+		<entity id="3547011.s8.e3" charOffset="96-116"
+			type="HP" text="ovarian fibrosarcoma" ontology_id="HP_0000137"/>
+		<entity id="3547011.s8.e4" charOffset="144-159"
+			type="HP" text="cardiac fibroma" ontology_id="HP_0010617"/>
+		<entity id="3547011.s8.e5" charOffset="167-178"
+			type="HP" text="rhabdomyoma" ontology_id="HP_0009730"/>
+	</sentence>
+	<sentence id="3547011.s9" text="In addition to the usual modalities of treatment, topical immunotherapy and topical 5-fluorouracil have been used with success."/>
+	<sentence id="3547011.s10" text="Oral synthetic retinoids, such as 13-cis-retinoic acid, have been used to prevent new lesions from appearing and to arrest the growth of older lesions by inducing differentiation."/>
+	<sentence id="3547011.s11" text="The independent observations of increased prostaglandin levels associated both with odontogenic keratocyst expansion and aggression of basal cell cancers merit further investigation both as a fundamental cellular mechanism and as a possible basis for treatment (e.g., with antiprostaglandins).">
+		<entity id="3547011.s11.e0" charOffset="116-138"
+			type="HP" text="odontogenic keratocyst" ontology_id="HP_0010603"/>
+		<entity id="3547011.s11.e1" charOffset="153-163"
+			type="HP" text="aggression" ontology_id="HP_0000718"/>
+		<entity id="3547011.s11.e2" charOffset="167-185"
+			type="HP" text="basal cell cancers" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="3547011.s12" text="The key to pre- and early postnatal diagnosis of the disorder--as well as to an understanding of the basic abnormality--lies in molecular genetics."/>
+	<sentence id="3547011.s13" text="Prime attention should be given to finding the site of the gene through the use of DNA and other markers."/>
+</document>

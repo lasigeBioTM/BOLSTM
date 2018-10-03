@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7200726">
+	<sentence id="7200726.s0" text="A mother and son with bilateral branchial sinuses, intrauterine and postnatal growth retardation, unusual facial appearance, and premature aging in the mother are reported.">
+		<entity id="7200726.s0.e0" charOffset="22-49"
+			type="HP" text="bilateral branchial sinuses" ontology_id="HP_0009794"/>
+		<entity id="7200726.s0.e2" charOffset="32-41"
+			type="HP" text="intrauterine and postnatal growth retardation" ontology_id="HP_0001511"/>
+		<entity id="7200726.s0.e3" charOffset="51-96"
+			type="HP" text="unusual facial appearance" ontology_id="HP_0002004"/>
+		<entity id="7200726.s0.e4" charOffset="98-123"
+			type="HP" text="premature aging" ontology_id="HP_0002216"/>
+		<entity id="7200726.s0.e1" charOffset="129-144"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="7200726.s1" text="No other members of the family are similarly affected."/>
+	<sentence id="7200726.s2" text="No hormonal or systemic cause of growth retardation was identified.">
+		<entity id="7200726.s2.e0" charOffset="31-49"
+			type="HP" text="growth retardation" ontology_id="HP_0001510"/>
+	</sentence>
+	<sentence id="7200726.s3" text="Chromosomal studies with G-banding were normal."/>
+	<sentence id="7200726.s4" text="It is suggested that this syndrome is a dominant trait, the mother being the initial mutant.">
+		<entity id="7200726.s4.e0" charOffset="38-52"
+			type="HP" text="dominant trait" ontology_id="HP_0000006"/>
+		<entity id="7200726.s4.e1" charOffset="38-46"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+	</sentence>
+</document>

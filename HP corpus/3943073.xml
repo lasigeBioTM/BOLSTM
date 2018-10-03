@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3943073">
+	<sentence id="3943073.s0" text="Six patients with typical features of the multiple basal cell nevus syndrome were studied cytogenetically, using prometaphase G-banding and C-banding.">
+		<entity id="3943073.s0.e0" charOffset="51-76"
+			type="HP" text="basal cell nevus syndrome" ontology_id="HP_0002671"/>
+		<entity id="3943073.s0.e1" charOffset="51-67"
+			type="HP" text="basal cell nevus" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="3943073.s1" text="Three patients were from one family and the others were sporadic cases.">
+		<entity id="3943073.s1.e0" charOffset="56-64"
+			type="HP" text="sporadic" ontology_id="HP_0003745"/>
+	</sentence>
+	<sentence id="3943073.s2" text="No cytogenetic marker of the disease was identified using these techniques."/>
+</document>

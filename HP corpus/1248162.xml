@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1248162">
+	<sentence id="1248162.s0" text="The present report concerns a two-generation family of nine individuals in which the father and three of the six living children all had: (1) a mixed hearing loss with a Mondini type cochlear malformation and stapes fixation; (2) cup-shaped, anteverted pinnae with bilateral prehelical pits: (3) bilateral branchial cleft fistulas; and (4) bilateral renal dysplasia and anomalies of the collecting system.">
+		<entity id="1248162.s0.e0" charOffset="144-162"
+			type="HP" text="mixed hearing loss" ontology_id="HP_0000410"/>
+		<entity id="1248162.s0.e1" charOffset="170-204"
+			type="HP" text="Mondini type cochlear malformation" ontology_id="HP_0000376"/>
+		<entity id="1248162.s0.e2" charOffset="209-224"
+			type="HP" text="stapes fixation" ontology_id="HP_0000381"/>
+		<entity id="1248162.s0.e3" charOffset="230-259"
+			type="HP" text="cup-shaped, anteverted pinnae" ontology_id="HP_0000378"/>
+		<entity id="1248162.s0.e4" charOffset="275-290"
+			type="HP" text="prehelical pits" ontology_id="HP_0004467"/>
+		<entity id="1248162.s0.e5" charOffset="306-330"
+			type="HP" text="branchial cleft fistulas" ontology_id="HP_0009795"/>
+		<entity id="1248162.s0.e8" charOffset="306-315"
+			type="HP" text="bilateral renal dysplasia" ontology_id="HP_0012582"/>
+		<entity id="1248162.s0.e9" charOffset="322-330"
+			type="HP" text="anomalies of the collecting system" ontology_id="HP_0004742"/>
+		<entity id="1248162.s0.e6" charOffset="340-365"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="1248162.s0.e7" charOffset="370-404"
+			type="HP" text="fistulas" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="1248162.s1" text="The father and one affected son also had aplasia of the lacrimal ducts.">
+		<entity id="1248162.s1.e0" charOffset="41-70"
+			type="HP" text="aplasia of the lacrimal ducts" ontology_id="HP_0007993"/>
+	</sentence>
+	<sentence id="1248162.s2" text="A fourth child who died at 5 months of age was reported to have branchial cleft fistulas and bilateral polycystic kidneys at autopsy.">
+		<entity id="1248162.s2.e0" charOffset="63-87"
+			type="HP" text="branchial cleft fistulas" ontology_id="HP_0009795"/>
+		<entity id="1248162.s2.e3" charOffset="63-72"
+			type="HP" text="bilateral polycystic kidneys" ontology_id="HP_0000113"/>
+		<entity id="1248162.s2.e1" charOffset="79-87"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="1248162.s2.e2" charOffset="92-120"
+			type="HP" text="fistulas" ontology_id="HP_0009794"/>
+	</sentence>
+	<sentence id="1248162.s3" text="In addition, the concept of noso-embryologic communities is presented."/>
+	<sentence id="1248162.s4" text="Such groups are composed of syndromes whose total phenotypic spectra not only overlap but also share common elements in embryogenesis."/>
+	<sentence id="1248162.s5" text="This concept is illustrated with a group of branchial arch syndromes that are related in this way.">
+		<entity id="1248162.s5.e0" charOffset="44-68"
+			type="HP" text="branchial arch syndromes" ontology_id="HP_0009794"/>
+		<entity id="1248162.s5.e1" charOffset="44-53"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+	</sentence>
+</document>

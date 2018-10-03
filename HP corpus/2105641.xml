@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2105641">
+	<sentence id="2105641.s0" text="Neurofibromatosis 2 or bilateral acoustic neurofibromatosis (negative regulation of cell proliferation) is a severe autosomal dominant disorder characterized by the development of multiple tumors of the nervous system, including meningiomas, gliomas, neurofibromas, ependymomas, and particularly acoustic neuromas.">
+		<entity id="21051021.s0.e0" charOffset="61-102"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<entity id="2105641.s0.e1" charOffset="229-240"
+			type="HP" text="neurofibromas" ontology_id="HP_0001067"/>
+		<pair id="2105641.s0.p8" e1="2105641.s0.e0"
+		    e2="2105641.s0.e1" ddi="true" type="effect"/>
+	</sentence>
+	<sentence id="2105641.s1" text="Polymorphic DNA markers have revealed frequent loss of one copy of chromosome 22 in the tumor types associated with negative regulation of cell proliferation.">
+		<entity id="2105641.s1.e0" charOffset="88-93"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+		<entity id="2105641.s1.e1" charOffset="116-157"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<pair id="2105641.s1.p0" e1="2105641.s1.e1"
+		    e2="2105641.s1.e0" ddi="false"/>
+	</sentence>
+	<sentence id="2105641.s2" text="Family studies have demonstrated that the primary defect in negative regulation of cell proliferation is linked to DNA markers on chromosome 22, suggesting that it involves inactivation of a tumor suppressor gene.">
+		<entity id="2105641.s2.e0" charOffset="59-100"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="2105641.s3" text="We have employed a combination of multipoint linkage analysis and examination of deletions in primary tumor specimens to precisely map the negative regulation of cell proliferation locus between flanking polymorphic DNA markers on chromosome 22.">
+		<entity id="2105641.s3.e0" charOffset="138-179"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="2105641.s4" text="The 13-cM region bracketed by these markers corresponds to 13% of the genetic length of the long arm of chromosome 22 and is expected to contain less than 5 x 10(6) bp of DNA."/>
+	<sentence id="2105641.s5" text="The delineation of flanking markers for negative regulation of cell proliferation should permit accurate presymptomatic and prenatal diagnosis for the disorder and greatly facilitate efforts to isolate the defective gene on the basis of its location.">
+		<entity id="2105641.s5.e0" charOffset="41-82"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+</document>

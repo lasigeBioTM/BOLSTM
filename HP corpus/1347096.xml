@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1347096">
+	<sentence id="1347096.s0" text="The Gorlin (naevoid-basal-cell-carcinoma) syndrome is an autosomal dominant disorder characterised by multiple naevoid basal-cell carcinomas, recurrent odontogenic keratocysts, skeletal anomalies, intracranial calcification, and developmental malformations.">
+		<entity id="1347096.s0.e0" charOffset="20-40"
+			type="HP" text="basal-cell-carcinoma" ontology_id="HP_0002671"/>
+		<entity id="1347096.s0.e1" charOffset="57-75"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+		<entity id="1347096.s0.e3" charOffset="57-84"
+			type="HP" text="multiple naevoid basal-cell carcinomas" ontology_id="HP_0001054"/>
+		<entity id="1347096.s0.e4" charOffset="102-140"
+			type="HP" text="odontogenic keratocysts" ontology_id="HP_0010603"/>
+		<entity id="1347096.s0.e5" charOffset="152-175"
+			type="HP" text="skeletal anomalies" ontology_id="HP_0000924"/>
+		<entity id="1347096.s0.e6" charOffset="177-195"
+			type="HP" text="intracranial calcification" ontology_id="HP_0002514"/>
+		<entity id="1347096.s0.e7" charOffset="197-223"
+			type="HP" text="developmental malformations" ontology_id="HP_0001263"/>
+		<entity id="1347096.s0.e2" charOffset="229-256"
+			type="HP" text="autosomal dominant disorder" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="1347096.s1" text="Characterisation of the gene that causes the syndrome may improve our understanding of the pathogenesis of other basal-cell carcinomas.">
+		<entity id="1347096.s1.e0" charOffset="113-134"
+			type="HP" text="basal-cell carcinomas" ontology_id="HP_0002671"/>
+	</sentence>
+	<sentence id="1347096.s2" text="By linkage analysis, we have shown that the gene is located on chromosome 9q22.3-q31; the most likely position is between DNA markers D9S12 and D9S53."/>
+	<sentence id="1347096.s3" text="Location of the gene for Gorlin syndrome offers the possibility that DNA markers can be used in risk estimation and presymptomatic identification of patients for surveillance."/>
+</document>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="7057963">
+	<sentence id="7057963.s0" text="Fifteen patients with bilateral acoustic neuromas are presented.">
+		<entity id="7057963.s0.e0" charOffset="22-49"
+			type="HP" text="bilateral acoustic neuromas" ontology_id="HP_0009589"/>
+	</sentence>
+	<sentence id="7057963.s1" text="Ten patients became symptomatic before age 21, and 9 of these patients developed additional central nervous system tumors.">
+		<entity id="7057963.s1.e0" charOffset="92-121"
+			type="HP" text="central nervous system tumors" ontology_id="HP_0100006"/>
+	</sentence>
+	<sentence id="7057963.s2" text="Cutaneous manifestations of neurofibromatosis and a positive family history of this disorder were absent in many of the patients.">
+		<entity id="7057963.s2.e0" charOffset="0-24"
+			type="HP" text="Cutaneous manifestations" ontology_id="HP_0000951"/>
+		<entity id="7057963.s2.e1" charOffset="27-44"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+	</sentence>
+	<sentence id="7057963.s3" text="Most patients required multiple surgical procedures, and the timing, techniques, and results of these operations are reported."/>
+	<sentence id="7057963.s4" text="The pathogenesis of these tumors, the genetic aspects of this disorder, and potential treatment alternatives are discussed.">
+		<entity id="7057963.s4.e0" charOffset="25-31"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+</document>

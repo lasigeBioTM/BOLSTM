@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="657583">
+	<sentence id="657583.s0" text="Three families are presented, one with branchio-oto-renal dysplasia (BOR) and two with branchio-oto dysplasia (BO).">
+		<entity id="657583.s0.e0" charOffset="52-67"
+			type="HP" text="renal dysplasia" ontology_id="HP_0000110"/>
+	</sentence>
+	<sentence id="657583.s1" text="The former syndrome is characterized by external ear malformations, cervical fistulae, mixed hearing loss and renal anomalies of varying severity.">
+		<entity id="657583.s1.e0" charOffset="40-66"
+			type="HP" text="external ear malformations" ontology_id="HP_0000356"/>
+		<entity id="657583.s1.e1" charOffset="68-85"
+			type="HP" text="cervical fistulae" ontology_id="HP_0009795"/>
+		<entity id="657583.s1.e2" charOffset="87-105"
+			type="HP" text="mixed hearing loss" ontology_id="HP_0000410"/>
+		<entity id="657583.s1.e3" charOffset="110-125"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+	</sentence>
+	<sentence id="657583.s2" text="The latter syndrome differs in that there are no renal anomalies and that the sensorineural component of the hearing loss may be absent.">
+		<entity id="657583.s2.e0" charOffset="48-63"
+			type="HP" text="renal anomalies" ontology_id="HP_0000077"/>
+		<entity id="657583.s2.e1" charOffset="108-120"
+			type="HP" text="hearing loss" ontology_id="HP_0000365"/>
+	</sentence>
+	<sentence id="657583.s3" text="The external ear malformations are quite variable in both syndromes.">
+		<entity id="657583.s3.e0" charOffset="3-29"
+			type="HP" text="external ear malformations" ontology_id="HP_0000356"/>
+		<entity id="657583.s3.e1" charOffset="40-48"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+	<sentence id="657583.s4" text="Evidence is presented which supports the idea that these two syndromes are not phenotypic variants of the same autosomal dominant mutation but distinct disease entities.">
+		<entity id="657583.s4.e0" charOffset="111-129"
+			type="HP" text="autosomal dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="657583.s5" text="The BOR syndrome appears to belong to a larger group of hereditary ear dysplasia-renal adysplasia syndromes that must be carefully ruled out in all patients with familial branchial arch malformations as well as in the parents and siblings of infants with *Potter facies* in the presence of auricular malformation and renal adysplasia.">
+		<entity id="657583.s5.e0" charOffset="69-82"
+			type="HP" text="ear dysplasia" ontology_id="HP_0000598"/>
+		<entity id="657583.s5.e1" charOffset="83-99"
+			type="HP" text="renal adysplasia" ontology_id="HP_0000110"/>
+		<entity id="657583.s5.e2" charOffset="173-182"
+			type="HP" text="branchial" ontology_id="HP_0009794"/>
+		<entity id="657583.s5.e3" charOffset="258-271"
+			type="HP" text="Potter facies" ontology_id="HP_0002009"/>
+		<entity id="657583.s5.e4" charOffset="292-314"
+			type="HP" text="auricular malformation" ontology_id="HP_0000356"/>
+		<entity id="657583.s5.e5" charOffset="319-335"
+			type="HP" text="renal adysplasia" ontology_id="HP_0000110"/>
+	</sentence>
+</document>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2729353">
+	<sentence id="2729353.s0" text="We report on a 4-year-old girl with Angelman syndrome who has an apparent de-novo del(15) (q11q13) originating from a maternally derived chromosome."/>
+	<sentence id="2729353.s1" text="Her mother had severe brachycephaly, sensorineural hearing loss, speech impediment, and mild ataxia.">
+		<entity id="2729343.s1.e0" charOffset="21-34"
+			type="HP" text="brachycephaly" ontology_id="HP_0000248"/>
+		<entity id="2729353.s1.e1" charOffset="36-62"
+			type="HP" text="sensorineural hearing loss" ontology_id="HP_0000407"/>
+		<entity id="2729353.s1.e2" charOffset="64-81"
+			type="HP" text="speech impediment" ontology_id="HP_0002167"/>
+		<entity id="2729353.s1.e3" charOffset="87-98"
+			type="HP" text="mild ataxia" ontology_id="HP_0001251"/>
+	</sentence>
+	<sentence id="2729353.s2" text="CT brain scans showed an enlarged foramen magnum in the mother and daughter but magnetic resonance imaging (MRI) showed no brainstem abnormality in either.">
+		<entity id="2729353.s2.e0" charOffset="23-46"
+			type="HP" text="enlarged foramen magnum" ontology_id="HP_0002700"/>
+		<entity id="2729353.s2.e1" charOffset="121-142"
+			type="HP" text="brainstem abnormality" ontology_id="HP_0002363"/>
+	</sentence>
+	<sentence id="2729353.s3" text="This family demonstrates that some Angelman syndrome cases may be dominantly transmitted with variable expression and associated with abnormal or cytogenetically apparently normal chromosome 15.">
+		<entity id="2729353.s3.e0" charOffset="64-86"
+			type="HP" text="dominantly transmitted" ontology_id="HP_0000006"/>
+		<entity id="2729353.s3.e1" charOffset="92-111"
+			type="HP" text="variable expression" ontology_id="HP_0003828"/>
+		<entity id="2729353.s3.e2" charOffset="92-100"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+</document>

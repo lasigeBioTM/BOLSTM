@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3585943">
+	<sentence id="3585943.s0" text="We report a girl aged 11 and her brother aged five, both with the typical features of Angelman syndrome, and three isolated cases.">
+		<entity id="3585943.s0.e0" charOffset="115-129"
+			type="HP" text="isolated cases" ontology_id="HP_0001420"/>
+	</sentence>
+	<sentence id="3585943.s1" text="This report, together with a review of published reports and contact with previous authors, has revealed a total of 41 sibs of probands, although only nine of these are known to have been later born."/>
+	<sentence id="3585943.s2" text="The possible effect of voluntary restriction of family size after the birth of an affected child is discussed in relation to the possibility of autosomal recessive inheritance, but a recurrence risk of 5% is appropriate for use in the genetic clinic.">
+		<entity id="3585943.s2.e0" charOffset="142-173"
+			type="HP" text="autosomal recessive inheritance" ontology_id="HP_0000007"/>
+		<entity id="3585943.s2.e1" charOffset="142-161"
+			type="HP" text="autosomal recessive" ontology_id="HP_0000007"/>
+	</sentence>
+</document>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1456285">
+	<sentence id="1456285.s0" text="We report on a female patient with bilateral acoustic neurinomas and other tumors in the central nervous system (neurofibromatosis type 2: negative regulation of cell proliferation) and the constitutional translocation, t(4;22) (q12;q12.2).">
+		<entity id="1456285.s0.e0" charOffset="35-64"
+			type="HP" text="bilateral acoustic neurinomas" ontology_id="HP_0009589"/>
+		<entity id="1456285.s0.e1" charOffset="69-81"
+			type="HP" text="other tumors" ontology_id="HP_0003008"/>
+		<entity id="1456285.s0.e2" charOffset="113-130"
+			type="HP" text="neurofibromatosis" ontology_id="HP_0006746"/>
+		<entity id="1456285.s0.e3" charOffset="139-180"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+		<pair id="1456285.s0.p0" e1="1456285.s0.e3"
+		    e2="1456285.s0.e0" ddi="false"/>
+		<pair id="1456285.s0.p1" e1="1456285.s0.e3"
+		    e2="1456285.s0.e1" ddi="false"/>
+		<pair id="1456285.s0.p2" e1="1456285.s0.e3"
+		    e2="1456285.s0.e2" ddi="false"/>
+	</sentence>
+	<sentence id="1456285.s1" text="The precise identification of the translocation breakpoint (q12.2) on chromosome 22 implies the refined localization of a gene responsible for negative regulation of cell proliferation, and would provide a clue to its molecular characterization and to the isolation of the gene.">
+		<entity id="1456285.s1.e0" charOffset="143-184"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="1456285.s2" text="Chromosomes of a paraspinal neurinoma from the patient were also analyzed, and the same karyotype as seen in cultured peripheral lymphocytes was found.">
+		<entity id="1456285.s2.e0" charOffset="16-36"
+			type="HP" text="paraspinal neurinoma" ontology_id="HP_0006751"/>
+	</sentence>
+	<sentence id="1456285.s3" text="The patient's father was also a carrier of the translocation, but he had no clinical symptoms of negative regulation of cell proliferation, nor did other relatives.">
+		<entity id="1456285.s3.e0" charOffset="96-137"
+			type="GO" text="negative regulation of cell proliferation" ontology_id="GO_0008285"/>
+	</sentence>
+	<sentence id="1456285.s4" text="Several explanations are offered for the different expression of the translocation between the patient and her father."/>
+</document>

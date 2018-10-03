@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2035528">
+	<sentence id="2035528.s0" text="A 9-year-old mentally retarded girl with multiple congenital anomalies was found to carry a balanced 13/14 Robertsonian translocation [45,XX,t(13q14q)] which was also present in her father.">
+		<entity id="2035528.s0.e0" charOffset="13-30"
+			type="HP" text="mentally retarded" ontology_id="HP_0001249"/>
+	</sentence>
+	<sentence id="2035528.s1" text="Her mother carried a balanced reciprocal translocation between chromosomes 1 and 14 [46,XX,t(1;14) (q32;q32)]."/>
+	<sentence id="2035528.s2" text="Both of her parents were phenotypically normal."/>
+	<sentence id="2035528.s3" text="Molecular studies were carried out to determine the parental origin of chromosomes 1, 13, and 14 in the patient."/>
+	<sentence id="2035528.s4" text="Using probes for D14S13 and D14S22, we could show that the patient inherited both chromosomes 14 from her father and none from her mother."/>
+	<sentence id="2035528.s5" text="Similar studies using probes for chromosomes 1 (D1S76) and 13 (D13S37) loci showed the presence of both maternal and paternal alleles in the patient."/>
+	<sentence id="2035528.s6" text="Our findings indicate that paternal uniparental heterodisomy for chromosome 14 most likely accounts for the phenotypic abnormalities observed in our patient."/>
+	<sentence id="2035528.s7" text="It is suggested that uniparental disomy may be the basis for abnormal development in at least some phenotypically abnormal familial balanced-translocation carriers.">
+		<entity id="2035528.s7.e0" charOffset="64-84"
+			type="HP" text="abnormal development" ontology_id="HP_0001263"/>
+	</sentence>
+</document>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="292745">
+	<sentence id="292745.s0" text="This paper is based on our experience with the Gorlin-Goltz syndrome and on data from 14 patients of the Nordwestdeutsche Kieferklinik in whom this disorder was detected, treated and followed up."/>
+	<sentence id="292745.s1" text="A clinical concept has been produced, with a diagnostic check list including a genetic and a dermatological routine work up as well as a radiological survey of the jaws and skeleton."/>
+	<sentence id="292745.s2" text="Whenever multiple basal cell carcinomas plus the typical jaw lesions are found in a patient, the diagnosis is easy.">
+		<entity id="292745.s2.e0" charOffset="15-36"
+			type="HP" text="basal cell carcinomas" ontology_id="HP_0002671"/>
+		<entity id="292745.s2.e1" charOffset="54-65"
+			type="HP" text="jaw lesions" ontology_id="HP_0000209"/>
+	</sentence>
+	<sentence id="292745.s3" text="A minimum diagnostic criterion is the combination of either the skin tumours or multiple odontogenic keratocysts plus a positive family history for this disorder, bifid ribs, lamellar calcification of the falx cerebri or any one of the skeletal abnormalities typical of this syndrome.">
+		<entity id="292745.s3.e0" charOffset="61-73"
+			type="HP" text="skin tumours" ontology_id="HP_0008069"/>
+		<entity id="292745.s3.e1" charOffset="86-109"
+			type="HP" text="odontogenic keratocysts" ontology_id="HP_0010603"/>
+		<entity id="292745.s3.e2" charOffset="160-170"
+			type="HP" text="bifid ribs" ontology_id="HP_0000892"/>
+		<entity id="292745.s3.e3" charOffset="181-214"
+			type="HP" text="calcification of the falx cerebri" ontology_id="HP_0005462"/>
+		<entity id="292745.s3.e4" charOffset="233-255"
+			type="HP" text="skeletal abnormalities" ontology_id="HP_0000924"/>
+	</sentence>
+	<sentence id="292745.s4" text="All those in whom this disorder is diagnosed or suspected should be followed up for the rest of their lives."/>
+	<sentence id="292745.s5" text="The family should be examined and genetic counselling should be offered."/>
+</document>

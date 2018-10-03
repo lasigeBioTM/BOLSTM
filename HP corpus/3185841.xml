@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="3185841">
+	<sentence id="3185841.s0" text="The diagnosis, size and operation results in 41 acoustic neurinomas (26 females and 15 males) are presented.">
+		<entity id="3185841.s0.e0" charOffset="48-67"
+			type="HP" text="acoustic neurinomas" ontology_id="HP_0009588"/>
+	</sentence>
+	<sentence id="3185841.s1" text="In one case the tumor was bilateral.">
+		<entity id="3185841.s1.e0" charOffset="16-21"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3185841.s2" text="Out of the total of 41 tumors, 12.5% were small acoustic neurinomas.">
+		<entity id="3185841.s2.e0" charOffset="22-28"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+		<entity id="3185841.s2.e1" charOffset="47-66"
+			type="HP" text="acoustic neurinomas" ontology_id="HP_0009588"/>
+	</sentence>
+	<sentence id="3185841.s3" text="As a rule, at diagnosis the tumors were larger in females than in males.">
+		<entity id="3185841.s3.e0" charOffset="27-33"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3185841.s4" text="Ten of the small and medium size acoustic neurinomas had no brain stem and cerebellar symptoms or signs at all, only the 8th cranial nerve was affected.">
+		<entity id="3185841.s4.e0" charOffset="33-52"
+			type="HP" text="acoustic neurinomas" ontology_id="HP_0009588"/>
+		<entity id="3185841.s4.e1" charOffset="75-94"
+			type="HP" text="cerebellar symptoms" ontology_id="HP_0001317"/>
+		<entity id="3185841.s4.e2" charOffset="121-138"
+			type="HP" text="8th cranial nerve" ontology_id="HP_0009591"/>
+	</sentence>
+	<sentence id="3185841.s5" text="All large tumors already had brain stem symptoms and one-third of them also had cerebellar symptoms, lesions of further cranial nerves and increasing intracranial pressure.">
+		<entity id="3185841.s5.e0" charOffset="12-18"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+		<entity id="3185841.s5.e1" charOffset="31-50"
+			type="HP" text="brain stem symptoms" ontology_id="HP_0002363"/>
+		<entity id="3185841.s5.e2" charOffset="82-101"
+			type="HP" text="cerebellar symptoms" ontology_id="HP_0001317"/>
+		<entity id="3185841.s5.e3" charOffset="103-136"
+			type="HP" text="lesions of further cranial nerves" ontology_id="HP_0001291"/>
+		<entity id="3185841.s5.e4" charOffset="141-173"
+			type="HP" text="increasing intracranial pressure" ontology_id="HP_0002516"/>
+	</sentence>
+	<sentence id="3185841.s6" text="All these findings were always present in giant tumors.">
+		<entity id="3185841.s6.e0" charOffset="53-59"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3185841.s7" text="Neurootological functional laboratory examinations cannot be replaced by CT because of the possibility of false negative findings in the smallest acoustic neurinomas.">
+		<entity id="3185841.s7.e0" charOffset="155-174"
+			type="HP" text="acoustic neurinomas" ontology_id="HP_0009588"/>
+	</sentence>
+	<sentence id="3185841.s8" text="CT and functional neurootological laboratory examinations are complementary to each other and they are not screening procedures at all."/>
+	<sentence id="3185841.s9" text="As regards morbidity and mortality, the surgical results are comparable with those of other authors using microsurgical techniques."/>
+	<sentence id="3185841.s10" text="As regards the preservation of hearing, the results are among the best particularly in tumors that were diagnosed as small or medium in this series.">
+		<entity id="3185841.s10.e0" charOffset="112-118"
+			type="HP" text="tumors" ontology_id="HP_0002664"/>
+	</sentence>
+	<sentence id="3185841.s11" text="Thus it is apparent that the size of a diagnosed acoustic neurinoma is more important for surgical results than the chosen approach to the tumor.">
+		<entity id="3185841.s11.e0" charOffset="82-100"
+			type="HP" text="acoustic neurinoma" ontology_id="HP_0009588"/>
+		<entity id="3185841.s11.e1" charOffset="172-177"
+			type="HP" text="tumor" ontology_id="HP_0002664"/>
+	</sentence>
+</document>

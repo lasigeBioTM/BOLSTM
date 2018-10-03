@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="1750770">
+	<sentence id="1750770.s0" text="Two very preterm infants (born at 29 and 25 weeks, respectively) were found to have abnormal ribs.">
+		<entity id="1750770.s0.e0" charOffset="9-24"
+			type="HP" text="preterm infants" ontology_id="HP_0001622"/>
+		<entity id="1750770.s0.e1" charOffset="84-97"
+			type="HP" text="abnormal ribs" ontology_id="HP_0000772"/>
+	</sentence>
+	<sentence id="1750770.s1" text="Though this was thought unimportant at the time, it was subsequently shown to indicate that some members of their families had a dominantly inherited risk of developing skin cancer and other serious problems.">
+		<entity id="1750770.s1.e0" charOffset="129-149"
+			type="HP" text="dominantly inherited" ontology_id="HP_0000006"/>
+		<entity id="1750770.s1.e1" charOffset="169-180"
+			type="HP" text="skin cancer" ontology_id="HP_0008069"/>
+	</sentence>
+</document>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2667456">
+	<sentence id="2667456.s0" text="The authors report a new case of Townes-Brocks syndrome with cardiac defect, ossicular anomalies and dominant transmission.">
+		<entity id="2667456.s0.e0" charOffset="61-75"
+			type="HP" text="cardiac defect" ontology_id="HP_0001627"/>
+		<entity id="2667456.s0.e1" charOffset="77-96"
+			type="HP" text="ossicular anomalies" ontology_id="HP_0001759"/>
+		<entity id="2667456.s0.e2" charOffset="101-122"
+			type="HP" text="dominant transmission" ontology_id="HP_0000006"/>
+		<entity id="2667456.s0.e3" charOffset="101-109"
+			type="HP" text="dominant" ontology_id="HP_0000006"/>
+	</sentence>
+	<sentence id="2667456.s1" text="The intrafamilial variability of the phenotype and the difficulty of diagnosis in isolated cases are underlined.">
+		<entity id="2667456.s1.e0" charOffset="4-29"
+			type="HP" text="intrafamilial variability" ontology_id="HP_0003822"/>
+		<entity id="2667456.s1.e3" charOffset="4-46"
+			type="HP" text="isolated cases" ontology_id="HP_0001420"/>
+		<entity id="2667456.s1.e1" charOffset="18-29"
+			type="HP" text="intrafamilial variability of the phenotype" ontology_id="HP_0003822"/>
+		<entity id="2667456.s1.e2" charOffset="82-96"
+			type="HP" text="variability" ontology_id="HP_0003812"/>
+	</sentence>
+</document>

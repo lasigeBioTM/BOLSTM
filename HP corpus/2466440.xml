@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document id="2466440">
+	<sentence id="2466440.s0" text="Thirty six children with typical features of Angelman's syndrome, including global developmental delay, ataxia, episodes of paroxysmal laughter, seizures, and microcephaly were studied.">
+		<entity id="2466440.s0.e0" charOffset="76-102"
+			type="HP" text="global developmental delay" ontology_id="HP_0001263"/>
+		<entity id="2466440.s0.e1" charOffset="104-110"
+			type="HP" text="ataxia" ontology_id="HP_0001251"/>
+		<entity id="2466440.s0.e2" charOffset="112-143"
+			type="HP" text="episodes of paroxysmal laughter" ontology_id="HP_0000749"/>
+		<entity id="2466440.s0.e3" charOffset="145-153"
+			type="HP" text="seizures" ontology_id="HP_0001250"/>
+		<entity id="2466440.s0.e4" charOffset="159-171"
+			type="HP" text="microcephaly" ontology_id="HP_0000252"/>
+	</sentence>
+	<sentence id="2466440.s1" text="The series included three sibships of three affected sisters, two affected brothers, and two affected sisters, respectively."/>
+	<sentence id="2466440.s2" text="The facial appearance is characterised by a prominent jaw, a wide mouth, and a pointed chin.">
+		<entity id="2266220.s2.e0" charOffset="2-19"
+			type="HP" text="facial appearance" ontology_id="HP_0001999"/>
+		<entity id="2466420.s2.e1" charOffset="42-55"
+			type="HP" text="prominent jaw" ontology_id="HP_0002051"/>
+		<entity id="2466440.s2.e2" charOffset="59-69"
+			type="HP" text="wide mouth" ontology_id="HP_0000154"/>
+		<entity id="2466440.s2.e3" charOffset="77-89"
+			type="HP" text="pointed chin" ontology_id="HP_0000307"/>
+	</sentence>
+	<sentence id="2466440.s3" text="Tongue thrusting is common.">
+		<entity id="2466440.s3.e0" charOffset="0-16"
+			type="HP" text="Tongue thrusting" ontology_id="HP_0000182"/>
+	</sentence>
+	<sentence id="2466440.s4" text="The movement disorder consists of a wide based, ataxic gait with frequent jerky limb movements and flapping of the hands.">
+		<entity id="2366330.s3.e0" charOffset="3-20"
+			type="HP" text="movement disorder" ontology_id="HP_0100022"/>
+		<entity id="2466440.s4.e1" charOffset="35-58"
+			type="HP" text="wide based, ataxic gait" ontology_id="HP_0002136"/>
+		<entity id="2466440.s4.e3" charOffset="47-53"
+			type="HP" text="jerky limb movements" ontology_id="HP_0002276"/>
+		<entity id="2466440.s4.e4" charOffset="73-93"
+			type="HP" text="flapping of the hands" ontology_id="HP_0100023"/>
+		<entity id="2466440.s4.e2" charOffset="98-119"
+			type="HP" text="ataxic" ontology_id="HP_0001251"/>
+	</sentence>
+	<sentence id="2466440.s5" text="Tone is variable in the limbs with normal reflexes, and the plantar responses are usually flexor.">
+		<entity id="2466440.s5.e0" charOffset="9-17"
+			type="HP" text="variable" ontology_id="HP_0003813"/>
+	</sentence>
+	<sentence id="2466440.s6" text="The syndrome is being diagnosed more often, and attention is drawn to its diagnostic aspects."/>
+</document>
