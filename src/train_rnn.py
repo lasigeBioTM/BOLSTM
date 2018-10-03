@@ -23,6 +23,13 @@ logger.setLevel(logging.WARNING)
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+import tensorflow as tf
+from keras.backend.tensorflow_backend import set_session
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+
+sess = tf.Session(config=config)
+set_session(sess)  # set this TensorFlow session as the default session for Keras
 
 from chebi_path import load_chebi
 from models import get_model, get_xu_model, embbed_size, max_sentence_length, max_ancestors_length, n_classes
@@ -54,7 +61,7 @@ def write_plots(history, modelname):
     plt.ylabel('score')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig("{}_acc.png".format(modelname))
+    plt.savefig("temp/{}_acc.png".format(modelname))
 
     plt.figure()
     plt.plot(history.history['loss'])
@@ -63,7 +70,7 @@ def write_plots(history, modelname):
     plt.ylabel('loss')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig("{}_loss.png".format(modelname))
+    plt.savefig("temp/{}_loss.png".format(modelname))
 
 def get_glove_vectors(filename='glove.6B.300d.txt'):
     """
@@ -304,39 +311,11 @@ def get_ddi_data(dirs, name_to_id, synonym_to_id, id_to_name):
     return labels, (left_instances, right_instances), classes, common_ancestors,\
            (left_ancestors, right_ancestors), (left_wordnet, right_wordnet)
 
-def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_train,
-          X_subpaths_train, X_ancestors_train, id_to_index):
-    # open numpy arrays with data and train model
 
-    # number of input channels is determined by args after corpus_name and model_name
-    n_inputs = 0
-    if "words" in channels:
-        n_inputs += 2
-    if "wordnet" in channels:
-        n_inputs += 2
-    if "concat_ancestors" in channels:
-        n_inputs += 2
-    if "common_ancestors" in channels:
-        n_inputs += 1
 
-    # remove previous model files
-    if os.path.isfile("{}/{}.json".format(MODELS_DIR, modelname)):
-        os.remove("{}/{}.json".format(MODELS_DIR, modelname))
-    if os.path.isfile("{}/{}.h5".format(MODELS_DIR, modelname)):
-        os.remove("{}/{}.h5".format(MODELS_DIR, modelname))
-
-    #print(train_labels)
-    Y_train = to_categorical(Y_train, num_classes=n_classes)
-    # get random instance order (to shuffle docs types and labels)
-    list_order = np.arange(len(Y_train))
-    print(list_order)
-    random.seed(1)
-    random.shuffle(list_order)
-    Y_train = Y_train[list_order]
-    train_labels = train_labels[list_order]
-    print("train order:", list_order)
-
-    # store features in this dictionry according to args
+def prepare_inputs(channels, input_data, list_order, id_to_index):
+    Y_train, train_labels, X_words_train, X_wordnet_train, \
+    X_subpaths_train, X_ancestors_train = input_data
     inputs = {}
     if "words" in channels:
         # emb_index, emb_matrix = get_glove_vectors()
@@ -361,7 +340,7 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
         wn_index = None
 
     if "concat_ancestors" in channels or "common_ancestors" in channels:
-        #is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
+        # is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi()
         X_ids_left = preprocess_ids(X_subpaths_train[0], id_to_index, max_ancestors_length)
         X_ids_right = preprocess_ids(X_subpaths_train[1], id_to_index, max_ancestors_length)
         X_ancestors = preprocess_ids(X_ancestors_train, id_to_index, max_ancestors_length * 2)
@@ -369,8 +348,53 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
         inputs["left_ancestors"] = X_ids_left[list_order]
         inputs["right_ancestors"] = X_ids_right[list_order]
         inputs["common_ancestors"] = X_ancestors[list_order]
-    else:
-        id_to_index = None
+
+    return inputs, w2v_layer, wn_index
+
+def train(modelname, channels, train_inputs, id_to_index, test_inputs=None):
+    # open numpy arrays with data and train model
+    Y_train, train_labels, X_words_train, X_wordnet_train, \
+        X_subpaths_train, X_ancestors_train = train_inputs
+    if test_inputs is not None:
+        Y_test, test_labels, X_words_test, X_wordnet_test, \
+            X_subpaths_test, X_ancestors_test = test_inputs
+    # number of input channels is determined by args after corpus_name and model_name
+    n_inputs = 0
+    if "words" in channels:
+        n_inputs += 2
+    if "wordnet" in channels:
+        n_inputs += 2
+    if "concat_ancestors" in channels:
+        n_inputs += 2
+    if "common_ancestors" in channels:
+        n_inputs += 1
+
+    # remove previous model files
+    if os.path.isfile("{}/{}.json".format(MODELS_DIR, modelname)):
+        os.remove("{}/{}.json".format(MODELS_DIR, modelname))
+    if os.path.isfile("{}/{}.h5".format(MODELS_DIR, modelname)):
+        os.remove("{}/{}.h5".format(MODELS_DIR, modelname))
+
+    #print(train_labels)
+    Y_train = to_categorical(Y_train, num_classes=n_classes)
+
+    # get random instance order (to shuffle docs types and labels)
+    list_order = np.arange(len(Y_train))
+    #print(list_order)
+    random.seed(1)
+    random.shuffle(list_order)
+    Y_train = Y_train[list_order]
+    train_labels = train_labels[list_order]
+    print("train order:", list_order)
+
+    # store features in this dictionry according to args
+
+    inputs, w2v_layer, wn_index = prepare_inputs(channels, train_inputs, list_order, id_to_index)
+
+    if test_inputs is not None:
+        Y_test = to_categorical(Y_test, num_classes=n_classes)
+        test_list_order = np.arange(len(Y_test))
+        test_inputs, w2v_layer_test, wn_index_test = prepare_inputs(channels, test_inputs, test_list_order, id_to_index)
 
     model = get_model(w2v_layer, channels, wn_index, id_to_index)
     del id_to_index
@@ -385,14 +409,17 @@ def train(modelname, channels, Y_train, train_labels, X_words_train, X_wordnet_t
 
     metrics = Metrics(train_labels, X_words_train, n_inputs)
     checkpointer = ModelCheckpoint(filepath="{}/{}.h5".format(MODELS_DIR, modelname), verbose=1, save_best_only=True)
-    history = model.fit(inputs,
-                        {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
-                        batch_size=batch_size, verbose=2, callbacks=[metrics, checkpointer])
+
+    if test_inputs is None:
+        history = model.fit(inputs,
+                            {"output": Y_train}, validation_split=validation_split, epochs=n_epochs,
+                            batch_size=batch_size, verbose=2, callbacks=[metrics, checkpointer])
+    else:
+        history = model.fit(inputs,
+                            {"output": Y_train}, validation_data=(test_inputs, Y_test), epochs=n_epochs,
+                            batch_size=batch_size, verbose=2, callbacks=[metrics, checkpointer])
 
     # keras.callbacks.EarlyStopping(patience=3)])
-    # history = model.fit({"input": X_words_train}, {"output": Y_train},
-    #                    validation_split=validation_split, epochs=n_epochs,
-    #                    batch_size=batch_size, verbose=2, callbacks=[metrics])
     write_plots(history, modelname)
 
     # serialize weights to HDF5 - weights are saved using checkpointer
@@ -482,8 +509,8 @@ def main():
 
         if sys.argv[1].endswith("_train"):
             train_labels = np.array(train_labels)
-            train(sys.argv[3], sys.argv[5:], Y_train, train_labels, X_train, X_train_wordnet, X_train_subpaths,
-                  X_train_ancestors, id_to_index)
+            train(sys.argv[3], sys.argv[5:], (Y_train, train_labels, X_train, X_train_wordnet, X_train_subpaths,
+                  X_train_ancestors), id_to_index)
         elif sys.argv[1].endswith("_predict"):
             train_labels = np.array(train_labels)
             predict(sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6:], train_labels, X_train, X_train_wordnet, X_train_subpaths,
@@ -514,8 +541,41 @@ def main():
             X_subpaths_train = np.load(sys.argv[2] + "_x_subpaths.npy")
             X_ancestors_train = np.load(sys.argv[2] + "_x_ancestors.npy")
 
-        train(sys.argv[3], sys.argv[4:], Y_train, train_labels, X_words_train, X_wordnet_train,
-              X_subpaths_train, X_ancestors_train, id_to_index)
+        train_inputs = (Y_train, train_labels, X_words_train, X_wordnet_train,
+              X_subpaths_train, X_ancestors_train)
+        train(sys.argv[3], sys.argv[4:], train_inputs, id_to_index)
+
+    elif sys.argv[1] == "train_test":
+        is_a_graph, name_to_id, synonym_to_id, id_to_name, id_to_index = load_chebi("{}/chebi.obo".format(DATA_DIR))
+
+        train_labels = np.load(sys.argv[2] + "_labels.npy")
+        test_labels = np.load(sys.argv[3] + "_labels.npy")
+        Y_train = np.load(sys.argv[2] + "_y.npy")
+        Y_test = np.load(sys.argv[3] + "_y.npy")
+        # Y_train = to_categorical(Y_train, num_classes=n_classes)
+        X_words_train = None
+        X_wordnet_train = None
+        X_subpaths_train = None
+        X_ancestors_train = None
+
+        X_words_test = None
+        X_wordnet_test = None
+        X_subpaths_test = None
+        X_ancestors_test = None
+
+        if "words" in sys.argv[5:]:
+            X_words_train = np.load(sys.argv[2] + "_x_words.npy")
+            X_words_test = np.load(sys.argv[3] + "_x_words.npy")
+        if "wordnet" in sys.argv[5:]:
+            X_wordnet_train = np.load(sys.argv[2] + "_x_wordnet.npy")
+            X_wordnet_test = np.load(sys.argv[3] + "_x_wordnet.npy")
+        if "concat_ancestors" in sys.argv[5:] or "common_ancestors" in sys.argv[4:]:
+            X_subpaths_train = np.load(sys.argv[2] + "_x_subpaths.npy")
+            X_ancestors_test = np.load(sys.argv[3] + "_x_ancestors.npy")
+
+        train(sys.argv[4], sys.argv[5:], (Y_train, train_labels, X_words_train, X_wordnet_train,
+              X_subpaths_train, X_ancestors_train), id_to_index, (Y_test, test_labels, X_words_test, X_wordnet_test,
+              X_subpaths_test, X_ancestors_test))
 
     elif sys.argv[1] == "predict":
         # open numpy files according to the input channels specified, open model files and apply model to data
@@ -532,7 +592,7 @@ def main():
             X_ancestors_test = np.load(sys.argv[2] + "_x_ancestors.npy")
             X_subpaths_test = np.load(sys.argv[2] + "_x_subpaths.npy")
         test_labels = np.load(sys.argv[2] + "_labels.npy")
-        predict(sys.argv[3], sys.argv[2], "", sys.argv[4:], test_labels, X_words_test, X_wn_test, X_subpaths_test,
+        predict(sys.argv[3], sys.argv[2], "results/", sys.argv[4:], test_labels, X_words_test, X_wn_test, X_subpaths_test,
                 X_ancestors_test, id_to_index)
 
 
