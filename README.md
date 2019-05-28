@@ -22,7 +22,7 @@ Furthermore, the word and wordnet indices are separated into right and left side
 
 
 ## Train model
-![BOLSTM architecture](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6323831/bin/12859_2018_2584_Fig2_HTML.jpg)
+![BOLSTM architecture](arch.jpeg)
 
 *python3 src/train_rnn.py train temp/dditrain full_model words wordnet common_ancestors concat_ancestors*
 
