@@ -1,5 +1,8 @@
 # BO-LSTM: Classifying Relations via Long Short-Term Memory Networks along Biomedical Ontologies
 
+Publication: A. Lamurias, D. Sousa, L. Clarke, and F. Couto, “BO-LSTM: classifying relations via long short-term memory networks along biomedical ontologies,” BMC Bioinformatics, vol. 20, no. 10, pp. 1–12, 2019.
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6323831/
+
 ## Getting Started
 Code necessary to run the BO-LSTM model. Use the Dockerfile or the [docker hub image](https://hub.docker.com/r/andrelamurias/bolstm/) setup the experimental environment.
 
