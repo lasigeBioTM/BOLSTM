@@ -12,7 +12,7 @@ Use *train.sh* to train a BO-LSTM classification model and *predict.sh* to run t
 
 ### Set-up SST-light
 
-If you're not using the Docker image, you have to set-up SST-light
+If you're not using the Docker image, you have to set-up SST-light. First, download the archive from https://sourceforge.net/projects/supersensetag/files/sst-light/sst-light-0.4/ and uncompress the contents. Then:
 ```bash
 cd sst-light-0.4
 make
