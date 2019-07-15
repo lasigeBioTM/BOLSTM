@@ -10,6 +10,15 @@ Use *prepare_ddi.sh* to generate training instances and *pipeline_ddi.sh* to run
 
 Use *train.sh* to train a BO-LSTM classification model and *predict.sh* to run the model on new data.
 
+### Set-up SST-light
+
+If you're not using the Docker image, you have to set-up SST-light
+```bash
+cd sst-light-0.4
+make
+export PATH="/sst-light-0.4:$PATH"
+```
+
 ## Preparing data
 *python3 src/train_rnn.py preprocessing ddi temp/dditrain data/DDICorpus/Train/MedLine/ data/DDICorpus/Train/DrugBank/*
 
