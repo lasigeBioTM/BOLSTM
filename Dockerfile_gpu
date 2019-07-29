@@ -16,7 +16,7 @@ RUN apt-get update -y && apt-get install wget -y
 #                  CREATE/COPY REPOSITORY DIRECTORIES                
 # --------------------------------------------------------------
 
-#COPY bolstm/src/ src/
+COPY src/ src/
 RUN mkdir /bolstm/temp/
 RUN mkdir /bolstm/models/
 RUN mkdir /bolstm/data/
@@ -50,7 +50,7 @@ RUN python3 -m spacy download en_core_web_sm
 # --------------------------------------------------------------
 
 WORKDIR /bolstm/bin
-RUN wget http://www.nactem.ac.uk/y-matsu/geniass/geniass-1.00.tar.gz && \
+RUN wget -q http://www.nactem.ac.uk/y-matsu/geniass/geniass-1.00.tar.gz && \
     tar -xvzf geniass-1.00.tar.gz && \
     rm geniass-1.00.tar.gz  
 WORKDIR /bolstm/bin/geniass/
@@ -66,7 +66,8 @@ WORKDIR /bolstm
 #    tar -xvzf sst-light-0.4.tar.gz && \
 #    rm sst-light-0.4.tar.gz
 RUN git clone https://github.com/AndreLamurias/sst-light.git
-WORKDIR /bolstm/sst-light/
+RUN mv sst-light sst-light-0.4
+WORKDIR /bolstm/sst-light-0.4/
 RUN apt-get update -y && make # (error to solve)
 RUN cp sst /bin/
 
@@ -77,14 +78,16 @@ RUN cp sst /bin/
 WORKDIR /bolstm/src
 RUN git clone https://github.com/lasigeBioTM/DiShIn.git
 WORKDIR /bolstm/src/DiShIn
-RUN wget www.geneontology.org/ontology/go.owl
-RUN wget http://labs.rd.ciencias.ulisboa.pt/dishin/go.db
-RUN wget http://purl.obolibrary.org/obo/hp.owl
-RUN wget http://labs.rd.ciencias.ulisboa.pt/dishin/hp.db
-RUN wget ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.owl
-RUN wget http://labs.rd.ciencias.ulisboa.pt/dishin/chebi.db
+RUN wget -q www.geneontology.org/ontology/go.owl
+RUN wget -q http://labs.rd.ciencias.ulisboa.pt/dishin/go.db
+RUN wget -q http://purl.obolibrary.org/obo/hp.owl
+RUN wget -q http://labs.rd.ciencias.ulisboa.pt/dishin/hp.db
+RUN wget -q ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.owl
+RUN wget -q http://labs.rd.ciencias.ulisboa.pt/dishin/chebi.db
 
-RUN wget ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo
+WORKDIR /bolstm/data
+RUN wget -q ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo
+RUN wget -q http://evexdb.org/pmresources/vec-space-models/PubMed-w2v.bin
 
 
 WORKDIR /bolstm
