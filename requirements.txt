@@ -20,7 +20,7 @@ h5py==2.7.1
 html5lib
 idna==2.6
 Keras
-lxml==3.7.3
+lxml==4.6.5
 Markdown==2.6.9
 matplotlib
 msgpack-numpy==0.4.1
