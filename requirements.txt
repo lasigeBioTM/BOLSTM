@@ -48,7 +48,7 @@ termcolor==1.1.0
 thinc
 toolz==0.8.2
 tqdm==4.19.4
-ujson==1.35
+ujson==5.2.0
 wcwidth==0.1.7
 webencodings==0.5.1
 Werkzeug==0.15.3
