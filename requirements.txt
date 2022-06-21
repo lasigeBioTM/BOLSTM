@@ -27,7 +27,7 @@ msgpack-numpy==0.4.1
 msgpack-python
 murmurhash==0.28.0
 networkx==2.0
-numpy==1.13.3
+numpy==1.22.0
 pathlib==1.0.1
 plac==0.9.6
 preshed==1.0.0
